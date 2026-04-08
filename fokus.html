@@ -7,106 +7,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link href="shared.css" rel="stylesheet"/>
 <style>
-  .timer-ring-wrap {
-    position: relative; width: 280px; height: 280px; margin: 0 auto;
-    animation: fadeScale 0.8s ease both;
-  }
+  .timer-ring-wrap { position: relative; width: 280px; height: 280px; margin: 0 auto; animation: fadeScale 0.8s ease both; }
   .timer-ring-wrap svg { transform: rotate(-90deg); }
   .timer-bg { fill: none; stroke: rgba(207,157,123,0.08); stroke-width: 4; }
-  .timer-progress {
-    fill: none; stroke-width: 4; stroke-linecap: round;
-    transition: stroke-dashoffset 1s linear, stroke 0.5s;
-  }
-  .timer-glow {
-    position: absolute; inset: 20px; border-radius: 50%;
-    transition: box-shadow 1s;
-  }
-  .timer-center {
-    position: absolute; inset: 0; display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-  }
-  .timer-time {
-    font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700;
-    color: var(--brass-light); letter-spacing: 2px;
-  }
-  .timer-phase {
-    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--brass); opacity: 0.45; margin-top: 4px;
-  }
+  .timer-progress { fill: none; stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; }
+  .timer-glow { position: absolute; inset: 20px; border-radius: 50%; transition: box-shadow 1s; }
+  .timer-center { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .timer-time { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; color: var(--brass-light); letter-spacing: 2px; }
+  .timer-phase { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--brass); opacity: 0.45; margin-top: 4px; }
 
-  .phase-tabs {
-    display: flex; justify-content: center; gap: 6px;
-    margin-bottom: 36px; animation: slideUp 0.5s 0.1s both ease;
-  }
-  .phase-tab {
-    background: rgba(207,157,123,0.05); color: var(--brass);
-    border: 1px solid rgba(207,157,123,0.1); border-radius: 10px;
-    padding: 8px 18px; font-size: 13px; cursor: pointer;
-    font-family: 'Inter', sans-serif; transition: all 0.3s;
-  }
+  .phase-tabs { display: flex; justify-content: center; gap: 6px; margin-bottom: 36px; animation: slideUp 0.5s 0.1s both ease; }
+  .phase-tab { background: rgba(207,157,123,0.05); color: var(--brass); border: 1px solid rgba(207,157,123,0.1); border-radius: 10px; padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s; }
   .phase-tab:hover { background: rgba(207,157,123,0.1); }
   .phase-tab.active { background: rgba(207,157,123,0.14); border-color: rgba(207,157,123,0.3); color: var(--brass-light); }
 
-  .control-btn {
-    width: 56px; height: 56px; border-radius: 50%; border: none;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; cursor: pointer; transition: all 0.3s;
-    font-family: 'Inter', sans-serif;
-  }
+  .control-btn { width: 56px; height: 56px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif; }
   .control-btn:hover { transform: scale(1.08); }
   .control-btn:active { transform: scale(0.95); }
-  .play-btn {
-    background: linear-gradient(135deg, var(--coffee), var(--brass));
-    color: var(--black); box-shadow: 0 8px 28px rgba(207,157,123,0.25);
-  }
+  .play-btn { background: linear-gradient(135deg, var(--coffee), var(--brass)); color: var(--black); box-shadow: 0 8px 28px rgba(207,157,123,0.25); }
   .play-btn:hover { box-shadow: 0 12px 36px rgba(207,157,123,0.35); }
-  .reset-btn {
-    background: rgba(207,157,123,0.08); color: var(--brass);
-    border: 1px solid rgba(207,157,123,0.12);
-  }
+  .reset-btn { background: rgba(207,157,123,0.08); color: var(--brass); border: 1px solid rgba(207,157,123,0.12); }
 
-  .session-counter {
-    display: flex; justify-content: center; gap: 10px; margin-top: 32px;
-    animation: fadeIn 0.6s 0.3s both ease;
-  }
-  .session-dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    background: rgba(207,157,123,0.1); border: 1px solid rgba(207,157,123,0.15);
-    transition: all 0.4s;
-  }
-  .session-dot.done {
-    background: var(--brass); border-color: var(--brass);
-    box-shadow: 0 0 12px rgba(207,157,123,0.3);
-    animation: popIn 0.5s ease;
-  }
+  .session-counter { display: flex; justify-content: center; gap: 10px; margin-top: 32px; animation: fadeIn 0.6s 0.3s both ease; }
+  .session-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(207,157,123,0.1); border: 1px solid rgba(207,157,123,0.15); transition: all 0.4s; }
+  .session-dot.done { background: var(--brass); border-color: var(--brass); box-shadow: 0 0 12px rgba(207,157,123,0.3); animation: popIn 0.5s ease; }
   .session-dot.current { border-color: var(--brass); animation: glowPulse 2s infinite; }
 
-  .quote-area {
-    text-align: center; margin-top: 48px; padding: 32px 24px;
-    border-top: 1px solid rgba(207,157,123,0.06);
-    animation: fadeIn 1s 0.5s both ease;
-  }
-  .quote-text {
-    font-family: 'Playfair Display', serif; font-style: italic;
-    font-size: 18px; color: var(--brass-light); opacity: 0.6;
-    line-height: 1.7; max-width: 500px; margin: 0 auto;
-  }
-  .quote-author {
-    font-size: 12px; color: var(--brass); opacity: 0.3;
-    margin-top: 12px; letter-spacing: 2px;
-  }
+  .quote-area { text-align: center; margin-top: 48px; padding: 32px 24px; border-top: 1px solid rgba(207,157,123,0.06); animation: fadeIn 1s 0.5s both ease; }
+  .quote-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: var(--brass-light); opacity: 0.6; line-height: 1.7; max-width: 500px; margin: 0 auto; }
+  .quote-author { font-size: 12px; color: var(--brass); opacity: 0.3; margin-top: 12px; letter-spacing: 2px; }
 
-  .ambient-toggle {
-    display: flex; align-items: center; gap: 10px; justify-content: center;
-    margin-top: 28px; animation: fadeIn 0.6s 0.4s both ease;
-  }
-  .ambient-btn {
-    padding: 6px 14px; border-radius: 8px; font-size: 18px;
-    background: rgba(207,157,123,0.05); border: 1px solid rgba(207,157,123,0.08);
-    cursor: pointer; transition: all 0.3s;
-  }
+  .ambient-toggle { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 28px; animation: fadeIn 0.6s 0.4s both ease; }
+  .ambient-btn { padding: 6px 14px; border-radius: 8px; font-size: 18px; background: rgba(207,157,123,0.05); border: 1px solid rgba(207,157,123,0.08); cursor: pointer; transition: all 0.3s; }
   .ambient-btn:hover { background: rgba(207,157,123,0.1); transform: scale(1.08); }
   .ambient-btn.active { background: rgba(207,157,123,0.15); border-color: rgba(207,157,123,0.3); }
+  .vol-slider { -webkit-appearance: none; appearance: none; width: 70px; height: 3px; background: rgba(207,157,123,0.15); border-radius: 2px; outline: none; vertical-align: middle; }
+  .vol-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brass); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -116,139 +52,246 @@
 
 <script>
 const QUOTES = [
-  {text:"Ein Buch muss die Axt sein für das gefrorene Meer in uns.", author:"Franz Kafka"},
-  {text:"Lesen ist Denken mit fremdem Gehirn.", author:"Jorge Luis Borges"},
-  {text:"Es gibt mehr Schätze in Büchern als in allen Piratenbeuten.", author:"Walt Disney"},
-  {text:"Ein Raum ohne Bücher ist wie ein Körper ohne Seele.", author:"Cicero"},
-  {text:"Wer liest, lebt tausend Leben. Wer nie liest, lebt nur eins.", author:"George R.R. Martin"},
-  {text:"Bücher sind die stille Gewalt der Welt.", author:"William Godwin"},
-  {text:"Schreiben ist leicht. Man muss nur die falschen Wörter weglassen.", author:"Mark Twain"},
-  {text:"Das Paradies habe ich mir immer als eine Art Bibliothek vorgestellt.", author:"Jorge Luis Borges"},
-  {text:"In Büchern liegt die Seele aller gewesenen Zeit.", author:"Thomas Carlyle"},
+  {text:"Ein Buch muss die Axt sein für das gefrorene Meer in uns.",author:"Franz Kafka"},
+  {text:"Lesen ist Denken mit fremdem Gehirn.",author:"Jorge Luis Borges"},
+  {text:"Es gibt mehr Schätze in Büchern als in allen Piratenbeuten.",author:"Walt Disney"},
+  {text:"Ein Raum ohne Bücher ist wie ein Körper ohne Seele.",author:"Cicero"},
+  {text:"Wer liest, lebt tausend Leben. Wer nie liest, lebt nur eins.",author:"George R.R. Martin"},
+  {text:"Schreiben ist leicht. Man muss nur die falschen Wörter weglassen.",author:"Mark Twain"},
+  {text:"Das Paradies habe ich mir immer als eine Art Bibliothek vorgestellt.",author:"Jorge Luis Borges"},
+  {text:"In Büchern liegt die Seele aller gewesenen Zeit.",author:"Thomas Carlyle"},
 ];
 
 const PHASES = {
-  fokus: { label: "Fokus", minutes: 25, color: "var(--brass)" },
-  kurz: { label: "Kurze Pause", minutes: 5, color: "#6ee7b7" },
-  lang: { label: "Lange Pause", minutes: 15, color: "#93c5fd" },
+  fokus: { label:"Fokus", minutes:25, color:"var(--brass)" },
+  kurz:  { label:"Kurze Pause", minutes:5, color:"#6ee7b7" },
+  lang:  { label:"Lange Pause", minutes:15, color:"#93c5fd" },
 };
 
-let timer = null, running = false, timeLeft = PHASES.fokus.minutes * 60;
-let phase = "fokus", sessions = 0, totalSessions = 4;
-const CIRC = 2 * Math.PI * 130;
+let timer=null, running=false, timeLeft=PHASES.fokus.minutes*60;
+let phase="fokus", sessions=0, totalSessions=4;
+const CIRC=2*Math.PI*130;
 
-let audioCtx = null, ambientNodes = {};
+/* ═══════════════════════════════════════════
+   HIGH-QUALITY AMBIENT SOUND ENGINE
+   ═══════════════════════════════════════════ */
+let audioCtx=null, activeAmbient={};
 
-function initAudio() {
-  if (audioCtx) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function getCtx(){
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  return audioCtx;
 }
 
-function createNoise(type) {
-  initAudio();
-  const bufferSize = 2 * audioCtx.sampleRate;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
+// ── RAIN: layered filtered noise + randomized droplets ──
+function createRain(){
+  const ctx=getCtx();
+  const master=ctx.createGain(); master.gain.value=0.35;
+  master.connect(ctx.destination);
 
-  if (type === 'rain') {
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.15;
-      if (Math.random() < 0.001) data[i] *= 4;
+  // Layer 1: gentle broadband background (like distant rain)
+  const bg=ctx.createBufferSource();
+  const bgBuf=ctx.createBuffer(2,ctx.sampleRate*4,ctx.sampleRate);
+  for(let ch=0;ch<2;ch++){
+    const d=bgBuf.getChannelData(ch);
+    let v=0;
+    for(let i=0;i<d.length;i++){
+      v+=(Math.random()*2-1)*0.01;
+      v*=0.998;
+      d[i]=v*8;
     }
-  } else if (type === 'fire') {
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.08;
-      if (i > 0) data[i] = data[i] * 0.3 + data[i-1] * 0.7;
-    }
-  } else {
-    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.05;
   }
+  bg.buffer=bgBuf; bg.loop=true;
+  const bgFilter=ctx.createBiquadFilter();
+  bgFilter.type='bandpass'; bgFilter.frequency.value=2500; bgFilter.Q.value=0.4;
+  const bgGain=ctx.createGain(); bgGain.gain.value=0.6;
+  bg.connect(bgFilter).connect(bgGain).connect(master);
+  bg.start();
 
-  const source = audioCtx.createBufferSource();
-  source.buffer = buffer; source.loop = true;
-  const gain = audioCtx.createGain(); gain.gain.value = 0.3;
+  // Layer 2: higher "patter" layer
+  const pat=ctx.createBufferSource();
+  const patBuf=ctx.createBuffer(2,ctx.sampleRate*3,ctx.sampleRate);
+  for(let ch=0;ch<2;ch++){
+    const d=patBuf.getChannelData(ch);
+    for(let i=0;i<d.length;i++){
+      d[i]=Math.random()*2-1;
+      if(Math.random()<0.0008) d[i]*=3; // occasional drip
+    }
+  }
+  pat.buffer=patBuf; pat.loop=true;
+  const patFilter=ctx.createBiquadFilter();
+  patFilter.type='bandpass'; patFilter.frequency.value=5000; patFilter.Q.value=0.8;
+  const patGain=ctx.createGain(); patGain.gain.value=0.12;
+  pat.connect(patFilter).connect(patGain).connect(master);
+  pat.start();
 
-  const filter = audioCtx.createBiquadFilter();
-  if (type === 'rain') { filter.type = 'highpass'; filter.frequency.value = 800; }
-  else if (type === 'fire') { filter.type = 'lowpass'; filter.frequency.value = 400; }
-  else { filter.type = 'lowpass'; filter.frequency.value = 200; }
+  // Layer 3: slow modulation for natural feel
+  const lfo=ctx.createOscillator();
+  lfo.type='sine'; lfo.frequency.value=0.15;
+  const lfoGain=ctx.createGain(); lfoGain.gain.value=600;
+  lfo.connect(lfoGain).connect(bgFilter.frequency);
+  lfo.start();
 
-  source.connect(filter).connect(gain).connect(audioCtx.destination);
-  source.start();
-  return { source, gain };
+  return {master, sources:[bg,pat,lfo]};
 }
 
-function toggleAmbient(type) {
-  if (ambientNodes[type]) {
-    ambientNodes[type].gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
-    setTimeout(() => { try { ambientNodes[type].source.stop(); } catch(e){} }, 600);
-    delete ambientNodes[type];
+// ── FIRE: warm brown noise with crackle ──
+function createFire(){
+  const ctx=getCtx();
+  const master=ctx.createGain(); master.gain.value=0.35;
+  master.connect(ctx.destination);
+
+  // Brown noise base
+  const src=ctx.createBufferSource();
+  const buf=ctx.createBuffer(2,ctx.sampleRate*4,ctx.sampleRate);
+  for(let ch=0;ch<2;ch++){
+    const d=buf.getChannelData(ch);
+    let v=0;
+    for(let i=0;i<d.length;i++){
+      const w=Math.random()*2-1;
+      v=(v+0.02*w)/1.02;
+      d[i]=v*3.5;
+    }
+  }
+  src.buffer=buf; src.loop=true;
+  const lp=ctx.createBiquadFilter();
+  lp.type='lowpass'; lp.frequency.value=350; lp.Q.value=0.7;
+  const baseGain=ctx.createGain(); baseGain.gain.value=0.9;
+  src.connect(lp).connect(baseGain).connect(master);
+  src.start();
+
+  // Crackle layer
+  const cr=ctx.createBufferSource();
+  const crBuf=ctx.createBuffer(1,ctx.sampleRate*3,ctx.sampleRate);
+  const cd=crBuf.getChannelData(0);
+  for(let i=0;i<cd.length;i++){
+    cd[i]=0;
+    if(Math.random()<0.002){
+      const len=Math.floor(Math.random()*800)+100;
+      for(let j=0;j<len&&i+j<cd.length;j++){
+        cd[i+j]=(Math.random()*2-1)*Math.exp(-j/150)*0.4;
+      }
+    }
+  }
+  cr.buffer=crBuf; cr.loop=true;
+  const crHp=ctx.createBiquadFilter();
+  crHp.type='highpass'; crHp.frequency.value=1200;
+  const crGain=ctx.createGain(); crGain.gain.value=0.35;
+  cr.connect(crHp).connect(crGain).connect(master);
+  cr.start();
+
+  // Warmth modulation
+  const lfo=ctx.createOscillator();
+  lfo.type='sine'; lfo.frequency.value=0.08;
+  const lfoG=ctx.createGain(); lfoG.gain.value=80;
+  lfo.connect(lfoG).connect(lp.frequency);
+  lfo.start();
+
+  return {master, sources:[src,cr,lfo]};
+}
+
+// ── WIND: modulated filtered noise ──
+function createWind(){
+  const ctx=getCtx();
+  const master=ctx.createGain(); master.gain.value=0.35;
+  master.connect(ctx.destination);
+
+  const src=ctx.createBufferSource();
+  const buf=ctx.createBuffer(2,ctx.sampleRate*5,ctx.sampleRate);
+  for(let ch=0;ch<2;ch++){
+    const d=buf.getChannelData(ch);
+    let v=0;
+    for(let i=0;i<d.length;i++){
+      v+=(Math.random()*2-1)*0.008;
+      v*=0.999;
+      d[i]=v*6;
+    }
+  }
+  src.buffer=buf; src.loop=true;
+
+  const bp=ctx.createBiquadFilter();
+  bp.type='bandpass'; bp.frequency.value=600; bp.Q.value=0.3;
+  const bp2=ctx.createBiquadFilter();
+  bp2.type='bandpass'; bp2.frequency.value=1800; bp2.Q.value=0.5;
+  const g1=ctx.createGain(); g1.gain.value=0.7;
+  const g2=ctx.createGain(); g2.gain.value=0.25;
+
+  src.connect(bp).connect(g1).connect(master);
+  src.connect(bp2).connect(g2).connect(master);
+  src.start();
+
+  // Slow sweeping LFO
+  const lfo1=ctx.createOscillator(); lfo1.type='sine'; lfo1.frequency.value=0.06;
+  const lfo1G=ctx.createGain(); lfo1G.gain.value=300;
+  lfo1.connect(lfo1G).connect(bp.frequency);
+  lfo1.start();
+
+  // Volume swell
+  const lfo2=ctx.createOscillator(); lfo2.type='sine'; lfo2.frequency.value=0.12;
+  const lfo2G=ctx.createGain(); lfo2G.gain.value=0.15;
+  lfo2.connect(lfo2G).connect(g1.gain);
+  lfo2.start();
+
+  return {master, sources:[src,lfo1,lfo2]};
+}
+
+const SOUND_CREATORS={rain:createRain, fire:createFire, wind:createWind};
+
+function toggleAmbient(type){
+  if(activeAmbient[type]){
+    const a=activeAmbient[type];
+    a.master.gain.linearRampToValueAtTime(0, audioCtx.currentTime+0.8);
+    setTimeout(()=>{ a.sources.forEach(s=>{try{s.stop();}catch(e){}}); },1000);
+    delete activeAmbient[type];
   } else {
-    ambientNodes[type] = createNoise(type);
+    activeAmbient[type]=SOUND_CREATORS[type]();
   }
   updateAmbientUI();
 }
 
-function updateAmbientUI() {
-  document.querySelectorAll('.ambient-btn').forEach(btn => {
-    btn.classList.toggle('active', !!ambientNodes[btn.dataset.type]);
-  });
+function setVolume(type,val){
+  if(activeAmbient[type]) activeAmbient[type].master.gain.linearRampToValueAtTime(parseFloat(val), audioCtx.currentTime+0.1);
 }
 
-function setPhase(p) {
-  phase = p; timeLeft = PHASES[p].minutes * 60;
-  if (running) { clearInterval(timer); running = false; }
-  render();
+function updateAmbientUI(){
+  document.querySelectorAll('.ambient-btn').forEach(b=>b.classList.toggle('active',!!activeAmbient[b.dataset.type]));
 }
 
-function toggleTimer() {
-  if (running) { clearInterval(timer); running = false; }
-  else {
-    running = true;
-    timer = setInterval(() => {
+/* ═══════ TIMER LOGIC ═══════ */
+function setPhase(p){phase=p;timeLeft=PHASES[p].minutes*60;if(running){clearInterval(timer);running=false;}render();}
+
+function toggleTimer(){
+  if(running){clearInterval(timer);running=false;}
+  else{
+    running=true;
+    timer=setInterval(()=>{
       timeLeft--;
-      if (timeLeft <= 0) {
-        clearInterval(timer); running = false;
-        if (phase === 'fokus') {
-          sessions++;
-          if (sessions % totalSessions === 0) setPhase('lang');
-          else setPhase('kurz');
-        } else { setPhase('fokus'); }
+      if(timeLeft<=0){clearInterval(timer);running=false;
+        if(phase==='fokus'){sessions++;setPhase(sessions%totalSessions===0?'lang':'kurz');}
+        else setPhase('fokus');
         return;
       }
       updateDisplay();
-    }, 1000);
+    },1000);
   }
   render();
 }
 
-function resetTimer() {
-  clearInterval(timer); running = false;
-  timeLeft = PHASES[phase].minutes * 60;
-  render();
+function resetTimer(){clearInterval(timer);running=false;timeLeft=PHASES[phase].minutes*60;render();}
+function fmt(s){return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
+
+function updateDisplay(){
+  const el=document.getElementById('timer-time'), prog=document.getElementById('timer-prog');
+  if(el)el.textContent=fmt(timeLeft);
+  if(prog){const t=PHASES[phase].minutes*60;prog.style.strokeDashoffset=CIRC*(timeLeft/t);}
 }
 
-function fmt(s) { return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
+function render(){
+  const app=document.getElementById('app');
+  const ph=PHASES[phase], total=ph.minutes*60, pct=timeLeft/total;
+  const q=QUOTES[Math.floor(Math.random()*QUOTES.length)];
 
-function updateDisplay() {
-  const el = document.getElementById('timer-time');
-  const prog = document.getElementById('timer-prog');
-  if (el) el.textContent = fmt(timeLeft);
-  if (prog) {
-    const total = PHASES[phase].minutes * 60;
-    const pct = timeLeft / total;
-    prog.style.strokeDashoffset = CIRC * pct;
-  }
-}
-
-function render() {
-  const app = document.getElementById('app');
-  const ph = PHASES[phase];
-  const total = ph.minutes * 60;
-  const pct = timeLeft / total;
-  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-
-  app.innerHTML = `
+  app.innerHTML=`
     <header style="text-align:center;margin-bottom:36px">
       <div style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--brass);opacity:0.5;margin-bottom:12px;animation:titleReveal .8s ease both">🕯️  Fokuszeit</div>
       <h1 class="serif" style="font-size:44px;font-weight:800;color:var(--brass-light);line-height:1.1;animation:slideUp .6s ease both">Pomodoro</h1>
@@ -256,18 +299,14 @@ function render() {
     </header>
 
     <div class="phase-tabs">
-      ${Object.entries(PHASES).map(([k,v])=>`
-        <button class="phase-tab ${k===phase?'active':''}" onclick="setPhase('${k}')">${v.label}</button>
-      `).join('')}
+      ${Object.entries(PHASES).map(([k,v])=>`<button class="phase-tab ${k===phase?'active':''}" onclick="setPhase('${k}')">${v.label}</button>`).join('')}
     </div>
 
     <div class="timer-ring-wrap">
       <div class="timer-glow" style="box-shadow:${running?`0 0 60px 10px ${ph.color}22, inset 0 0 40px ${ph.color}11`:'none'}"></div>
       <svg width="280" height="280" viewBox="0 0 280 280">
         <circle cx="140" cy="140" r="130" class="timer-bg"/>
-        <circle cx="140" cy="140" r="130" class="timer-progress" id="timer-prog"
-          stroke="${ph.color}" stroke-dasharray="${CIRC}"
-          stroke-dashoffset="${CIRC * pct}"/>
+        <circle cx="140" cy="140" r="130" class="timer-progress" id="timer-prog" stroke="${ph.color}" stroke-dasharray="${CIRC}" stroke-dashoffset="${CIRC*pct}"/>
       </svg>
       <div class="timer-center">
         <div class="timer-time" id="timer-time">${fmt(timeLeft)}</div>
@@ -277,20 +316,27 @@ function render() {
 
     <div style="display:flex;justify-content:center;gap:16px;margin-top:28px;animation:slideUp .5s .2s both ease">
       <button class="control-btn reset-btn" onclick="resetTimer()">↺</button>
-      <button class="control-btn play-btn" onclick="toggleTimer()">${running ? '⏸' : '▶'}</button>
+      <button class="control-btn play-btn" onclick="toggleTimer()">${running?'⏸':'▶'}</button>
     </div>
 
     <div class="session-counter">
-      ${Array.from({length:totalSessions},(_, i)=>`
-        <div class="session-dot ${i < (sessions % totalSessions) ? 'done' : ''} ${i === (sessions % totalSessions) && phase === 'fokus' ? 'current' : ''}"></div>
-      `).join('')}
+      ${Array.from({length:totalSessions},(_,i)=>`<div class="session-dot ${i<(sessions%totalSessions)?'done':''} ${i===(sessions%totalSessions)&&phase==='fokus'?'current':''}"></div>`).join('')}
     </div>
 
     <div class="ambient-toggle">
       <span style="font-size:11px;color:var(--brass);opacity:0.3;letter-spacing:2px;text-transform:uppercase">Ambient</span>
-      <button class="ambient-btn ${ambientNodes['rain']?'active':''}" data-type="rain" onclick="toggleAmbient('rain')">🌧️</button>
-      <button class="ambient-btn ${ambientNodes['fire']?'active':''}" data-type="fire" onclick="toggleAmbient('fire')">🔥</button>
-      <button class="ambient-btn ${ambientNodes['wind']?'active':''}" data-type="wind" onclick="toggleAmbient('wind')">🌿</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <button class="ambient-btn ${activeAmbient.rain?'active':''}" data-type="rain" onclick="toggleAmbient('rain')">🌧️</button>
+        ${activeAmbient.rain?'<input type="range" class="vol-slider" min="0" max="0.7" step="0.02" value="0.35" oninput="setVolume(\'rain\',this.value)">':''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <button class="ambient-btn ${activeAmbient.fire?'active':''}" data-type="fire" onclick="toggleAmbient('fire')">🔥</button>
+        ${activeAmbient.fire?'<input type="range" class="vol-slider" min="0" max="0.7" step="0.02" value="0.35" oninput="setVolume(\'fire\',this.value)">':''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <button class="ambient-btn ${activeAmbient.wind?'active':''}" data-type="wind" onclick="toggleAmbient('wind')">🌿</button>
+        ${activeAmbient.wind?'<input type="range" class="vol-slider" min="0" max="0.7" step="0.02" value="0.35" oninput="setVolume(\'wind\',this.value)">':''}
+      </div>
     </div>
 
     <div class="quote-area">
@@ -298,7 +344,6 @@ function render() {
       <div class="quote-author">— ${q.author}</div>
     </div>`;
 }
-
 render();
 </script>
 </body>
