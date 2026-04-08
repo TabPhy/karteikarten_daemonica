@@ -6,7 +6,7 @@
       {
         "titel": "Protagonist",
         "vorderseite": "Hauptfigur",
-        "rueckseite": ["karten/charaktere/protagonist/ruekseite.txt"],
+        "rueckseite": ["karten/charaktere/protagonist/rueckseite.txt"],
         "bilder": [
           "karten/charaktere/protagonist/titelbild.jpg",
           "karten/charaktere/protagonist/szene.png"
@@ -14,8 +14,8 @@
       },
       {
         "titel": "Antagonist",
-        "vorderseite": "Gegenspieler",
-        "rueckseite": "Welche Rolle spielt der Antagonist im Gesamtkonflikt?",
+        "vorderseite": ["karten/charaktere/antagonist/vorderseite.txt"],
+        "rueckseite": ["karten/charaktere/antagonist/rueckseite.txt"],
         "bilder": [
           "karten/charaktere/antagonist/portrait.jpg"
         ]
@@ -29,7 +29,7 @@
       {
         "titel": "Kernthema",
         "vorderseite": "Zentrales Thema",
-        "rueckseite": "Das übergreifende Thema, das sich durch das gesamte Werk zieht.",
+        "rueckseite": "Direkter Text geht auch – kein .txt nötig!",
         "bilder": []
       }
     ]
