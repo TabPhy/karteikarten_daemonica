@@ -5,47 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Buch-Karteikarten</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="shared.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <style>
-  :root {
-    --black: #0C1519; --jungle: #162127; --jet: #3A3534;
-    --coffee: #724B39; --brass: #CF9D7B; --brass-light: #e0b99a;
-    --cream: #f0dcc8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', system-ui, sans-serif; background: var(--black); color: var(--cream); min-height: 100vh; overflow-x: hidden; }
-  h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.35; }
-    90% { opacity: 0; }
-    100% { transform: translateY(-100vh) rotate(180deg); opacity: 0; }
-  }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeScale { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes slideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-  @keyframes breathe {
-    0%, 100% { opacity: 0.03; transform: scale(1); }
-    50% { opacity: 0.07; transform: scale(1.05); }
-  }
-  @keyframes titleReveal {
-    from { opacity: 0; transform: translateY(20px); letter-spacing: 12px; }
-    to { opacity: 1; transform: translateY(0); letter-spacing: 6px; }
-  }
-
-  .particle {
-    position: fixed; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(circle, var(--brass) 0%, transparent 70%);
-  }
-
-  .cat-card {
-    transition: all 0.5s cubic-bezier(.4,0,.2,1); cursor: pointer;
-    position: relative; overflow: hidden;
-  }
+  /* ── Karteikarten-spezifische Styles ── */
   .cat-card::before {
     content: ''; position: absolute; inset: 0; opacity: 0;
     background: linear-gradient(135deg, rgba(207,157,123,0.12), transparent 60%);
@@ -66,10 +31,6 @@
   .flip-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 36px; overflow: hidden; }
   .flip-back { transform: rotateY(180deg); }
 
-  .mini-card {
-    transition: all 0.4s cubic-bezier(.4,0,.2,1); cursor: pointer;
-    position: relative; overflow: hidden;
-  }
   .mini-card::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(145deg, rgba(207,157,123,0.06), transparent);
@@ -78,81 +39,39 @@
   .mini-card:hover::after { opacity: 1; }
   .mini-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); border-color: rgba(207,157,123,0.25) !important; }
 
-  .btn {
-    border: none; cursor: pointer; font-family: 'Inter', sans-serif;
-    transition: all 0.3s cubic-bezier(.4,0,.2,1);
-  }
-  .btn:hover { transform: scale(1.04); }
-  .btn:active { transform: scale(0.97); }
-  .btn-ghost {
-    background: rgba(207,157,123,0.08); color: var(--brass);
-    border-radius: 12px; padding: 8px 18px; font-size: 14px;
-    border: 1px solid rgba(207,157,123,0.12);
-  }
-  .btn-ghost:hover { background: rgba(207,157,123,0.14); border-color: rgba(207,157,123,0.3); }
-
-  .divider {
-    width: 50px; height: 2px; border-radius: 1px;
-    background: linear-gradient(90deg, var(--coffee), var(--brass));
-  }
-
-  .img-thumb {
-    width: 60px; height: 60px; object-fit: cover; border-radius: 10px;
-    border: 1px solid rgba(207,157,123,0.15); transition: all 0.4s; cursor: pointer;
-    opacity: 0.8;
-  }
-  .img-thumb:hover { border-color: var(--brass); transform: scale(1.1); opacity: 1; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-
   .card-bg-img {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; opacity: 0.1; filter: blur(1px) saturate(0.6);
     transition: opacity 0.6s;
   }
-
   .gallery-img {
     height: 180px; border-radius: 14px; object-fit: cover; cursor: pointer;
-    border: 1px solid rgba(207,157,123,0.12); transition: all 0.4s;
-    opacity: 0.85;
+    border: 1px solid rgba(207,157,123,0.12); transition: all 0.4s; opacity: 0.85;
   }
   .gallery-img:hover { opacity: 1; transform: scale(1.03); box-shadow: 0 12px 36px rgba(0,0,0,0.5); border-color: rgba(207,157,123,0.3); }
 
   .overlay {
     position: fixed; inset: 0; background: rgba(12,21,25,0.85);
     display: flex; justify-content: center; align-items: center;
-    z-index: 100; animation: fadeIn 0.3s ease; backdrop-filter: blur(16px);
-    cursor: zoom-out;
+    z-index: 100; animation: fadeIn 0.3s ease; backdrop-filter: blur(16px); cursor: zoom-out;
   }
-
   .loading-screen {
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; min-height: 100vh; animation: fadeIn 0.5s ease;
   }
-
-  .nav-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    transition: all 0.3s; cursor: pointer;
-  }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; transition: all 0.3s; cursor: pointer; }
   .nav-dot:hover { transform: scale(1.3); }
-
   .text-content { white-space: pre-wrap; }
-  .text-content p { margin-bottom: 0.8em; }
-
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(207,157,123,0.15); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(207,157,123,0.3); }
 </style>
 </head>
 <body>
+<script src="shared.js"></script>
+<script>initSharedUI('karten');</script>
+
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect } = React;
 
-/*
- * resolveText(value)
- * - String  → returns it directly
- * - Array   → treats entries as file paths, fetches & concatenates them
- */
 async function resolveText(value) {
   if (!value) return "";
   if (typeof value === "string") return value;
@@ -160,11 +79,8 @@ async function resolveText(value) {
     const parts = await Promise.all(
       value.map(async (entry) => {
         if (typeof entry === "string" && (entry.endsWith(".txt") || entry.endsWith(".md"))) {
-          try {
-            const res = await fetch(entry);
-            if (!res.ok) return `[Datei nicht gefunden: ${entry}]`;
-            return await res.text();
-          } catch { return `[Fehler beim Laden: ${entry}]`; }
+          try { const r = await fetch(entry); if (!r.ok) return `[Datei nicht gefunden: ${entry}]`; return await r.text(); }
+          catch { return `[Fehler beim Laden: ${entry}]`; }
         }
         return String(entry);
       })
@@ -189,25 +105,6 @@ async function resolveAllCards(data) {
   return resolved;
 }
 
-const Particles = () => (
-  <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-    {Array.from({ length: 18 }, (_, i) => (
-      <div key={i} className="particle" style={{
-        left: `${3 + Math.random() * 94}%`, bottom: "-20px",
-        width: `${2 + Math.random() * 5}px`, height: `${2 + Math.random() * 5}px`,
-        animation: `floatUp ${12 + Math.random() * 10}s ${i * 0.9}s infinite ease-in-out`,
-      }} />
-    ))}
-  </div>
-);
-
-const BgGlow = () => (
-  <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-    <div style={{ position: "absolute", top: "-30%", right: "-15%", width: "65vw", height: "65vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(114,75,57,0.07) 0%, transparent 70%)", animation: "breathe 9s infinite ease-in-out" }} />
-    <div style={{ position: "absolute", bottom: "-25%", left: "-10%", width: "55vw", height: "55vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(207,157,123,0.04) 0%, transparent 70%)", animation: "breathe 12s 3s infinite ease-in-out" }} />
-  </div>
-);
-
 function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -231,7 +128,6 @@ function App() {
   const selectCat = (cat) => transition(() => { setActiveCat(cat); setActiveCard(null); setFlipped(false); setCardIdx(0); });
   const goHome = () => transition(() => { setActiveCat(null); setActiveCard(null); setFlipped(false); });
   const openCard = (card, idx) => { setActiveCard(card); setCardIdx(idx); setFlipped(false); };
-
   const navCard = (dir) => {
     const list = data[activeCat].karten;
     const next = (cardIdx + dir + list.length) % list.length;
@@ -251,7 +147,6 @@ function App() {
 
   if (!data) return (
     <div className="loading-screen">
-      <BgGlow />
       <div style={{ fontSize: 48, marginBottom: 20, animation: "breathe 2s infinite" }}>📚</div>
       <p className="serif" style={{ fontSize: 20, color: "var(--brass-light)" }}>Lade Karteikarten...</p>
     </div>
@@ -263,10 +158,7 @@ function App() {
 
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
-      <Particles /><BgGlow />
-
-      <div style={{
-        maxWidth: 1020, margin: "0 auto", padding: "44px 24px", position: "relative", zIndex: 1,
+      <div className="page-wrap" style={{
         opacity: trans ? 0 : 1, transform: trans ? "translateY(12px)" : "translateY(0)",
         transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
       }}>
@@ -295,8 +187,9 @@ function App() {
               return (
                 <div key={cat} className="cat-card" onClick={() => selectCat(cat)} style={{
                   background: "linear-gradient(150deg, var(--jungle) 0%, var(--jet) 100%)",
-                  borderRadius: 20, padding: "38px 30px",
-                  border: "1px solid rgba(207,157,123,0.08)",
+                  borderRadius: 20, padding: "38px 30px", cursor: "pointer",
+                  border: "1px solid rgba(207,157,123,0.08)", position: "relative", overflow: "hidden",
+                  transition: "all 0.5s cubic-bezier(.4,0,.2,1)",
                   animation: `slideUp 0.6s ${i * 0.09}s both cubic-bezier(.4,0,.2,1)`,
                 }}>
                   <div style={{ fontSize: 40, marginBottom: 18, filter: "grayscale(15%)" }}>{meta.icon}</div>
@@ -327,7 +220,6 @@ function App() {
                 ))}
               </div>
             )}
-
             {karten.length === 0 && (
               <div style={{ textAlign: "center", padding: "80px 20px", animation: "fadeIn 0.8s ease" }}>
                 <div style={{ fontSize: 60, marginBottom: 20, opacity: 0.5 }}>{catData.icon}</div>
@@ -337,7 +229,6 @@ function App() {
                 </p>
               </div>
             )}
-
             <div style={{
               display: "grid",
               gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(260px, 1fr))" : "1fr",
@@ -347,10 +238,10 @@ function App() {
                 <div key={i} className="mini-card" onClick={() => openCard(card, i)} style={{
                   background: "linear-gradient(150deg, rgba(22,33,39,0.9), rgba(58,53,52,0.45))",
                   borderRadius: 16, padding: viewMode === "grid" ? "26px 24px" : "18px 24px",
-                  border: "1px solid rgba(207,157,123,0.07)",
+                  border: "1px solid rgba(207,157,123,0.07)", cursor: "pointer",
                   animation: `${viewMode === "grid" ? "slideUp" : "slideRight"} 0.5s ${i * 0.07}s both ease`,
-                  display: viewMode === "list" ? "flex" : "block",
-                  alignItems: "center", gap: 18,
+                  display: viewMode === "list" ? "flex" : "block", alignItems: "center", gap: 18,
+                  position: "relative", overflow: "hidden", transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
                 }}>
                   {card.bilder?.length > 0 && <img src={card.bilder[0]} className="card-bg-img" alt="" loading="lazy" />}
                   <div style={{ position: "relative", zIndex: 1, flex: 1 }}>
@@ -378,10 +269,8 @@ function App() {
             <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 28 }}>
               <button className="btn btn-ghost" onClick={() => setActiveCard(null)}>← Alle Karten</button>
             </div>
-
             <div className="flip-card" onClick={() => setFlipped(!flipped)} style={{ width: "100%", maxWidth: 540, height: 380, margin: "0 auto" }}>
               <div className={`flip-inner ${flipped ? "flipped" : ""}`}>
-                {/* FRONT */}
                 <div className="flip-face" style={{
                   background: "linear-gradient(150deg, var(--jet), var(--jungle))",
                   border: "1px solid rgba(207,157,123,0.12)",
@@ -396,7 +285,6 @@ function App() {
                     <div style={{ fontSize: 11, color: "var(--brass)", opacity: 0.2, marginTop: 28, fontStyle: "italic" }}>Klicke zum Umdrehen</div>
                   </div>
                 </div>
-                {/* BACK */}
                 <div className="flip-face flip-back" style={{
                   background: "linear-gradient(150deg, var(--black), var(--jungle))",
                   border: "1px solid rgba(207,157,123,0.2)",
@@ -411,7 +299,6 @@ function App() {
               </div>
             </div>
 
-            {/* IMAGE GALLERY */}
             {activeCard.bilder?.length > 0 && (
               <div style={{ marginTop: 32, animation: "slideUp 0.6s 0.2s both ease" }}>
                 <div style={{ fontSize: 11, letterSpacing: 4, color: "var(--brass)", opacity: 0.3, textTransform: "uppercase", marginBottom: 14, textAlign: "center" }}>Materialien</div>
@@ -424,7 +311,6 @@ function App() {
               </div>
             )}
 
-            {/* NAV */}
             {karten.length > 1 && (
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 20, marginTop: 36 }}>
                 <button className="btn btn-ghost" onClick={(e) => { e.stopPropagation(); navCard(-1); }} style={{ borderRadius: "50%", width: 44, height: 44, padding: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>←</button>
@@ -441,7 +327,6 @@ function App() {
         )}
       </div>
 
-      {/* LIGHTBOX */}
       {lightbox && (
         <div className="overlay" onClick={() => setLightbox(null)}>
           <img src={lightbox} alt="" style={{ maxWidth: "92%", maxHeight: "88vh", borderRadius: 16, objectFit: "contain", animation: "fadeScale 0.35s ease", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(207,157,123,0.08)" }} />
