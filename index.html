@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Buch-Karteikarten</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; overflow-x: hidden; }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 0.3; }
+    90% { opacity: 0.1; }
+    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+  }
+  @keyframes fadeScale { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .cat-card { transition: all 0.4s cubic-bezier(.4,0,.2,1); cursor: pointer; }
+  .cat-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .flip-card { perspective: 1200px; cursor: pointer; }
+  .flip-inner { transition: transform 0.7s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
+  .flip-inner.flipped { transform: rotateY(180deg); }
+  .flip-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 32px; }
+  .flip-back { transform: rotateY(180deg); }
+  .mini-card { transition: all 0.3s ease; cursor: pointer; }
+  .mini-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+  .btn { border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .btn:hover { transform: scale(1.05); }
+  .btn:active { transform: scale(0.97); }
+  .input, .textarea { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 12px; padding: 12px 16px; font-family: inherit; font-size: 14px; width: 100%; box-sizing: border-box; outline: none; transition: border 0.2s; }
+  .input:focus, .textarea:focus { border-color: rgba(255,255,255,0.4); }
+  .textarea { resize: vertical; min-height: 70px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 100; animation: fadeScale 0.3s ease; backdrop-filter: blur(8px); }
+  .particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15); pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const PALETTES = {
+  "Charaktere": { bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", accent: "#a78bfa", icon: "👤" },
+  "Themen": { bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", accent: "#f9a8d4", icon: "💡" },
+  "Orte": { bg: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", accent: "#67e8f9", icon: "🌍" },
+  "Zitate": { bg: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)", accent: "#6ee7b7", icon: "✍️" },
+  "Symbole": { bg: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)", accent: "#fcd34d", icon: "🔮" },
+  "Handlung": { bg: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)", accent: "#c4b5fd", icon: "📖" },
+};
+
+const DEFAULT_CARDS = {
+  "Charaktere": [
+    { id: 1, title: "Protagonist", front: "Hauptfigur", back: "Entwicklung, Motivation und innerer Konflikt der Hauptfigur beschreiben." },
+    { id: 2, title: "Antagonist", front: "Gegenspieler", back: "Welche Rolle spielt der Antagonist im Gesamtkonflikt?" },
+  ],
+  "Themen": [
+    { id: 3, title: "Kernthema", front: "Zentrales Thema", back: "Das übergreifende Thema, das sich durch das gesamte Werk zieht." },
+  ],
+  "Orte": [], "Zitate": [], "Symbole": [], "Handlung": [],
+};
+
+function loadCards() {
+  try {
+    const saved = localStorage.getItem("book-flashcards-data");
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return DEFAULT_CARDS;
+}
+
+function saveCards(cards) {
+  try { localStorage.setItem("book-flashcards-data", JSON.stringify(cards)); } catch (e) {}
+}
+
+const Particle = ({ delay, x }) => (
+  <div className="particle" style={{ left: `${x}%`, bottom: "-10px", animation: `floatUp 8s ${delay}s infinite ease-in-out` }} />
+);
+
+function App() {
+  const [cards, setCards] = useState(loadCards);
+  const [activeCat, setActiveCat] = useState(null);
+  const [activeCard, setActiveCard] = useState(null);
+  const [flipped, setFlipped] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [newCard, setNewCard] = useState({ title: "", front: "", back: "" });
+  const [catTransition, setCatTransition] = useState(false);
+  const [cardIdx, setCardIdx] = useState(0);
+  const [editingCard, setEditingCard] = useState(null);
+  const [editData, setEditData] = useState({ title: "", front: "", back: "" });
+  const categories = Object.keys(cards);
+
+  useEffect(() => { saveCards(cards); }, [cards]);
+
+  const selectCategory = (cat) => {
+    setCatTransition(true);
+    setTimeout(() => { setActiveCat(cat); setActiveCard(null); setFlipped(false); setCardIdx(0); setCatTransition(false); }, 300);
+  };
+
+  const goBack = () => {
+    setCatTransition(true);
+    setTimeout(() => { setActiveCat(null); setActiveCard(null); setFlipped(false); setCatTransition(false); }, 300);
+  };
+
+  const openCard = (card, idx) => { setActiveCard(card); setCardIdx(idx); setFlipped(false); };
+
+  const navCard = (dir) => {
+    const list = cards[activeCat];
+    const next = (cardIdx + dir + list.length) % list.length;
+    setFlipped(false);
+    setTimeout(() => { setCardIdx(next); setActiveCard(list[next]); }, 150);
+  };
+
+  const addCard = () => {
+    if (!newCard.title.trim() || !newCard.front.trim()) return;
+    const id = Date.now();
+    const updated = { ...cards, [activeCat]: [...cards[activeCat], { id, ...newCard }] };
+    setCards(updated);
+    setNewCard({ title: "", front: "", back: "" });
+    setShowAdd(false);
+  };
+
+  const deleteCard = (id) => {
+    setCards(prev => ({ ...prev, [activeCat]: prev[activeCat].filter(c => c.id !== id) }));
+    setActiveCard(null);
+  };
+
+  const startEdit = (card) => { setEditingCard(card.id); setEditData({ title: card.title, front: card.front, back: card.back }); };
+
+  const saveEdit = () => {
+    setCards(prev => ({ ...prev, [activeCat]: prev[activeCat].map(c => c.id === editingCard ? { ...c, ...editData } : c) }));
+    if (activeCard && activeCard.id === editingCard) setActiveCard({ ...activeCard, ...editData });
+    setEditingCard(null);
+  };
+
+  const exportData = () => {
+    const blob = new Blob([JSON.stringify(cards, null, 2)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "karteikarten-backup.json"; a.click();
+  };
+
+  const importData = () => {
+    const input = document.createElement("input"); input.type = "file"; input.accept = ".json";
+    input.onchange = (e) => {
+      const reader = new FileReader();
+      reader.onload = (ev) => { try { setCards(JSON.parse(ev.target.result)); } catch(err) { alert("Ungültige Datei."); } };
+      reader.readAsText(e.target.files[0]);
+    };
+    input.click();
+  };
+
+  const palette = activeCat ? PALETTES[activeCat] : null;
+
+  return (
+    <div style={{ minHeight: "100vh", position: "relative", padding: "32px 20px" }}>
+      {Array.from({ length: 20 }, (_, i) => <Particle key={i} delay={i * 0.6} x={Math.random() * 100} />)}
+
+      <div style={{ maxWidth: 960, margin: "0 auto", opacity: catTransition ? 0 : 1, transform: catTransition ? "scale(0.97)" : "scale(1)", transition: "all 0.3s ease" }}>
+
+        {/* HEADER */}
+        <div style={{ textAlign: "center", marginBottom: 40, position: "relative" }}>
+          {activeCat && (
+            <button className="btn" onClick={goBack} style={{ position: "absolute", left: 0, top: 0, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: "8px 18px", fontSize: 14 }}>← Zurück</button>
+          )}
+          {!activeCat && (
+            <div style={{ position: "absolute", right: 0, top: 0, display: "flex", gap: 8 }}>
+              <button className="btn" onClick={exportData} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 12 }}>💾 Export</button>
+              <button className="btn" onClick={importData} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 12 }}>📂 Import</button>
+            </div>
+          )}
+          <div style={{ fontSize: 14, letterSpacing: 4, textTransform: "uppercase", opacity: 0.5, marginBottom: 8 }}>
+            {activeCat ? PALETTES[activeCat].icon + " " + activeCat : "📚 Mein Buch"}
+          </div>
+          <h1 style={{ fontSize: activeCat ? 32 : 42, fontWeight: 800, margin: 0, background: activeCat ? palette.bg : "linear-gradient(135deg, #a78bfa, #f9a8d4, #67e8f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.2 }}>
+            {activeCat || "Karteikarten"}
+          </h1>
+          {!activeCat && <p style={{ opacity: 0.5, marginTop: 8, fontSize: 15 }}>Wähle eine Kategorie, um deine Schlüsselkonzepte zu erkunden</p>}
+        </div>
+
+        {/* CATEGORY GRID */}
+        {!activeCat && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
+            {categories.map((cat, i) => {
+              const p = PALETTES[cat]; const count = cards[cat].length;
+              return (
+                <div key={cat} className="cat-card" onClick={() => selectCategory(cat)} style={{ background: p.bg, borderRadius: 20, padding: "36px 28px", position: "relative", overflow: "hidden", animation: `slideUp 0.5s ${i * 0.08}s both ease` }}>
+                  <div style={{ position: "absolute", top: -20, right: -20, fontSize: 80, opacity: 0.15 }}>{p.icon}</div>
+                  <div style={{ fontSize: 36, marginBottom: 12 }}>{p.icon}</div>
+                  <div style={{ fontSize: 22, fontWeight: 700 }}>{cat}</div>
+                  <div style={{ fontSize: 13, opacity: 0.75, marginTop: 6 }}>{count} {count === 1 ? "Karte" : "Karten"}</div>
+                  <div style={{ marginTop: 16, width: 40, height: 3, background: "rgba(255,255,255,0.5)", borderRadius: 2 }} />
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* CARDS IN CATEGORY */}
+        {activeCat && !activeCard && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}>
+              <button className="btn" onClick={() => setShowAdd(true)} style={{ background: palette.bg, color: "#fff", borderRadius: 14, padding: "10px 22px", fontSize: 15, fontWeight: 600 }}>+ Neue Karte</button>
+            </div>
+            {cards[activeCat].length === 0 && (
+              <div style={{ textAlign: "center", padding: "60px 20px", opacity: 0.5 }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>{PALETTES[activeCat].icon}</div>
+                <p>Noch keine Karten. Erstelle deine erste!</p>
+              </div>
+            )}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 16 }}>
+              {cards[activeCat].map((card, i) => (
+                <div key={card.id} className="mini-card" onClick={() => openCard(card, i)} style={{ background: "rgba(255,255,255,0.06)", borderRadius: 16, padding: "24px 20px", border: "1px solid rgba(255,255,255,0.08)", animation: `slideUp 0.4s ${i * 0.06}s both ease`, position: "relative" }}>
+                  <div style={{ position: "absolute", top: 12, right: 14, width: 8, height: 8, borderRadius: "50%", background: palette.bg }} />
+                  <div style={{ fontSize: 13, opacity: 0.4, marginBottom: 6, fontWeight: 600, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</div>
+                  <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 8 }}>{card.title}</div>
+                  <div style={{ fontSize: 14, opacity: 0.6, lineHeight: 1.5 }}>{card.front}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ACTIVE CARD VIEW */}
+        {activeCat && activeCard && (
+          <div style={{ animation: "fadeScale 0.4s ease" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <button className="btn" onClick={() => setActiveCard(null)} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: "8px 18px", fontSize: 14 }}>← Alle Karten</button>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button className="btn" onClick={() => startEdit(activeCard)} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 13 }}>✏️</button>
+                <button className="btn" onClick={() => deleteCard(activeCard.id)} style={{ background: "rgba(255,70,70,0.2)", color: "#ff7070", borderRadius: 10, padding: "8px 14px", fontSize: 13 }}>🗑</button>
+              </div>
+            </div>
+            <div className="flip-card" onClick={() => setFlipped(!flipped)} style={{ width: "100%", maxWidth: 500, height: 320, margin: "0 auto" }}>
+              <div className={`flip-inner ${flipped ? "flipped" : ""}`}>
+                <div className="flip-face" style={{ background: palette.bg, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
+                  <div style={{ fontSize: 13, opacity: 0.6, letterSpacing: 2, marginBottom: 12, textTransform: "uppercase" }}>Vorderseite</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{activeCard.title}</div>
+                  <div style={{ fontSize: 16, opacity: 0.9, lineHeight: 1.6, textAlign: "center" }}>{activeCard.front}</div>
+                  <div style={{ fontSize: 12, opacity: 0.4, marginTop: 20 }}>Klicke zum Umdrehen</div>
+                </div>
+                <div className="flip-face flip-back" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)", border: `2px solid ${palette.accent}`, boxShadow: `0 20px 60px rgba(0,0,0,0.4), inset 0 0 60px rgba(255,255,255,0.03)` }}>
+                  <div style={{ fontSize: 13, opacity: 0.6, letterSpacing: 2, marginBottom: 16, textTransform: "uppercase" }}>Rückseite</div>
+                  <div style={{ fontSize: 16, lineHeight: 1.7, textAlign: "center", opacity: 0.9 }}>{activeCard.back || "Noch kein Inhalt"}</div>
+                </div>
+              </div>
+            </div>
+            {cards[activeCat].length > 1 && (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 24, marginTop: 28 }}>
+                <button className="btn" onClick={(e) => { e.stopPropagation(); navCard(-1); }} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: "50%", width: 44, height: 44, fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>←</button>
+                <span style={{ opacity: 0.5, fontSize: 14 }}>{cardIdx + 1} / {cards[activeCat].length}</span>
+                <button className="btn" onClick={(e) => { e.stopPropagation(); navCard(1); }} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: "50%", width: 44, height: 44, fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>→</button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ADD MODAL */}
+      {showAdd && (
+        <div className="overlay" onClick={() => setShowAdd(false)}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "#1a1a2e", borderRadius: 24, padding: 32, width: "90%", maxWidth: 420, border: "1px solid rgba(255,255,255,0.1)" }}>
+            <h3 style={{ marginBottom: 20, fontSize: 20 }}>Neue Karte erstellen</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <input className="input" placeholder="Titel" value={newCard.title} onChange={e => setNewCard(p => ({ ...p, title: e.target.value }))} />
+              <textarea className="textarea" placeholder="Vorderseite – Schlüsselbegriff / Frage" value={newCard.front} onChange={e => setNewCard(p => ({ ...p, front: e.target.value }))} />
+              <textarea className="textarea" placeholder="Rückseite – Erklärung / Antwort" value={newCard.back} onChange={e => setNewCard(p => ({ ...p, back: e.target.value }))} />
+              <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+                <button className="btn" onClick={() => setShowAdd(false)} style={{ flex: 1, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15 }}>Abbrechen</button>
+                <button className="btn" onClick={addCard} style={{ flex: 1, background: palette.bg, color: "#fff", borderRadius: 12, padding: 12, fontSize: 15, fontWeight: 600 }}>Erstellen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT MODAL */}
+      {editingCard && (
+        <div className="overlay" onClick={() => setEditingCard(null)}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "#1a1a2e", borderRadius: 24, padding: 32, width: "90%", maxWidth: 420, border: "1px solid rgba(255,255,255,0.1)" }}>
+            <h3 style={{ marginBottom: 20, fontSize: 20 }}>Karte bearbeiten</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <input className="input" placeholder="Titel" value={editData.title} onChange={e => setEditData(p => ({ ...p, title: e.target.value }))} />
+              <textarea className="textarea" placeholder="Vorderseite" value={editData.front} onChange={e => setEditData(p => ({ ...p, front: e.target.value }))} />
+              <textarea className="textarea" placeholder="Rückseite" value={editData.back} onChange={e => setEditData(p => ({ ...p, back: e.target.value }))} />
+              <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+                <button className="btn" onClick={() => setEditingCard(null)} style={{ flex: 1, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15 }}>Abbrechen</button>
+                <button className="btn" onClick={saveEdit} style={{ flex: 1, background: palette?.bg || "linear-gradient(135deg,#667eea,#764ba2)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15, fontWeight: 600 }}>Speichern</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
