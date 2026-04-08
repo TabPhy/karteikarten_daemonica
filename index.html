@@ -171,7 +171,18 @@ function App() {
           <div style={{ fontSize: 11, letterSpacing: 6, textTransform: "uppercase", color: "var(--brass)", opacity: 0.5, marginBottom: 12, animation: "titleReveal 0.8s ease both" }}>
             {activeCat ? catData.icon + "  " + activeCat : "📚  Bibliothek"}
           </div>
-          <h1 className="serif" style={{ fontSize: activeCat ? 38 : 52, fontWeight: 800, color: "var(--brass-light)", lineHeight: 1.1, animation: "slideUp 0.6s ease both" }}>
+          <h1 className="serif" style={{
+            fontSize: activeCat ? 38 : 52, fontWeight: 800, lineHeight: 1.1,
+            animation: "slideUp 0.6s ease both",
+            background: activeCat ? "var(--brass-light)" : "linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 40%, var(--cream) 60%, var(--brass-light) 100%)",
+            backgroundSize: activeCat ? "auto" : "200% auto",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            animationName: activeCat ? "slideUp" : "slideUp, shimmer",
+            animationDuration: activeCat ? "0.6s" : "0.6s, 5s",
+            animationIterationCount: activeCat ? "1" : "1, infinite",
+            animationTimingFunction: "ease, linear",
+            animationFillMode: "both",
+          }}>
             {activeCat || "Karteikarten"}
           </h1>
           <div className="divider" style={{ margin: "18px auto 0" }} />
@@ -185,18 +196,37 @@ function App() {
             {categories.map(([cat, meta], i) => {
               const count = meta.karten.length;
               return (
-                <div key={cat} className="cat-card" onClick={() => selectCat(cat)} style={{
-                  background: "linear-gradient(150deg, var(--jungle) 0%, var(--jet) 100%)",
-                  borderRadius: 20, padding: "38px 30px", cursor: "pointer",
-                  border: "1px solid rgba(207,157,123,0.08)", position: "relative", overflow: "hidden",
-                  transition: "all 0.5s cubic-bezier(.4,0,.2,1)",
-                  animation: `slideUp 0.6s ${i * 0.09}s both cubic-bezier(.4,0,.2,1)`,
-                }}>
-                  <div style={{ fontSize: 40, marginBottom: 18, filter: "grayscale(15%)" }}>{meta.icon}</div>
+                <div key={cat} className="cat-card"
+                  onClick={() => selectCat(cat)}
+                  onMouseMove={e => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    const x = ((e.clientX - r.left) / r.width - 0.5) * 12;
+                    const y = ((e.clientY - r.top) / r.height - 0.5) * 12;
+                    e.currentTarget.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-6px)`;
+                    const icon = e.currentTarget.querySelector('.cat-icon');
+                    if (icon) icon.style.transform = `translate(${x*1.5}px, ${y*1.5}px) scale(1.1)`;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = '';
+                    const icon = e.currentTarget.querySelector('.cat-icon');
+                    if (icon) icon.style.transform = '';
+                  }}
+                  style={{
+                    background: "linear-gradient(150deg, var(--jungle) 0%, var(--jet) 100%)",
+                    borderRadius: 20, padding: "38px 30px", cursor: "pointer",
+                    border: "1px solid rgba(207,157,123,0.08)", position: "relative", overflow: "hidden",
+                    transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
+                    animation: `slideUp 0.6s ${i * 0.09}s both cubic-bezier(.4,0,.2,1)`,
+                  }}>
+                  {/* Animated shimmer border */}
+                  <div style={{ position: "absolute", inset: -1, borderRadius: 21, opacity: 0.4, background: "linear-gradient(90deg, transparent 0%, rgba(207,157,123,0.2) 50%, transparent 100%)", backgroundSize: "200% 100%", animation: `shimmer 4s ${i*0.5}s infinite linear`, pointerEvents: "none" }} />
+                  {/* Radial glow on hover via CSS */}
+                  <div style={{ position: "absolute", top: "20%", left: "50%", width: "120%", height: "120%", transform: "translateX(-50%)", borderRadius: "50%", background: "radial-gradient(circle, rgba(207,157,123,0.05) 0%, transparent 60%)", pointerEvents: "none" }} />
+                  <div className="cat-icon" style={{ fontSize: 44, marginBottom: 18, transition: "transform 0.3s ease", willChange: "transform" }}>{meta.icon}</div>
                   <h2 className="serif" style={{ fontSize: 26, fontWeight: 700, color: "var(--brass-light)", marginBottom: 6 }}>{cat}</h2>
                   <p style={{ fontSize: 13, color: "var(--brass)", opacity: 0.4, marginBottom: 16, fontStyle: "italic" }}>{meta.beschreibung}</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 36, height: 2, background: "linear-gradient(90deg, var(--coffee), var(--brass))", borderRadius: 1 }} />
+                    <div style={{ width: 36, height: 2, background: "linear-gradient(90deg, var(--coffee), var(--brass))", borderRadius: 1, transition: "width 0.5s", }} />
                     <span style={{ fontSize: 12, color: "var(--brass)", opacity: 0.45, fontWeight: 500 }}>{count} {count === 1 ? "Karte" : "Karten"}</span>
                   </div>
                 </div>
