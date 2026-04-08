@@ -1,0 +1,57 @@
+{
+  "Charaktere": {
+    "icon": "👤",
+    "beschreibung": "Figuren & Persönlichkeiten",
+    "karten": [
+      {
+        "titel": "Protagonist",
+        "vorderseite": "Hauptfigur",
+        "rueckseite": "Entwicklung, Motivation und innerer Konflikt der Hauptfigur beschreiben.",
+        "bilder": [
+          "karten/charaktere/protagonist/titelbild.jpg",
+          "karten/charaktere/protagonist/szene.png"
+        ]
+      },
+      {
+        "titel": "Antagonist",
+        "vorderseite": "Gegenspieler",
+        "rueckseite": "Welche Rolle spielt der Antagonist im Gesamtkonflikt?",
+        "bilder": [
+          "karten/charaktere/antagonist/portrait.jpg"
+        ]
+      }
+    ]
+  },
+  "Themen": {
+    "icon": "💡",
+    "beschreibung": "Kernideen & Motive",
+    "karten": [
+      {
+        "titel": "Kernthema",
+        "vorderseite": "Zentrales Thema",
+        "rueckseite": "Das übergreifende Thema, das sich durch das gesamte Werk zieht.",
+        "bilder": []
+      }
+    ]
+  },
+  "Orte": {
+    "icon": "🌍",
+    "beschreibung": "Schauplätze & Welten",
+    "karten": []
+  },
+  "Zitate": {
+    "icon": "✍️",
+    "beschreibung": "Schlüsselzitate & Passagen",
+    "karten": []
+  },
+  "Symbole": {
+    "icon": "🔮",
+    "beschreibung": "Symbolik & Metaphern",
+    "karten": []
+  },
+  "Handlung": {
+    "icon": "📖",
+    "beschreibung": "Plot & Wendepunkte",
+    "karten": []
+  }
+}
