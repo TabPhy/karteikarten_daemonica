@@ -6,7 +6,7 @@
       {
         "titel": "Protagonist",
         "vorderseite": "Hauptfigur",
-        "rueckseite": "Entwicklung, Motivation und innerer Konflikt der Hauptfigur beschreiben.",
+        "rueckseite": ["karten/charaktere/protagonist/ruekseite.txt"],
         "bilder": [
           "karten/charaktere/protagonist/titelbild.jpg",
           "karten/charaktere/protagonist/szene.png"
