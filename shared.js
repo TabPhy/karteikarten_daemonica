@@ -1,33 +1,33 @@
-/* shared.js — particles, glow & navigation (plain DOM, no React needed) */
+/* shared.js — particles, glow & navigation */
 
 function initSharedUI(activePage) {
-  // ── Navigation ──
+  const pages = [
+    { href: "index.html",      key: "karten",     icon: "📚", label: "Karteikarten" },
+    { href: "buch.html",       key: "buch",        icon: "📖", label: "Mein Buch" },
+    { href: "spiel.html",      key: "spiel",       icon: "🃏", label: "Memory" },
+    { href: "wortspiel.html",  key: "wortspiel",   icon: "✏️", label: "Wörterraten" },
+    { href: "fokus.html",      key: "fokus",        icon: "🕯️", label: "Fokus" },
+  ];
+
   const nav = document.createElement("nav");
   nav.className = "site-nav";
-  nav.innerHTML = `
-    <a href="index.html" class="nav-link ${activePage === 'karten' ? 'active' : ''}">📚 Karteikarten</a>
-    <a href="spiel.html" class="nav-link ${activePage === 'spiel' ? 'active' : ''}">🎮 Minispiel</a>
-  `;
+  nav.innerHTML = pages.map(p =>
+    `<a href="${p.href}" class="nav-link ${p.key === activePage ? 'active' : ''}">${p.icon} ${p.label}</a>`
+  ).join('');
   document.body.prepend(nav);
 
-  // ── Background glow ──
   const g1 = document.createElement("div"); g1.className = "bg-glow-1";
   const g2 = document.createElement("div"); g2.className = "bg-glow-2";
   document.body.append(g1, g2);
 
-  // ── Particles ──
-  const pContainer = document.createElement("div");
-  pContainer.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;";
+  const pc = document.createElement("div");
+  pc.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;";
   for (let i = 0; i < 16; i++) {
     const p = document.createElement("div");
     p.className = "particle";
-    const size = 2 + Math.random() * 5;
-    p.style.cssText = `
-      left:${3 + Math.random() * 94}%;bottom:-20px;
-      width:${size}px;height:${size}px;
-      animation:floatUp ${12 + Math.random() * 10}s ${i * 0.9}s infinite ease-in-out;
-    `;
-    pContainer.appendChild(p);
+    const s = 2 + Math.random() * 5;
+    p.style.cssText = `left:${3+Math.random()*94}%;bottom:-20px;width:${s}px;height:${s}px;animation:floatUp ${12+Math.random()*10}s ${i*0.9}s infinite ease-in-out;`;
+    pc.appendChild(p);
   }
-  document.body.append(pContainer);
+  document.body.append(pc);
 }
