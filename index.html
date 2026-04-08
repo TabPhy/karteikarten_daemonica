@@ -4,252 +4,452 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Buch-Karteikarten</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; overflow-x: hidden; }
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    10% { opacity: 0.3; }
-    90% { opacity: 0.1; }
-    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+  :root {
+    --black: #0C1519; --jungle: #162127; --jet: #3A3534;
+    --coffee: #724B39; --brass: #CF9D7B; --brass-light: #e0b99a;
+    --cream: #f0dcc8;
   }
-  @keyframes fadeScale { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-  .cat-card { transition: all 0.4s cubic-bezier(.4,0,.2,1); cursor: pointer; }
-  .cat-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--black); color: var(--cream); min-height: 100vh; overflow-x: hidden; }
+  h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0; }
+    100% { transform: translateY(-100vh) rotate(180deg); opacity: 0; }
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeScale { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.03; transform: scale(1); }
+    50% { opacity: 0.06; transform: scale(1.05); }
+  }
+  @keyframes gentlePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(207,157,123,0.2); }
+    50% { box-shadow: 0 0 20px 4px rgba(207,157,123,0.1); }
+  }
+
+  .particle {
+    position: fixed; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, var(--brass) 0%, transparent 70%);
+  }
+
+  .cat-card {
+    transition: all 0.5s cubic-bezier(.4,0,.2,1); cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .cat-card::before {
+    content: ''; position: absolute; inset: 0; opacity: 0;
+    background: linear-gradient(135deg, rgba(207,157,123,0.15), transparent);
+    transition: opacity 0.5s;
+  }
+  .cat-card:hover::before { opacity: 1; }
+  .cat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(207,157,123,0.08); }
+
   .flip-card { perspective: 1200px; cursor: pointer; }
-  .flip-inner { transition: transform 0.7s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
+  .flip-inner { transition: transform 0.8s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; position: relative; width: 100%; height: 100%; }
   .flip-inner.flipped { transform: rotateY(180deg); }
-  .flip-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 32px; }
+  .flip-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 32px; overflow: hidden; }
   .flip-back { transform: rotateY(180deg); }
-  .mini-card { transition: all 0.3s ease; cursor: pointer; }
-  .mini-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
-  .btn { border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
-  .btn:hover { transform: scale(1.05); }
+
+  .mini-card {
+    transition: all 0.4s cubic-bezier(.4,0,.2,1); cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .mini-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(207,157,123,0.08), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .mini-card:hover::after { opacity: 1; }
+  .mini-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); border-color: rgba(207,157,123,0.3) !important; }
+
+  .btn {
+    border: none; cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .btn:hover { transform: scale(1.04); }
   .btn:active { transform: scale(0.97); }
-  .input, .textarea { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 12px; padding: 12px 16px; font-family: inherit; font-size: 14px; width: 100%; box-sizing: border-box; outline: none; transition: border 0.2s; }
-  .input:focus, .textarea:focus { border-color: rgba(255,255,255,0.4); }
-  .textarea { resize: vertical; min-height: 70px; }
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 100; animation: fadeScale 0.3s ease; backdrop-filter: blur(8px); }
-  .particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15); pointer-events: none; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--coffee), var(--brass));
+    color: var(--black); border-radius: 14px; padding: 12px 24px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .btn-primary:hover { box-shadow: 0 8px 30px rgba(207,157,123,0.3); }
+
+  .btn-ghost {
+    background: rgba(207,157,123,0.08); color: var(--brass);
+    border-radius: 12px; padding: 8px 18px; font-size: 14px;
+    border: 1px solid rgba(207,157,123,0.15);
+  }
+  .btn-ghost:hover { background: rgba(207,157,123,0.15); border-color: rgba(207,157,123,0.3); }
+
+  .input-field {
+    background: rgba(207,157,123,0.06); border: 1px solid rgba(207,157,123,0.15);
+    color: var(--cream); border-radius: 12px; padding: 13px 16px;
+    font-family: 'Inter', sans-serif; font-size: 14px; width: 100%;
+    outline: none; transition: all 0.3s;
+  }
+  .input-field:focus { border-color: var(--brass); box-shadow: 0 0 0 3px rgba(207,157,123,0.1); }
+  .input-field::placeholder { color: rgba(207,157,123,0.35); }
+  textarea.input-field { resize: vertical; min-height: 72px; }
+
+  .overlay {
+    position: fixed; inset: 0; background: rgba(12,21,25,0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 100; animation: fadeIn 0.3s ease; backdrop-filter: blur(12px);
+  }
+
+  .divider {
+    width: 50px; height: 2px; border-radius: 1px;
+    background: linear-gradient(90deg, var(--coffee), var(--brass));
+    margin: 12px auto;
+  }
+
+  .img-upload-zone {
+    border: 2px dashed rgba(207,157,123,0.2); border-radius: 14px;
+    padding: 20px; text-align: center; cursor: pointer;
+    transition: all 0.3s; color: rgba(207,157,123,0.4); font-size: 13px;
+  }
+  .img-upload-zone:hover { border-color: var(--brass); color: var(--brass); background: rgba(207,157,123,0.04); }
+
+  .img-thumb {
+    width: 56px; height: 56px; object-fit: cover; border-radius: 10px;
+    border: 1px solid rgba(207,157,123,0.2); transition: all 0.3s; cursor: pointer;
+  }
+  .img-thumb:hover { border-color: var(--brass); transform: scale(1.08); }
+
+  .card-bg-img {
+    position: absolute; inset: 0; object-fit: cover; opacity: 0.12;
+    filter: blur(1px); transition: opacity 0.6s;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(207,157,123,0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(207,157,123,0.35); }
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
-const PALETTES = {
-  "Charaktere": { bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", accent: "#a78bfa", icon: "👤" },
-  "Themen": { bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", accent: "#f9a8d4", icon: "💡" },
-  "Orte": { bg: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", accent: "#67e8f9", icon: "🌍" },
-  "Zitate": { bg: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)", accent: "#6ee7b7", icon: "✍️" },
-  "Symbole": { bg: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)", accent: "#fcd34d", icon: "🔮" },
-  "Handlung": { bg: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)", accent: "#c4b5fd", icon: "📖" },
+const CATS = {
+  "Charaktere": { icon: "👤", desc: "Figuren & Persönlichkeiten" },
+  "Themen": { icon: "💡", desc: "Kernideen & Motive" },
+  "Orte": { icon: "🌍", desc: "Schauplätze & Welten" },
+  "Zitate": { icon: "✍️", desc: "Schlüsselzitate & Passagen" },
+  "Symbole": { icon: "🔮", desc: "Symbolik & Metaphern" },
+  "Handlung": { icon: "📖", desc: "Plot & Wendepunkte" },
 };
 
-const DEFAULT_CARDS = {
-  "Charaktere": [
-    { id: 1, title: "Protagonist", front: "Hauptfigur", back: "Entwicklung, Motivation und innerer Konflikt der Hauptfigur beschreiben." },
-    { id: 2, title: "Antagonist", front: "Gegenspieler", back: "Welche Rolle spielt der Antagonist im Gesamtkonflikt?" },
-  ],
-  "Themen": [
-    { id: 3, title: "Kernthema", front: "Zentrales Thema", back: "Das übergreifende Thema, das sich durch das gesamte Werk zieht." },
-  ],
-  "Orte": [], "Zitate": [], "Symbole": [], "Handlung": [],
-};
+const DEFAULT = Object.fromEntries(
+  Object.keys(CATS).map(k => [k, k === "Charaktere" ? [
+    { id: 1, title: "Protagonist", front: "Hauptfigur", back: "Entwicklung, Motivation und innerer Konflikt der Hauptfigur.", images: [] },
+    { id: 2, title: "Antagonist", front: "Gegenspieler", back: "Welche Rolle spielt der Antagonist im Gesamtkonflikt?", images: [] },
+  ] : k === "Themen" ? [
+    { id: 3, title: "Kernthema", front: "Zentrales Thema", back: "Das übergreifende Thema des gesamten Werks.", images: [] },
+  ] : []])
+);
 
-function loadCards() {
-  try {
-    const saved = localStorage.getItem("book-flashcards-data");
-    if (saved) return JSON.parse(saved);
-  } catch (e) {}
-  return DEFAULT_CARDS;
-}
+const load = () => { try { const s = localStorage.getItem("bk-cards-v2"); return s ? JSON.parse(s) : DEFAULT; } catch(e) { return DEFAULT; } };
+const save = (c) => { try { localStorage.setItem("bk-cards-v2", JSON.stringify(c)); } catch(e) {} };
 
-function saveCards(cards) {
-  try { localStorage.setItem("book-flashcards-data", JSON.stringify(cards)); } catch (e) {}
-}
+const toBase64 = (file) => new Promise((res, rej) => {
+  const r = new FileReader();
+  r.onload = () => res(r.result);
+  r.onerror = rej;
+  r.readAsDataURL(file);
+});
 
-const Particle = ({ delay, x }) => (
-  <div className="particle" style={{ left: `${x}%`, bottom: "-10px", animation: `floatUp 8s ${delay}s infinite ease-in-out` }} />
+const Particles = () => (
+  <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+    {Array.from({ length: 15 }, (_, i) => (
+      <div key={i} className="particle" style={{
+        left: `${5 + Math.random() * 90}%`, bottom: "-20px",
+        width: `${3 + Math.random() * 4}px`, height: `${3 + Math.random() * 4}px`,
+        animation: `floatUp ${10 + Math.random() * 8}s ${i * 0.8}s infinite ease-in-out`,
+      }} />
+    ))}
+  </div>
+);
+
+const BgGlow = () => (
+  <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+    <div style={{ position: "absolute", top: "-30%", right: "-10%", width: "60vw", height: "60vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(114,75,57,0.08) 0%, transparent 70%)", animation: "breathe 8s infinite ease-in-out" }} />
+    <div style={{ position: "absolute", bottom: "-20%", left: "-10%", width: "50vw", height: "50vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(207,157,123,0.05) 0%, transparent 70%)", animation: "breathe 10s 2s infinite ease-in-out" }} />
+  </div>
 );
 
 function App() {
-  const [cards, setCards] = useState(loadCards);
+  const [cards, setCards] = useState(load);
   const [activeCat, setActiveCat] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [flipped, setFlipped] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
-  const [newCard, setNewCard] = useState({ title: "", front: "", back: "" });
-  const [catTransition, setCatTransition] = useState(false);
+  const [newCard, setNewCard] = useState({ title: "", front: "", back: "", images: [] });
+  const [trans, setTrans] = useState(false);
   const [cardIdx, setCardIdx] = useState(0);
-  const [editingCard, setEditingCard] = useState(null);
-  const [editData, setEditData] = useState({ title: "", front: "", back: "" });
-  const categories = Object.keys(cards);
+  const [editing, setEditing] = useState(null);
+  const [editData, setEditData] = useState({ title: "", front: "", back: "", images: [] });
+  const [lightbox, setLightbox] = useState(null);
+  const [viewMode, setViewMode] = useState("grid");
+  const fileRef = useRef(); const editFileRef = useRef();
 
-  useEffect(() => { saveCards(cards); }, [cards]);
+  useEffect(() => { save(cards); }, [cards]);
 
-  const selectCategory = (cat) => {
-    setCatTransition(true);
-    setTimeout(() => { setActiveCat(cat); setActiveCard(null); setFlipped(false); setCardIdx(0); setCatTransition(false); }, 300);
-  };
-
-  const goBack = () => {
-    setCatTransition(true);
-    setTimeout(() => { setActiveCat(null); setActiveCard(null); setFlipped(false); setCatTransition(false); }, 300);
-  };
-
+  const transition = (fn) => { setTrans(true); setTimeout(() => { fn(); setTrans(false); }, 350); };
+  const selectCat = (cat) => transition(() => { setActiveCat(cat); setActiveCard(null); setFlipped(false); setCardIdx(0); });
+  const goHome = () => transition(() => { setActiveCat(null); setActiveCard(null); setFlipped(false); });
   const openCard = (card, idx) => { setActiveCard(card); setCardIdx(idx); setFlipped(false); };
-
   const navCard = (dir) => {
-    const list = cards[activeCat];
-    const next = (cardIdx + dir + list.length) % list.length;
-    setFlipped(false);
-    setTimeout(() => { setCardIdx(next); setActiveCard(list[next]); }, 150);
+    const list = cards[activeCat]; const next = (cardIdx + dir + list.length) % list.length;
+    setFlipped(false); setTimeout(() => { setCardIdx(next); setActiveCard(list[next]); }, 200);
+  };
+
+  const handleImages = async (files, target) => {
+    const imgs = await Promise.all(Array.from(files).slice(0, 5).map(toBase64));
+    if (target === "new") setNewCard(p => ({ ...p, images: [...p.images, ...imgs].slice(0, 5) }));
+    else setEditData(p => ({ ...p, images: [...p.images, ...imgs].slice(0, 5) }));
   };
 
   const addCard = () => {
     if (!newCard.title.trim() || !newCard.front.trim()) return;
-    const id = Date.now();
-    const updated = { ...cards, [activeCat]: [...cards[activeCat], { id, ...newCard }] };
-    setCards(updated);
-    setNewCard({ title: "", front: "", back: "" });
-    setShowAdd(false);
+    const c = { id: Date.now(), ...newCard };
+    setCards(p => ({ ...p, [activeCat]: [...p[activeCat], c] }));
+    setNewCard({ title: "", front: "", back: "", images: [] }); setShowAdd(false);
   };
 
-  const deleteCard = (id) => {
-    setCards(prev => ({ ...prev, [activeCat]: prev[activeCat].filter(c => c.id !== id) }));
-    setActiveCard(null);
-  };
+  const deleteCard = (id) => { setCards(p => ({ ...p, [activeCat]: p[activeCat].filter(c => c.id !== id) })); setActiveCard(null); };
 
-  const startEdit = (card) => { setEditingCard(card.id); setEditData({ title: card.title, front: card.front, back: card.back }); };
-
+  const startEdit = (card) => { setEditing(card.id); setEditData({ title: card.title, front: card.front, back: card.back, images: card.images || [] }); };
   const saveEdit = () => {
-    setCards(prev => ({ ...prev, [activeCat]: prev[activeCat].map(c => c.id === editingCard ? { ...c, ...editData } : c) }));
-    if (activeCard && activeCard.id === editingCard) setActiveCard({ ...activeCard, ...editData });
-    setEditingCard(null);
+    setCards(p => ({ ...p, [activeCat]: p[activeCat].map(c => c.id === editing ? { ...c, ...editData } : c) }));
+    if (activeCard?.id === editing) setActiveCard({ ...activeCard, ...editData });
+    setEditing(null);
   };
 
   const exportData = () => {
     const blob = new Blob([JSON.stringify(cards, null, 2)], { type: "application/json" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-    a.download = "karteikarten-backup.json"; a.click();
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "karteikarten-backup.json"; a.click();
   };
-
   const importData = () => {
     const input = document.createElement("input"); input.type = "file"; input.accept = ".json";
-    input.onchange = (e) => {
-      const reader = new FileReader();
-      reader.onload = (ev) => { try { setCards(JSON.parse(ev.target.result)); } catch(err) { alert("Ungültige Datei."); } };
-      reader.readAsText(e.target.files[0]);
-    };
+    input.onchange = (e) => { const r = new FileReader(); r.onload = (ev) => { try { setCards(JSON.parse(ev.target.result)); } catch(err) { alert("Ungültige Datei."); } }; r.readAsText(e.target.files[0]); };
     input.click();
   };
 
-  const palette = activeCat ? PALETTES[activeCat] : null;
+  const pal = activeCat ? CATS[activeCat] : null;
+
+  const ImageModal = ({ images, target }) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {images.map((img, i) => (
+          <div key={i} style={{ position: "relative" }}>
+            <img src={img} className="img-thumb" alt="" />
+            <button className="btn" onClick={() => {
+              const updated = images.filter((_, j) => j !== i);
+              if (target === "new") setNewCard(p => ({ ...p, images: updated }));
+              else setEditData(p => ({ ...p, images: updated }));
+            }} style={{ position: "absolute", top: -6, right: -6, width: 20, height: 20, borderRadius: "50%", background: "rgba(200,60,60,0.9)", color: "#fff", fontSize: 11, display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>×</button>
+          </div>
+        ))}
+      </div>
+      {images.length < 5 && (
+        <div className="img-upload-zone" onClick={() => target === "new" ? fileRef.current?.click() : editFileRef.current?.click()}>
+          📷 Bilder hinzufügen (max. 5)
+          <input ref={target === "new" ? fileRef : editFileRef} type="file" accept="image/*" multiple hidden
+            onChange={(e) => { handleImages(e.target.files, target); e.target.value = ""; }} />
+        </div>
+      )}
+    </div>
+  );
 
   return (
-    <div style={{ minHeight: "100vh", position: "relative", padding: "32px 20px" }}>
-      {Array.from({ length: 20 }, (_, i) => <Particle key={i} delay={i * 0.6} x={Math.random() * 100} />)}
+    <div style={{ minHeight: "100vh", position: "relative" }}>
+      <Particles /><BgGlow />
 
-      <div style={{ maxWidth: 960, margin: "0 auto", opacity: catTransition ? 0 : 1, transform: catTransition ? "scale(0.97)" : "scale(1)", transition: "all 0.3s ease" }}>
+      <div style={{
+        maxWidth: 1000, margin: "0 auto", padding: "40px 24px", position: "relative", zIndex: 1,
+        opacity: trans ? 0 : 1, transform: trans ? "translateY(10px)" : "translateY(0)",
+        transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
+      }}>
 
         {/* HEADER */}
-        <div style={{ textAlign: "center", marginBottom: 40, position: "relative" }}>
+        <header style={{ textAlign: "center", marginBottom: 48, position: "relative" }}>
           {activeCat && (
-            <button className="btn" onClick={goBack} style={{ position: "absolute", left: 0, top: 0, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: "8px 18px", fontSize: 14 }}>← Zurück</button>
+            <button className="btn btn-ghost" onClick={goHome} style={{ position: "absolute", left: 0, top: 4 }}>
+              ← Zurück
+            </button>
           )}
           {!activeCat && (
-            <div style={{ position: "absolute", right: 0, top: 0, display: "flex", gap: 8 }}>
-              <button className="btn" onClick={exportData} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 12 }}>💾 Export</button>
-              <button className="btn" onClick={importData} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 12 }}>📂 Import</button>
+            <div style={{ position: "absolute", right: 0, top: 4, display: "flex", gap: 8 }}>
+              <button className="btn btn-ghost" onClick={exportData} style={{ fontSize: 12 }}>💾 Export</button>
+              <button className="btn btn-ghost" onClick={importData} style={{ fontSize: 12 }}>📂 Import</button>
             </div>
           )}
-          <div style={{ fontSize: 14, letterSpacing: 4, textTransform: "uppercase", opacity: 0.5, marginBottom: 8 }}>
-            {activeCat ? PALETTES[activeCat].icon + " " + activeCat : "📚 Mein Buch"}
+          <div style={{ fontSize: 12, letterSpacing: 6, textTransform: "uppercase", color: "var(--brass)", opacity: 0.6, marginBottom: 10 }}>
+            {activeCat ? pal.icon + "  " + activeCat : "📚  Bibliothek"}
           </div>
-          <h1 style={{ fontSize: activeCat ? 32 : 42, fontWeight: 800, margin: 0, background: activeCat ? palette.bg : "linear-gradient(135deg, #a78bfa, #f9a8d4, #67e8f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: activeCat ? 36 : 48, fontWeight: 800, color: "var(--brass-light)", lineHeight: 1.1 }}>
             {activeCat || "Karteikarten"}
           </h1>
-          {!activeCat && <p style={{ opacity: 0.5, marginTop: 8, fontSize: 15 }}>Wähle eine Kategorie, um deine Schlüsselkonzepte zu erkunden</p>}
-        </div>
+          <div className="divider" style={{ marginTop: 16 }} />
+          {!activeCat && <p style={{ color: "var(--brass)", opacity: 0.45, marginTop: 12, fontSize: 14, fontWeight: 300, letterSpacing: 0.5 }}>Wähle eine Kategorie, um deine Schlüsselkonzepte zu erkunden</p>}
+          {activeCat && <p style={{ color: "var(--brass)", opacity: 0.4, marginTop: 8, fontSize: 13 }}>{pal.desc}</p>}
+        </header>
 
-        {/* CATEGORY GRID */}
+        {/* CATEGORIES */}
         {!activeCat && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
-            {categories.map((cat, i) => {
-              const p = PALETTES[cat]; const count = cards[cat].length;
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+            {Object.entries(CATS).map(([cat, meta], i) => {
+              const count = cards[cat]?.length || 0;
               return (
-                <div key={cat} className="cat-card" onClick={() => selectCategory(cat)} style={{ background: p.bg, borderRadius: 20, padding: "36px 28px", position: "relative", overflow: "hidden", animation: `slideUp 0.5s ${i * 0.08}s both ease` }}>
-                  <div style={{ position: "absolute", top: -20, right: -20, fontSize: 80, opacity: 0.15 }}>{p.icon}</div>
-                  <div style={{ fontSize: 36, marginBottom: 12 }}>{p.icon}</div>
-                  <div style={{ fontSize: 22, fontWeight: 700 }}>{cat}</div>
-                  <div style={{ fontSize: 13, opacity: 0.75, marginTop: 6 }}>{count} {count === 1 ? "Karte" : "Karten"}</div>
-                  <div style={{ marginTop: 16, width: 40, height: 3, background: "rgba(255,255,255,0.5)", borderRadius: 2 }} />
+                <div key={cat} className="cat-card" onClick={() => selectCat(cat)} style={{
+                  background: "linear-gradient(145deg, var(--jungle), var(--jet))",
+                  borderRadius: 20, padding: "36px 30px",
+                  border: "1px solid rgba(207,157,123,0.1)",
+                  animation: `slideUp 0.6s ${i * 0.08}s both cubic-bezier(.4,0,.2,1)`,
+                }}>
+                  <div style={{ fontSize: 38, marginBottom: 16, filter: "grayscale(20%)" }}>{meta.icon}</div>
+                  <h2 className="serif" style={{ fontSize: 24, fontWeight: 700, color: "var(--brass-light)", marginBottom: 6 }}>{cat}</h2>
+                  <p style={{ fontSize: 13, color: "var(--brass)", opacity: 0.45, marginBottom: 14 }}>{meta.desc}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ width: 40, height: 2, background: "linear-gradient(90deg, var(--coffee), var(--brass))", borderRadius: 1 }} />
+                    <span style={{ fontSize: 12, color: "var(--brass)", opacity: 0.5, fontWeight: 500 }}>{count} {count === 1 ? "Karte" : "Karten"}</span>
+                  </div>
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* CARDS IN CATEGORY */}
+        {/* CARD LIST */}
         {activeCat && !activeCard && (
-          <div>
-            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}>
-              <button className="btn" onClick={() => setShowAdd(true)} style={{ background: palette.bg, color: "#fff", borderRadius: 14, padding: "10px 22px", fontSize: 15, fontWeight: 600 }}>+ Neue Karte</button>
+          <div style={{ animation: "fadeScale 0.5s ease" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                {["grid", "list"].map(m => (
+                  <button key={m} className="btn" onClick={() => setViewMode(m)} style={{
+                    background: viewMode === m ? "rgba(207,157,123,0.15)" : "transparent",
+                    color: "var(--brass)", borderRadius: 8, padding: "6px 12px", fontSize: 13,
+                    border: `1px solid ${viewMode === m ? "rgba(207,157,123,0.3)" : "transparent"}`,
+                  }}>{m === "grid" ? "▦" : "☰"}</button>
+                ))}
+              </div>
+              <button className="btn btn-primary" onClick={() => setShowAdd(true)}>+ Neue Karte</button>
             </div>
+
             {cards[activeCat].length === 0 && (
-              <div style={{ textAlign: "center", padding: "60px 20px", opacity: 0.5 }}>
-                <div style={{ fontSize: 48, marginBottom: 16 }}>{PALETTES[activeCat].icon}</div>
-                <p>Noch keine Karten. Erstelle deine erste!</p>
+              <div style={{ textAlign: "center", padding: "80px 20px", animation: "fadeIn 0.6s ease" }}>
+                <div style={{ fontSize: 56, marginBottom: 20, opacity: 0.6 }}>{pal.icon}</div>
+                <p className="serif" style={{ fontSize: 20, color: "var(--brass)", opacity: 0.5 }}>Noch keine Karten</p>
+                <p style={{ fontSize: 13, color: "var(--brass)", opacity: 0.3, marginTop: 8 }}>Erstelle deine erste Karteikarte</p>
               </div>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 16 }}>
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: viewMode === "grid" ? "repeat(auto-fill, minmax(250px, 1fr))" : "1fr",
+              gap: viewMode === "grid" ? 16 : 12,
+            }}>
               {cards[activeCat].map((card, i) => (
-                <div key={card.id} className="mini-card" onClick={() => openCard(card, i)} style={{ background: "rgba(255,255,255,0.06)", borderRadius: 16, padding: "24px 20px", border: "1px solid rgba(255,255,255,0.08)", animation: `slideUp 0.4s ${i * 0.06}s both ease`, position: "relative" }}>
-                  <div style={{ position: "absolute", top: 12, right: 14, width: 8, height: 8, borderRadius: "50%", background: palette.bg }} />
-                  <div style={{ fontSize: 13, opacity: 0.4, marginBottom: 6, fontWeight: 600, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 8 }}>{card.title}</div>
-                  <div style={{ fontSize: 14, opacity: 0.6, lineHeight: 1.5 }}>{card.front}</div>
+                <div key={card.id} className="mini-card" onClick={() => openCard(card, i)} style={{
+                  background: "linear-gradient(145deg, rgba(22,33,39,0.8), rgba(58,53,52,0.5))",
+                  borderRadius: 16, padding: viewMode === "grid" ? "24px 22px" : "18px 22px",
+                  border: "1px solid rgba(207,157,123,0.08)",
+                  animation: `${viewMode === "grid" ? "slideUp" : "slideRight"} 0.5s ${i * 0.06}s both ease`,
+                  display: viewMode === "list" ? "flex" : "block",
+                  alignItems: "center", gap: 16,
+                  position: "relative",
+                }}>
+                  {card.images?.length > 0 && <img src={card.images[0]} className="card-bg-img" alt="" />}
+                  <div style={{ position: "relative", zIndex: 1, flex: 1 }}>
+                    <div style={{ fontSize: 11, color: "var(--brass)", opacity: 0.3, marginBottom: 4, fontWeight: 600, letterSpacing: 2 }}>{String(i + 1).padStart(2, "0")}</div>
+                    <div className="serif" style={{ fontSize: 17, fontWeight: 700, color: "var(--brass-light)", marginBottom: 6 }}>{card.title}</div>
+                    <div style={{ fontSize: 13, color: "var(--brass)", opacity: 0.5, lineHeight: 1.5 }}>{card.front}</div>
+                  </div>
+                  {card.images?.length > 0 && viewMode === "list" && (
+                    <div style={{ display: "flex", gap: 4 }}>
+                      {card.images.slice(0, 3).map((img, j) => <img key={j} src={img} style={{ width: 36, height: 36, objectFit: "cover", borderRadius: 8, opacity: 0.7, border: "1px solid rgba(207,157,123,0.15)" }} alt="" />)}
+                    </div>
+                  )}
+                  {card.images?.length > 0 && viewMode === "grid" && (
+                    <div style={{ display: "flex", gap: 4, marginTop: 12, position: "relative", zIndex: 1 }}>
+                      {card.images.slice(0, 3).map((img, j) => <img key={j} src={img} style={{ width: 32, height: 32, objectFit: "cover", borderRadius: 8, opacity: 0.6, border: "1px solid rgba(207,157,123,0.1)" }} alt="" />)}
+                      {card.images.length > 3 && <span style={{ fontSize: 11, color: "var(--brass)", opacity: 0.4, alignSelf: "center", marginLeft: 4 }}>+{card.images.length - 3}</span>}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* ACTIVE CARD VIEW */}
+        {/* ACTIVE CARD */}
         {activeCat && activeCard && (
-          <div style={{ animation: "fadeScale 0.4s ease" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <button className="btn" onClick={() => setActiveCard(null)} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: "8px 18px", fontSize: 14 }}>← Alle Karten</button>
+          <div style={{ animation: "fadeScale 0.5s cubic-bezier(.4,0,.2,1)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+              <button className="btn btn-ghost" onClick={() => setActiveCard(null)}>← Alle Karten</button>
               <div style={{ display: "flex", gap: 8 }}>
-                <button className="btn" onClick={() => startEdit(activeCard)} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 10, padding: "8px 14px", fontSize: 13 }}>✏️</button>
-                <button className="btn" onClick={() => deleteCard(activeCard.id)} style={{ background: "rgba(255,70,70,0.2)", color: "#ff7070", borderRadius: 10, padding: "8px 14px", fontSize: 13 }}>🗑</button>
+                <button className="btn btn-ghost" onClick={() => startEdit(activeCard)} style={{ padding: "8px 12px" }}>✏️</button>
+                <button className="btn" onClick={() => deleteCard(activeCard.id)} style={{ background: "rgba(180,60,60,0.15)", color: "#c87070", borderRadius: 12, padding: "8px 12px", fontSize: 13, border: "1px solid rgba(180,60,60,0.2)" }}>🗑</button>
               </div>
             </div>
-            <div className="flip-card" onClick={() => setFlipped(!flipped)} style={{ width: "100%", maxWidth: 500, height: 320, margin: "0 auto" }}>
+
+            <div className="flip-card" onClick={() => setFlipped(!flipped)} style={{ width: "100%", maxWidth: 520, height: 360, margin: "0 auto" }}>
               <div className={`flip-inner ${flipped ? "flipped" : ""}`}>
-                <div className="flip-face" style={{ background: palette.bg, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
-                  <div style={{ fontSize: 13, opacity: 0.6, letterSpacing: 2, marginBottom: 12, textTransform: "uppercase" }}>Vorderseite</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{activeCard.title}</div>
-                  <div style={{ fontSize: 16, opacity: 0.9, lineHeight: 1.6, textAlign: "center" }}>{activeCard.front}</div>
-                  <div style={{ fontSize: 12, opacity: 0.4, marginTop: 20 }}>Klicke zum Umdrehen</div>
+                <div className="flip-face" style={{ background: "linear-gradient(145deg, var(--jet), var(--jungle))", border: "1px solid rgba(207,157,123,0.15)", boxShadow: "0 24px 60px rgba(0,0,0,0.4), 0 0 40px rgba(207,157,123,0.05)" }}>
+                  {activeCard.images?.length > 0 && <img src={activeCard.images[0]} className="card-bg-img" alt="" style={{ opacity: 0.1 }} />}
+                  <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+                    <div style={{ fontSize: 11, letterSpacing: 4, color: "var(--brass)", opacity: 0.4, marginBottom: 14, textTransform: "uppercase" }}>Vorderseite</div>
+                    <h2 className="serif" style={{ fontSize: 24, color: "var(--brass-light)", marginBottom: 10 }}>{activeCard.title}</h2>
+                    <div className="divider" />
+                    <p style={{ fontSize: 16, color: "var(--cream)", opacity: 0.8, lineHeight: 1.6, marginTop: 12 }}>{activeCard.front}</p>
+                    <div style={{ fontSize: 11, color: "var(--brass)", opacity: 0.25, marginTop: 24 }}>Klicke zum Umdrehen</div>
+                  </div>
                 </div>
-                <div className="flip-face flip-back" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)", border: `2px solid ${palette.accent}`, boxShadow: `0 20px 60px rgba(0,0,0,0.4), inset 0 0 60px rgba(255,255,255,0.03)` }}>
-                  <div style={{ fontSize: 13, opacity: 0.6, letterSpacing: 2, marginBottom: 16, textTransform: "uppercase" }}>Rückseite</div>
-                  <div style={{ fontSize: 16, lineHeight: 1.7, textAlign: "center", opacity: 0.9 }}>{activeCard.back || "Noch kein Inhalt"}</div>
+                <div className="flip-face flip-back" style={{ background: "linear-gradient(145deg, var(--black), var(--jungle))", border: "1px solid rgba(207,157,123,0.25)", boxShadow: "0 24px 60px rgba(0,0,0,0.5), 0 0 50px rgba(207,157,123,0.08)" }}>
+                  <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+                    <div style={{ fontSize: 11, letterSpacing: 4, color: "var(--brass)", opacity: 0.4, marginBottom: 16, textTransform: "uppercase" }}>Rückseite</div>
+                    <p style={{ fontSize: 16, color: "var(--cream)", lineHeight: 1.8, opacity: 0.85 }}>{activeCard.back || "Noch kein Inhalt"}</p>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* IMAGES */}
+            {activeCard.images?.length > 0 && (
+              <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 28, animation: "slideUp 0.5s 0.2s both ease" }}>
+                {activeCard.images.map((img, i) => (
+                  <img key={i} src={img} onClick={(e) => { e.stopPropagation(); setLightbox(img); }}
+                    style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 12, cursor: "pointer", border: "1px solid rgba(207,157,123,0.15)", transition: "all 0.3s", opacity: 0.8 }}
+                    onMouseOver={e => { e.target.style.opacity = 1; e.target.style.transform = "scale(1.1)"; }}
+                    onMouseOut={e => { e.target.style.opacity = 0.8; e.target.style.transform = "scale(1)"; }} alt="" />
+                ))}
+              </div>
+            )}
+
+            {/* NAV */}
             {cards[activeCat].length > 1 && (
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 24, marginTop: 28 }}>
-                <button className="btn" onClick={(e) => { e.stopPropagation(); navCard(-1); }} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: "50%", width: 44, height: 44, fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>←</button>
-                <span style={{ opacity: 0.5, fontSize: 14 }}>{cardIdx + 1} / {cards[activeCat].length}</span>
-                <button className="btn" onClick={(e) => { e.stopPropagation(); navCard(1); }} style={{ background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: "50%", width: 44, height: 44, fontSize: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>→</button>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28, marginTop: 28 }}>
+                <button className="btn btn-ghost" onClick={(e) => { e.stopPropagation(); navCard(-1); }} style={{ borderRadius: "50%", width: 44, height: 44, padding: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>←</button>
+                <span style={{ color: "var(--brass)", opacity: 0.35, fontSize: 13, fontWeight: 500, letterSpacing: 2 }}>{cardIdx + 1} / {cards[activeCat].length}</span>
+                <button className="btn btn-ghost" onClick={(e) => { e.stopPropagation(); navCard(1); }} style={{ borderRadius: "50%", width: 44, height: 44, padding: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>→</button>
               </div>
             )}
           </div>
@@ -259,15 +459,17 @@ function App() {
       {/* ADD MODAL */}
       {showAdd && (
         <div className="overlay" onClick={() => setShowAdd(false)}>
-          <div onClick={e => e.stopPropagation()} style={{ background: "#1a1a2e", borderRadius: 24, padding: 32, width: "90%", maxWidth: 420, border: "1px solid rgba(255,255,255,0.1)" }}>
-            <h3 style={{ marginBottom: 20, fontSize: 20 }}>Neue Karte erstellen</h3>
+          <div onClick={e => e.stopPropagation()} style={{ background: "linear-gradient(145deg, var(--jungle), var(--black))", borderRadius: 24, padding: 36, width: "92%", maxWidth: 440, border: "1px solid rgba(207,157,123,0.12)", animation: "fadeScale 0.35s ease", maxHeight: "90vh", overflowY: "auto" }}>
+            <h3 className="serif" style={{ fontSize: 22, color: "var(--brass-light)", marginBottom: 6 }}>Neue Karte</h3>
+            <div className="divider" style={{ margin: "10px 0 22px 0" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <input className="input" placeholder="Titel" value={newCard.title} onChange={e => setNewCard(p => ({ ...p, title: e.target.value }))} />
-              <textarea className="textarea" placeholder="Vorderseite – Schlüsselbegriff / Frage" value={newCard.front} onChange={e => setNewCard(p => ({ ...p, front: e.target.value }))} />
-              <textarea className="textarea" placeholder="Rückseite – Erklärung / Antwort" value={newCard.back} onChange={e => setNewCard(p => ({ ...p, back: e.target.value }))} />
-              <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
-                <button className="btn" onClick={() => setShowAdd(false)} style={{ flex: 1, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15 }}>Abbrechen</button>
-                <button className="btn" onClick={addCard} style={{ flex: 1, background: palette.bg, color: "#fff", borderRadius: 12, padding: 12, fontSize: 15, fontWeight: 600 }}>Erstellen</button>
+              <input className="input-field" placeholder="Titel" value={newCard.title} onChange={e => setNewCard(p => ({ ...p, title: e.target.value }))} />
+              <textarea className="input-field" placeholder="Vorderseite – Schlüsselbegriff / Frage" value={newCard.front} onChange={e => setNewCard(p => ({ ...p, front: e.target.value }))} />
+              <textarea className="input-field" placeholder="Rückseite – Erklärung / Antwort" value={newCard.back} onChange={e => setNewCard(p => ({ ...p, back: e.target.value }))} />
+              <ImageModal images={newCard.images} target="new" />
+              <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+                <button className="btn btn-ghost" onClick={() => setShowAdd(false)} style={{ flex: 1, padding: 13 }}>Abbrechen</button>
+                <button className="btn btn-primary" onClick={addCard} style={{ flex: 1, padding: 13 }}>Erstellen</button>
               </div>
             </div>
           </div>
@@ -275,20 +477,29 @@ function App() {
       )}
 
       {/* EDIT MODAL */}
-      {editingCard && (
-        <div className="overlay" onClick={() => setEditingCard(null)}>
-          <div onClick={e => e.stopPropagation()} style={{ background: "#1a1a2e", borderRadius: 24, padding: 32, width: "90%", maxWidth: 420, border: "1px solid rgba(255,255,255,0.1)" }}>
-            <h3 style={{ marginBottom: 20, fontSize: 20 }}>Karte bearbeiten</h3>
+      {editing && (
+        <div className="overlay" onClick={() => setEditing(null)}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "linear-gradient(145deg, var(--jungle), var(--black))", borderRadius: 24, padding: 36, width: "92%", maxWidth: 440, border: "1px solid rgba(207,157,123,0.12)", animation: "fadeScale 0.35s ease", maxHeight: "90vh", overflowY: "auto" }}>
+            <h3 className="serif" style={{ fontSize: 22, color: "var(--brass-light)", marginBottom: 6 }}>Karte bearbeiten</h3>
+            <div className="divider" style={{ margin: "10px 0 22px 0" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <input className="input" placeholder="Titel" value={editData.title} onChange={e => setEditData(p => ({ ...p, title: e.target.value }))} />
-              <textarea className="textarea" placeholder="Vorderseite" value={editData.front} onChange={e => setEditData(p => ({ ...p, front: e.target.value }))} />
-              <textarea className="textarea" placeholder="Rückseite" value={editData.back} onChange={e => setEditData(p => ({ ...p, back: e.target.value }))} />
-              <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
-                <button className="btn" onClick={() => setEditingCard(null)} style={{ flex: 1, background: "rgba(255,255,255,0.08)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15 }}>Abbrechen</button>
-                <button className="btn" onClick={saveEdit} style={{ flex: 1, background: palette?.bg || "linear-gradient(135deg,#667eea,#764ba2)", color: "#fff", borderRadius: 12, padding: 12, fontSize: 15, fontWeight: 600 }}>Speichern</button>
+              <input className="input-field" placeholder="Titel" value={editData.title} onChange={e => setEditData(p => ({ ...p, title: e.target.value }))} />
+              <textarea className="input-field" placeholder="Vorderseite" value={editData.front} onChange={e => setEditData(p => ({ ...p, front: e.target.value }))} />
+              <textarea className="input-field" placeholder="Rückseite" value={editData.back} onChange={e => setEditData(p => ({ ...p, back: e.target.value }))} />
+              <ImageModal images={editData.images} target="edit" />
+              <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+                <button className="btn btn-ghost" onClick={() => setEditing(null)} style={{ flex: 1, padding: 13 }}>Abbrechen</button>
+                <button className="btn btn-primary" onClick={saveEdit} style={{ flex: 1, padding: 13 }}>Speichern</button>
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* LIGHTBOX */}
+      {lightbox && (
+        <div className="overlay" onClick={() => setLightbox(null)} style={{ cursor: "zoom-out" }}>
+          <img src={lightbox} alt="" style={{ maxWidth: "90%", maxHeight: "85vh", borderRadius: 16, objectFit: "contain", animation: "fadeScale 0.3s ease", boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }} />
         </div>
       )}
     </div>
