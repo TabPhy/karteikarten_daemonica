@@ -1,0 +1,26 @@
+[
+  {
+    "titel": "Mein Erster Roman",
+    "beschreibung": "Eine packende Geschichte über Mut, Freundschaft und die Suche nach dem eigenen Weg.",
+    "cover": "werke/mein-erster-roman/cover.jpg",
+    "link": "https://www.wattpad.com/story/DEINE-STORY-ID",
+    "tags": ["Fantasy", "Abenteuer"],
+    "status": "ongoing"
+  },
+  {
+    "titel": "Kurzgeschichten",
+    "beschreibung": "Eine Sammlung kleiner Geschichten aus verschiedenen Welten.",
+    "cover": "werke/kurzgeschichten/cover.jpg",
+    "link": "https://www.wattpad.com/story/DEINE-STORY-ID",
+    "tags": ["Kurzgeschichten"],
+    "status": "complete"
+  },
+  {
+    "titel": "Projekt Drei",
+    "beschreibung": "Kommt bald...",
+    "cover": "",
+    "link": "",
+    "tags": ["Sci-Fi", "Drama"],
+    "status": "planned"
+  }
+]
