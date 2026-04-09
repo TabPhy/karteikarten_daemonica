@@ -97,15 +97,17 @@ Promise.all([
 ]).then(([bezData, cardsData])=>{
   data=bezData;
 
+  if(!data || !data.charaktere){
+    throw new Error('beziehungen.json hat kein "charaktere"-Feld');
+  }
+
   // Build a lookup: character name → first image from cards.json
   if(cardsData){
-    // Search all categories for matching cards
     for(const[cat, meta] of Object.entries(cardsData)){
       const karten=meta.karten||[];
       for(const karte of karten){
         const imgs=karte.bilder||[];
         if(imgs.length>0){
-          // Match by card title (titel) — case insensitive
           const name=karte.titel.trim().toLowerCase();
           if(!cardImages[name]) cardImages[name]=imgs[0];
         }
@@ -114,12 +116,14 @@ Promise.all([
   }
 
   layoutAndRender();
-}).catch(()=>{
+}).catch((err)=>{
+  console.error('Beziehungen laden fehlgeschlagen:', err);
   document.getElementById('graph-container').innerHTML=`
     <div style="text-align:center;padding:60px 20px">
       <div style="font-size:56px;margin-bottom:16px;opacity:0.4;animation:float 3s infinite ease-in-out">👥</div>
       <p class="serif" style="font-size:20px;color:var(--brass-light);opacity:0.5;margin-bottom:8px">Keine Beziehungsdaten</p>
       <p style="font-size:13px;color:var(--brass);opacity:0.3">Erstelle eine <code style="background:rgba(207,157,123,0.1);padding:2px 8px;border-radius:6px">beziehungen.json</code></p>
+      <p style="font-size:11px;color:rgba(200,100,100,0.5);margin-top:12px;font-family:monospace">${err.message||err}</p>
     </div>`;
 });
 
