@@ -75,6 +75,13 @@
         "bilder": [
           "karten/charaktere/vater/Malakar_1.png"
         ]
+      },
+      {
+        "id": 9,
+        "titel": "Susie",
+        "vorderseite": "Beste Freundin",
+        "rueckseite": ["karten/charaktere/susie/rueckseite.txt"],
+        "bilder": []
       }
     ]
   },
