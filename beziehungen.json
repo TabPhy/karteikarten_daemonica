@@ -7,63 +7,63 @@
       "icon": "👩",
       "rolle": "Protagonistin",
       "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit.",
-      "karte": { "kategorie": "Charaktere", "index": 0 }
+      "karte_id": 1
     },
     {
       "name": "Lucien",
       "icon": "😈",
       "rolle": "Antagonist",
       "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele.",
-      "karte": { "kategorie": "Charaktere", "index": 1 }
+      "karte_id": 2
     },
     {
       "name": "Elena",
       "icon": "👧",
       "rolle": "Mutter",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 2 }
+      "karte_id": 7
     },
     {
       "name": "Malakar",
       "icon": "🤴",
       "rolle": "Vater",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 3 }
+      "karte_id": 8
     },
     {
       "name": "Mason",
       "icon": "🤴",
       "rolle": "Halbbruder",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 4 }
+      "karte_id": 5
     },
     {
       "name": "Ethan",
       "icon": "🤴",
       "rolle": "Adoptivbruder",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 5 }
+      "karte_id": 3
     },
     {
       "name": "Lily",
       "icon": "👧",
       "rolle": "Halbschwester",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 6 }
+      "karte_id": 6
     },
     {
       "name": "Ava",
       "icon": "👧",
       "rolle": "Halbschwester",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 7 }
+      "karte_id": 4
     },
     {
       "name": "Susie",
       "icon": "👧",
       "rolle": "Beste Freundin",
       "beschreibung": "-",
-      "karte": { "kategorie": "Charaktere", "index": 8 }
+      "karte_id": 9
     }
   ],
   "beziehungen": [
