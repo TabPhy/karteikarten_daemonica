@@ -4,6 +4,7 @@
     "beschreibung": "Figuren & Persönlichkeiten",
     "karten": [
       {
+        "id": 1,
         "titel": "Cassie Hawthorne",
         "vorderseite": "Protagonist",
         "rueckseite": ["karten/charaktere/protagonist/rueckseite.txt"],
@@ -13,6 +14,7 @@
         ]
       },
       {
+        "id": 2,
         "titel": "Lucien",
         "vorderseite": "Antagonist | Höllenprinz",
         "rueckseite": ["karten/charaktere/antagonist/rueckseite.txt"],
@@ -21,6 +23,7 @@
         ]
       },
       {
+        "id": 3,
         "titel": "Ethan Hawthorne",
         "vorderseite": "Cassies Adoptivbruder | Malakars Untergebener",
         "rueckseite": ["karten/charaktere/bruder_1/rueckseite.txt"],
@@ -29,6 +32,7 @@
         ]
       },
       {
+        "id": 4,
         "titel": "Ava Hawthorne",
         "vorderseite": "Cassies Halbschwester | jüngerer Zwilling",
         "rueckseite": ["karten/charaktere/schwester_1/rueckseite.txt"],
@@ -37,6 +41,7 @@
         ]
       },
       {
+        "id": 5,
         "titel": "Mason Hawthorne",
         "vorderseite": "Cassies Halbbruder | älterer Zwilling",
         "rueckseite": ["karten/charaktere/bruder_2/rueckseite.txt"],
@@ -45,6 +50,7 @@
         ]
       },
       {
+        "id": 6,
         "titel": "Lily Hawthorne",
         "vorderseite": "Cassies Halbschwester | jüngste Schwester",
         "rueckseite": ["karten/charaktere/schwester_2/rueckseite.txt"],
@@ -53,6 +59,7 @@
         ]
       },
       {
+        "id": 7,
         "titel": "Elena Hawthorne",
         "vorderseite": "Cassies Mutter",
         "rueckseite": ["karten/charaktere/mutter/rueckseite.txt"],
@@ -61,6 +68,7 @@
         ]
       },
       {
+        "id": 8,
         "titel": "Malakar",
         "vorderseite": "Cassies Vater | Höllenlord",
         "rueckseite": ["karten/charaktere/vater/rueckseite.txt"],
