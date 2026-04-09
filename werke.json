@@ -1,19 +1,19 @@
 [
   {
-    "titel": "Mein Erster Roman",
-    "beschreibung": "Eine packende Geschichte über Mut, Freundschaft und die Suche nach dem eigenen Weg.",
-    "cover": "werke/mein-erster-roman/cover.jpg",
-    "link": "https://www.wattpad.com/story/DEINE-STORY-ID",
-    "tags": ["Fantasy", "Abenteuer"],
+    "titel": "Daemonica",
+    "beschreibung": "Jahr 2042.\n Ein Virus hat die Welt verändert. Infizierte verlieren ihren Verstand, ihre Körper verändern sich und zurück bleiben Kreaturen, die man nur noch Daemonen nennt. Hinter Mauern, unter strenger Kontrolle, klammert sich die Menschheit an die Illusion von Normalität.\n Cassandra Hawthorne lebt in einer der letzten sicheren Städte. Ihr Leben ist alles andere als perfekt, aber zumindest berechenbar. Bis zu der Nacht, in der eine verbotene Party außerhalb der Schutzmauern eskaliert und etwas in Cassie erwacht, das es nicht geben dürfte.\n Am nächsten Tag taucht ein neuer Schüler auf. Charmant. Beliebt. Und definitiv nicht der, für den er sich ausgibt. Während Cassie verzweifelt versucht zu begreifen, was mit ihr geschieht, drängt er sich Schritt für Schritt in ihr Leben.\n Was sie nicht weiß: Für ihn ist sie keine Fremde. Sie ist der Grund, warum er hier ist. \n Alle Rechte vorbehalten",
+    "cover": "werke/daemonica/Cover.png",
+    "link": "https://www.wattpad.com/story/215314115-daemonica",
+    "tags": ["Fantasy", "Dämonen"],
     "status": "ongoing"
   },
   {
-    "titel": "Kurzgeschichten",
-    "beschreibung": "Eine Sammlung kleiner Geschichten aus verschiedenen Welten.",
-    "cover": "werke/kurzgeschichten/cover.jpg",
-    "link": "https://www.wattpad.com/story/DEINE-STORY-ID",
-    "tags": ["Kurzgeschichten"],
-    "status": "complete"
+    "titel": "DIFFERENT - A Tale of Two Sisters",
+    "beschreibung": "»Weißt du, wer du wirklich bist?«\n Faith ist die Wiedergeburt des Halbbluts, das vor Hunderten von Jahren aus einer lieblosen Beziehung zwischen Luzifer und einem Erzengel hervorgegangen war. Sie war erst wenige Wochen alt, als ihre leiblichen Eltern bei einem Angriff durch Dämonen auf ihr Heimatdorf ums Leben kamen. Es ist ungewiss, wodurch der Feind sie so schnell aufspüren konnte.\n Seitdem lebt sie bei Gestaltwandlern, welche sie als ihre leibliche Familie vermeint - Bis sie eines Tages die bittere Wahrheit herausfindet.\n Zusammen mit ihrer Stiefschwester Anne und ihrem besten Freund Dilan macht sie sich auf eine unvermeidbare und gefährliche Reise, um das Wohl ihrer Welt zu sichern. \n Sollten die drei Freunde versagen, gibt es kein Zurück mehr.\n © Alle Rechte vorbehalten",
+    "cover": "werke/different/Cover.png",
+    "link": "https://www.wattpad.com/story/151328696-different-a-tale-of-two-sisters",
+    "tags": ["Fantasy", "High Fantasy"],
+    "status": "ongoing"
   },
   {
     "titel": "Projekt Drei",
