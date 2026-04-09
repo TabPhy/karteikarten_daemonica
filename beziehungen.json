@@ -1,0 +1,51 @@
+{
+  "charaktere": [
+    {
+      "name": "Elena",
+      "icon": "👩",
+      "rolle": "Protagonistin",
+      "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit."
+    },
+    {
+      "name": "Marcus",
+      "icon": "🧔",
+      "rolle": "Mentor",
+      "beschreibung": "Ein weiser alter Mann mit dunklem Geheimnis."
+    },
+    {
+      "name": "Viktor",
+      "icon": "😈",
+      "rolle": "Antagonist",
+      "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele."
+    },
+    {
+      "name": "Lina",
+      "icon": "👧",
+      "rolle": "Beste Freundin",
+      "beschreibung": "Elenas treueste Verbündete seit der Kindheit."
+    },
+    {
+      "name": "Adrian",
+      "icon": "🤴",
+      "rolle": "Love Interest",
+      "beschreibung": "Mysteriös und zurückhaltend, aber mit gutem Herz."
+    },
+    {
+      "name": "Nora",
+      "icon": "👩‍🔬",
+      "rolle": "Nebencharakter",
+      "beschreibung": "Die Wissenschaftlerin, die den Schlüssel zur Lösung haben könnte."
+    }
+  ],
+  "beziehungen": [
+    { "von": "Elena", "zu": "Lina",    "typ": "freund",  "label": "Beste Freundinnen" },
+    { "von": "Elena", "zu": "Marcus",  "typ": "mentor",  "label": "Schülerin & Mentor" },
+    { "von": "Elena", "zu": "Adrian",  "typ": "liebe",   "label": "Verliebt" },
+    { "von": "Elena", "zu": "Viktor",  "typ": "feind",   "label": "Erzfeinde" },
+    { "von": "Marcus", "zu": "Viktor", "typ": "feind",   "label": "Alte Rivalen" },
+    { "von": "Marcus", "zu": "Nora",   "typ": "familie", "label": "Geschwister" },
+    { "von": "Lina",   "zu": "Adrian", "typ": "neutral", "label": "Misstrauisch" },
+    { "von": "Adrian", "zu": "Viktor", "typ": "neutral", "label": "Unbekannte Verbindung" },
+    { "von": "Nora",   "zu": "Elena",  "typ": "freund",  "label": "Verbündete" }
+  ]
+}
