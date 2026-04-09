@@ -1,51 +1,66 @@
 {
+  "_hinweis": "Wenn ein Name hier mit einem Karten-Titel in cards.json übereinstimmt, wird automatisch das erste Bild dieser Karte als Avatar genutzt.",
+
   "charaktere": [
     {
-      "name": "Elena",
+      "name": "Cassie",
       "icon": "👩",
       "rolle": "Protagonistin",
       "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit."
     },
     {
-      "name": "Marcus",
-      "icon": "🧔",
-      "rolle": "Mentor",
-      "beschreibung": "Ein weiser alter Mann mit dunklem Geheimnis."
+      "name": "Susie",
+      "icon": "👧",
+      "rolle": "Beste Freundin",
+      "beschreibung": "-"
     },
     {
-      "name": "Viktor",
+      "name": "Lucien",
       "icon": "😈",
       "rolle": "Antagonist",
       "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele."
     },
     {
-      "name": "Lina",
+      "name": "Elena",
       "icon": "👧",
-      "rolle": "Beste Freundin",
-      "beschreibung": "Elenas treueste Verbündete seit der Kindheit."
+      "rolle": "Mutter",
+      "beschreibung": "-"
     },
     {
-      "name": "Adrian",
+      "name": "Malakar",
       "icon": "🤴",
-      "rolle": "Love Interest",
-      "beschreibung": "Mysteriös und zurückhaltend, aber mit gutem Herz."
+      "rolle": "Vater",
+      "beschreibung": "-"
     },
     {
-      "name": "Nora",
-      "icon": "👩‍🔬",
-      "rolle": "Nebencharakter",
-      "beschreibung": "Die Wissenschaftlerin, die den Schlüssel zur Lösung haben könnte."
+      "name": "Mason",
+      "icon": "🤴",
+      "rolle": "Halbbruder",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Ethan",
+      "icon": "🤴",
+      "rolle": "Adoptivbruder",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Lily",
+      "icon": "👧",
+      "rolle": "Halbschwester",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Ava",
+      "icon": "👧",
+      "rolle": "Halbschwester",
+      "beschreibung": "-"
     }
   ],
   "beziehungen": [
-    { "von": "Elena", "zu": "Lina",    "typ": "freund",  "label": "Beste Freundinnen" },
-    { "von": "Elena", "zu": "Marcus",  "typ": "mentor",  "label": "Schülerin & Mentor" },
-    { "von": "Elena", "zu": "Adrian",  "typ": "liebe",   "label": "Verliebt" },
-    { "von": "Elena", "zu": "Viktor",  "typ": "feind",   "label": "Erzfeinde" },
-    { "von": "Marcus", "zu": "Viktor", "typ": "feind",   "label": "Alte Rivalen" },
-    { "von": "Marcus", "zu": "Nora",   "typ": "familie", "label": "Geschwister" },
-    { "von": "Lina",   "zu": "Adrian", "typ": "neutral", "label": "Misstrauisch" },
-    { "von": "Adrian", "zu": "Viktor", "typ": "neutral", "label": "Unbekannte Verbindung" },
-    { "von": "Nora",   "zu": "Elena",  "typ": "freund",  "label": "Verbündete" }
+    { "von": "Cassie", "zu": "Susie",    "typ": "freund",  "label": "Beste Freundinnen" },
+    { "von": "Cassie", "zu": "Lucien", "typ": "feind",   "label": "Rivalen" },
+    { "von": "Elena", "zu": "Malakar",   "typ": "familie", "label": "Ex Verheiratet" },
+    { "von": "Mason",   "zu": "Ava", "typ": "familie", "label": "Zwillinge" },
   ]
 }
