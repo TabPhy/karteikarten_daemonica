@@ -12,11 +12,14 @@
     border: 1px solid rgba(207,157,123,0.08);
     border-radius: 20px; padding: 32px; max-width: 700px; margin: 0 auto;
     font-size: 20px; line-height: 1.8; font-family: 'Playfair Display', serif;
-    position: relative; min-height: 120px; cursor: text;
+    position: relative; min-height: 120px; max-height: 220px;
+    cursor: text; overflow-y: scroll;
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     outline: none; user-select: none;
-    overflow: hidden;
+    word-wrap: break-word; overflow-wrap: break-word;
+    scrollbar-width: none; -ms-overflow-style: none;
   }
+  .text-display::-webkit-scrollbar { display: none; }
   .text-display:focus { border-color: rgba(207,157,123,0.2); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 2px rgba(207,157,123,0.1); }
 
   .char { transition: color 0.05s; }
@@ -24,6 +27,7 @@
   .char.wrong { color: #e08080; background: rgba(200,60,60,0.12); border-radius: 3px; }
   .char.current { border-left: 2px solid var(--brass); margin-left: -1px; animation: blink 1s step-end infinite; }
   .char.pending { color: rgba(207,157,123,0.3); }
+  #text-chars { word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; }
 
   .stats-row {
     display: flex; justify-content: center; gap: 36px; margin: 28px 0;
@@ -170,24 +174,40 @@ function updateStats() {
 function buildCharsHTML() {
   let html = '';
   for (let i = 0; i < text.length; i++) {
-    const ch = text[i] === ' ' ? '&nbsp;' : text[i].replace(/</g, '&lt;');
+    const isSpace = text[i] === ' ';
+    const display = isSpace ? ' ' : text[i].replace(/</g, '&lt;');
+    let cls = 'char';
+    if (isSpace) cls += ' space';
     if (i < pos) {
-      const isCorrect = typed[i] === text[i];
-      html += `<span class="char ${isCorrect ? 'correct' : 'wrong'}">${ch}</span>`;
+      cls += typed[i] === text[i] ? ' correct' : ' wrong';
     } else if (i === pos) {
-      html += `<span class="char current pending">${ch}</span>`;
+      cls += ' current pending';
     } else {
-      html += `<span class="char pending">${ch}</span>`;
+      cls += ' pending';
     }
+    html += `<span class="${cls}">${display}</span>`;
   }
   return html;
 }
 
 function updateDisplay() {
   const display = document.getElementById('text-chars');
-  if (display) display.innerHTML = buildCharsHTML();
+  if (display) {
+    display.innerHTML = buildCharsHTML();
+    // Scroll to keep cursor visible
+    const cursor = display.querySelector('.current');
+    if (cursor) {
+      const container = document.getElementById('text-display');
+      const cursorTop = cursor.offsetTop;
+      const containerH = container.clientHeight;
+      const padding = 32;
+      // Scroll so the current line is near the top
+      if (cursorTop > containerH * 0.5) {
+        container.scrollTop = cursorTop - padding;
+      }
+    }
+  }
   updateStats();
-  // Hide the click hint after first keystroke
   const hint = document.getElementById('click-hint');
   if (hint && started) hint.classList.add('hidden');
 }
