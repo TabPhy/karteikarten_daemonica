@@ -1,66 +1,75 @@
 {
-  "_hinweis": "Wenn ein Name hier mit einem Karten-Titel in cards.json übereinstimmt, wird automatisch das erste Bild dieser Karte als Avatar genutzt.",
+  "_hinweis": "Mit 'karte' verknüpfst du einen Charakter mit einer Karteikarte. 'kategorie' = Name der Kategorie in cards.json, 'index' = Position der Karte (0 = erste Karte).",
 
   "charaktere": [
     {
       "name": "Cassie",
       "icon": "👩",
       "rolle": "Protagonistin",
-      "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit."
-    },
-    {
-      "name": "Susie",
-      "icon": "👧",
-      "rolle": "Beste Freundin",
-      "beschreibung": "-"
+      "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit.",
+      "karte": { "kategorie": "Charaktere", "index": 0 }
     },
     {
       "name": "Lucien",
       "icon": "😈",
       "rolle": "Antagonist",
-      "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele."
+      "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele.",
+      "karte": { "kategorie": "Charaktere", "index": 1 }
     },
     {
       "name": "Elena",
       "icon": "👧",
       "rolle": "Mutter",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 2 }
     },
     {
       "name": "Malakar",
       "icon": "🤴",
       "rolle": "Vater",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 3 }
     },
     {
       "name": "Mason",
       "icon": "🤴",
       "rolle": "Halbbruder",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 4 }
     },
     {
       "name": "Ethan",
       "icon": "🤴",
       "rolle": "Adoptivbruder",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 5 }
     },
     {
       "name": "Lily",
       "icon": "👧",
       "rolle": "Halbschwester",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 6 }
     },
     {
       "name": "Ava",
       "icon": "👧",
       "rolle": "Halbschwester",
-      "beschreibung": "-"
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 7 }
+    },
+    {
+      "name": "Susie",
+      "icon": "👧",
+      "rolle": "Beste Freundin",
+      "beschreibung": "-",
+      "karte": { "kategorie": "Charaktere", "index": 8 }
     }
   ],
   "beziehungen": [
-    { "von": "Cassie", "zu": "Susie",    "typ": "freund",  "label": "Beste Freundinnen" },
-    { "von": "Cassie", "zu": "Lucien", "typ": "feind",   "label": "Rivalen" },
-    { "von": "Elena", "zu": "Malakar",   "typ": "familie", "label": "Ex Verheiratet" },
-    { "von": "Mason",   "zu": "Ava", "typ": "familie", "label": "Zwillinge" }
+    { "von": "Cassie", "zu": "Susie",   "typ": "freund",  "label": "Beste Freundinnen" },
+    { "von": "Cassie", "zu": "Lucien",  "typ": "feind",   "label": "Rivalen" },
+    { "von": "Elena",  "zu": "Malakar", "typ": "familie", "label": "Ex Verheiratet" },
+    { "von": "Mason",  "zu": "Ava",     "typ": "familie", "label": "Zwillinge" }
   ]
 }
