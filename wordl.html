@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wordle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="shared.css" rel="stylesheet"/>
+<style>
+  .board { display:flex; flex-direction:column; gap:8px; align-items:center; margin:0 auto 24px; }
+  .row { display:flex; gap:8px; }
+  .tile {
+    width:56px; height:56px; border-radius:12px;
+    border:2px solid rgba(207,157,123,0.12);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:24px; font-weight:700;
+    color:var(--cream); text-transform:uppercase;
+    transition: all 0.3s; position:relative;
+  }
+  .tile.filled { border-color:rgba(207,157,123,0.3); animation:popIn .15s ease; }
+  .tile.correct { background:rgba(67,233,123,0.2); border-color:rgba(67,233,123,0.4); color:#6ee7b7; }
+  .tile.present { background:rgba(207,157,123,0.2); border-color:rgba(207,157,123,0.4); color:var(--brass-light); }
+  .tile.absent { background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.06); color:rgba(255,255,255,0.25); }
+  .tile.reveal { animation: flipReveal 0.5s ease both; }
+  @keyframes flipReveal {
+    0% { transform:rotateX(0); } 50% { transform:rotateX(90deg); } 100% { transform:rotateX(0); }
+  }
+  .tile.bounce { animation: bounce 0.4s ease; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+
+  .kb { display:flex; flex-direction:column; gap:6px; align-items:center; }
+  .kb-row { display:flex; gap:5px; }
+  .kb-key {
+    height:44px; min-width:32px; padding:0 10px; border-radius:8px;
+    background:linear-gradient(150deg,var(--jungle),var(--jet));
+    border:1px solid rgba(207,157,123,0.1);
+    color:var(--brass); font-family:'Inter',sans-serif; font-size:14px; font-weight:600;
+    cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center;
+  }
+  .kb-key:hover { border-color:rgba(207,157,123,0.3); transform:translateY(-1px); }
+  .kb-key.correct { background:rgba(67,233,123,0.15); border-color:rgba(67,233,123,0.3); color:#6ee7b7; }
+  .kb-key.present { background:rgba(207,157,123,0.15); border-color:rgba(207,157,123,0.3); color:var(--brass-light); }
+  .kb-key.absent { background:rgba(255,255,255,0.02); border-color:rgba(255,255,255,0.04); color:rgba(255,255,255,0.15); }
+  .kb-key.wide { min-width:56px; font-size:12px; }
+
+  .msg { text-align:center; min-height:28px; font-size:14px; color:var(--brass); opacity:0.6; margin-bottom:16px; }
+  .msg.error { color:#e08080; animation:shake .4s ease; }
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>initSharedUI('wordle');</script>
+<div class="page-wrap" id="app"></div>
+
+<script>
+const WORDS5=["PROSA","REIM","FABEL","DRAMA","LYRIK","MOTIV","FIGUR","SZENE","ROMAN","GENRE","TENOR","THEMA","TITEL","STOFF","EPOS","KANON","ZITAT","AUTOR","MUSE","VERLA"];
+const VALID=new Set(WORDS5);
+const ROWS=6, COLS=5;
+let target,board,currentRow,currentCol,over,msg,msgErr;
+
+function pick(){ return WORDS5[Math.floor(Math.random()*WORDS5.length)]; }
+
+function newGame(){
+  target=pick(); board=Array.from({length:ROWS},()=>Array(COLS).fill({ch:'',state:''}));
+  currentRow=0; currentCol=0; over=false; msg=''; msgErr=false;
+  render();
+}
+
+function addLetter(ch){
+  if(over||currentCol>=COLS) return;
+  board[currentRow][currentCol]={ch,state:''};
+  currentCol++; render();
+}
+
+function removeLetter(){
+  if(over||currentCol<=0) return;
+  currentCol--; board[currentRow][currentCol]={ch:'',state:''}; render();
+}
+
+function submitGuess(){
+  if(over||currentCol<COLS) return;
+  const guess=board[currentRow].map(t=>t.ch).join('');
+
+  // Evaluate
+  const tArr=target.split('');
+  const states=Array(COLS).fill('absent');
+  // First pass: correct
+  for(let i=0;i<COLS;i++){
+    if(guess[i]===tArr[i]){ states[i]='correct'; tArr[i]='_'; }
+  }
+  // Second pass: present
+  for(let i=0;i<COLS;i++){
+    if(states[i]==='correct') continue;
+    const idx=tArr.indexOf(guess[i]);
+    if(idx>=0){ states[i]='present'; tArr[idx]='_'; }
+  }
+
+  for(let i=0;i<COLS;i++) board[currentRow][i].state=states[i];
+
+  if(guess===target){ over=true; msg='🎉 Fantastisch!'; }
+  else if(currentRow>=ROWS-1){ over=true; msg=`Das Wort war: ${target}`; }
+  else { currentRow++; currentCol=0; }
+
+  msgErr=false; render();
+}
+
+function getKeyStates(){
+  const m={};
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const{ch,state}=board[r][c];
+      if(!ch||!state) continue;
+      if(state==='correct') m[ch]='correct';
+      else if(state==='present'&&m[ch]!=='correct') m[ch]='present';
+      else if(!m[ch]) m[ch]='absent';
+    }
+  }
+  return m;
+}
+
+function render(){
+  const app=document.getElementById('app');
+  const ks=getKeyStates();
+  const kbRows=[
+    'QWERTZUIOP'.split(''),
+    'ASDFGHJKL'.split(''),
+    ['⏎',...'YXCVBNM'.split(''),'⌫'],
+  ];
+
+  app.innerHTML=`
+    <header style="text-align:center;margin-bottom:28px">
+      <div style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--brass);opacity:0.5;margin-bottom:12px;animation:titleReveal .8s ease both">🟩  Minispiel</div>
+      <h1 class="serif" style="font-size:44px;font-weight:800;color:var(--brass-light);animation:slideUp .6s ease both">Wordle</h1>
+      <div class="divider" style="margin:18px auto 0"></div>
+      <p style="color:var(--brass);opacity:0.35;margin-top:10px;font-size:13px;font-style:italic">${COLS} Buchstaben, ${ROWS} Versuche — literarische Begriffe</p>
+      <div style="margin-top:10px"><a href="spiele.html" class="btn btn-ghost" style="font-size:12px;padding:6px 14px;text-decoration:none">← Alle Spiele</a></div>
+    </header>
+
+    <div class="msg ${msgErr?'error':''}">${msg}</div>
+
+    <div class="board">
+      ${board.map((row,r)=>`<div class="row">${row.map((t,c)=>{
+        const filled=t.ch?'filled':'';
+        const reveal=t.state?'reveal':'';
+        const win=over&&r===currentRow&&t.state==='correct'?'bounce':'';
+        return `<div class="tile ${filled} ${t.state} ${reveal} ${win}" style="${reveal?`animation-delay:${c*0.15}s`:''}">${t.ch}</div>`;
+      }).join('')}</div>`).join('')}
+    </div>
+
+    <div class="kb">
+      ${kbRows.map(row=>`<div class="kb-row">${row.map(k=>{
+        const cls=k.length>1?'kb-key wide':'kb-key';
+        const state=ks[k]||'';
+        return `<button class="${cls} ${state}" onclick="${k==='⏎'?'submitGuess()':k==='⌫'?'removeLetter()':`addLetter('${k}')`}">${k}</button>`;
+      }).join('')}</div>`).join('')}
+    </div>
+
+    ${over?`<div style="text-align:center;margin-top:20px"><button class="btn btn-primary" onclick="newGame()" style="padding:10px 28px">Nochmal</button></div>`:''}
+  `;
+}
+
+document.addEventListener('keydown',e=>{
+  if(over) return;
+  if(e.key==='Enter') submitGuess();
+  else if(e.key==='Backspace') removeLetter();
+  else{
+    const c=e.key.toUpperCase();
+    if(/^[A-ZÄÖÜ]$/.test(c)) addLetter(c);
+  }
+});
+newGame();
+</script>
+</body>
+</html>
