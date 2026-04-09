@@ -158,7 +158,9 @@ function App() {
 
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
-      <div className="page-wrap" style={{
+      <div style={{
+        maxWidth: 1020, margin: "0 auto", padding: "32px 24px 44px",
+        position: "relative", zIndex: 1,
         opacity: trans ? 0 : 1, transform: trans ? "translateY(12px)" : "translateY(0)",
         transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
       }}>
