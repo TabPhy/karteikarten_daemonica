@@ -61,6 +61,6 @@
     { "von": "Cassie", "zu": "Susie",    "typ": "freund",  "label": "Beste Freundinnen" },
     { "von": "Cassie", "zu": "Lucien", "typ": "feind",   "label": "Rivalen" },
     { "von": "Elena", "zu": "Malakar",   "typ": "familie", "label": "Ex Verheiratet" },
-    { "von": "Mason",   "zu": "Ava", "typ": "familie", "label": "Zwillinge" },
+    { "von": "Mason",   "zu": "Ava", "typ": "familie", "label": "Zwillinge" }
   ]
 }
