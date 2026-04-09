@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>???</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="shared.css" rel="stylesheet"/>
+<style>
+  .ee-wrap { text-align: center; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+  .glitch-title {
+    font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 800;
+    color: var(--brass-light); position: relative; display: inline-block;
+  }
+  .glitch-title::before, .glitch-title::after {
+    content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%;
+    overflow: hidden; pointer-events: none;
+  }
+  .glitch-title::before { color: #e08080; animation: glitch1 3s infinite; clip-path: inset(0 0 60% 0); }
+  .glitch-title::after { color: #6ee7b7; animation: glitch2 3s infinite; clip-path: inset(40% 0 0 0); }
+  @keyframes glitch1 {
+    0%,92%,100% { transform: translate(0); } 93% { transform: translate(-4px, 2px); }
+    96% { transform: translate(4px, -2px); } 98% { transform: translate(-2px, 0); }
+  }
+  @keyframes glitch2 {
+    0%,90%,100% { transform: translate(0); } 91% { transform: translate(3px, -1px); }
+    94% { transform: translate(-3px, 1px); } 97% { transform: translate(2px, 2px); }
+  }
+
+  .secret-content {
+    max-width: 600px; margin: 0 auto; padding: 40px 24px;
+    animation: fadeIn 1.5s ease;
+  }
+
+  .secret-card {
+    background: linear-gradient(150deg, var(--jungle), var(--jet));
+    border: 1px solid rgba(207,157,123,0.08); border-radius: 18px;
+    padding: 28px; margin-bottom: 20px; text-align: left;
+    transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  .secret-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(207,157,123,0.06), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .secret-card:hover::before { opacity: 1; }
+  .secret-card:hover { border-color: rgba(207,157,123,0.2); transform: translateY(-3px); }
+
+  .typewriter {
+    font-family: 'Playfair Display', serif; font-size: 20px;
+    color: var(--brass-light); opacity: 0.7;
+    border-right: 2px solid var(--brass);
+    display: inline-block; overflow: hidden; white-space: nowrap;
+    animation: typewriter 3s steps(40) 1s both, blink 0.7s step-end infinite;
+    max-width: 100%;
+  }
+
+  .matrix-rain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.04;
+    font-family: monospace; overflow: hidden;
+  }
+  .matrix-col {
+    position: absolute; top: -100%; color: var(--brass);
+    font-size: 14px; line-height: 1.2; writing-mode: vertical-rl;
+    animation: matrixFall linear infinite;
+  }
+  @keyframes matrixFall {
+    0% { top: -20%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  .achievement {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(207,157,123,0.08); border: 1px solid rgba(207,157,123,0.15);
+    border-radius: 20px; padding: 6px 16px; font-size: 12px;
+    color: var(--brass); margin: 4px;
+  }
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>
+// Don't use initSharedUI — no nav on this page! Just particles and glow.
+const g1 = document.createElement("div"); g1.className = "bg-glow-1";
+const g2 = document.createElement("div"); g2.className = "bg-glow-2";
+document.body.append(g1, g2);
+const pc = document.createElement("div");
+pc.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;";
+for (let i = 0; i < 16; i++) {
+  const p = document.createElement("div"); p.className = "particle";
+  const s = 2 + Math.random() * 5;
+  p.style.cssText = `left:${3+Math.random()*94}%;bottom:-20px;width:${s}px;height:${s}px;animation:floatUp ${12+Math.random()*10}s ${i*0.9}s infinite ease-in-out;`;
+  pc.appendChild(p);
+}
+document.body.append(pc);
+</script>
+
+<!-- Matrix rain background -->
+<div class="matrix-rain" id="matrix"></div>
+<script>
+const matrixEl=document.getElementById('matrix');
+const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+for(let i=0;i<30;i++){
+  const col=document.createElement('div'); col.className='matrix-col';
+  col.style.left=`${Math.random()*100}%`;
+  col.style.animationDuration=`${8+Math.random()*12}s`;
+  col.style.animationDelay=`${Math.random()*10}s`;
+  col.style.fontSize=`${10+Math.random()*8}px`;
+  let t='';
+  for(let j=0;j<30;j++) t+=chars[Math.floor(Math.random()*chars.length)]+'\n';
+  col.textContent=t;
+  matrixEl.appendChild(col);
+}
+</script>
+
+<div class="page-wrap">
+  <div class="ee-wrap">
+    <div style="margin-bottom:16px;font-size:80px;animation:float 3s infinite ease-in-out">🔮</div>
+    <div class="glitch-title" data-text="Du hast mich gefunden" style="animation:fadeScale 1s ease both">Du hast mich gefunden</div>
+    <div style="margin-top:16px">
+      <div class="typewriter">Willkommen auf der anderen Seite...</div>
+    </div>
+
+    <div style="margin-top:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;animation:fadeIn 2s 3s both ease">
+      <span class="achievement">🏆 Konami-Meister</span>
+      <span class="achievement">🔍 Geheimnis-Finder</span>
+      <span class="achievement">📚 Wahrer Bücherwurm</span>
+    </div>
+  </div>
+
+  <div class="secret-content">
+    <div class="secret-card" style="animation:slideUp .5s .5s both ease">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--brass);opacity:0.3;text-transform:uppercase;margin-bottom:10px">Geheimnis #1</div>
+      <div class="serif" style="font-size:18px;color:var(--brass-light);margin-bottom:8px">Behind the Scenes</div>
+      <p style="font-size:13px;color:var(--brass);opacity:0.5;line-height:1.7">
+        Hier kannst du Notizen, gestrichene Szenen, alternative Enden oder Fun Facts über dein Buch einfügen.
+        Alles was deine treuesten Leser belohnt. Bearbeite einfach diese HTML-Datei!
+      </p>
+    </div>
+
+    <div class="secret-card" style="animation:slideUp .5s .7s both ease">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--brass);opacity:0.3;text-transform:uppercase;margin-bottom:10px">Geheimnis #2</div>
+      <div class="serif" style="font-size:18px;color:var(--brass-light);margin-bottom:8px">Gestrichene Szene</div>
+      <p style="font-size:13px;color:var(--brass);opacity:0.5;line-height:1.7;font-style:italic">
+        „Hier stand einmal eine Szene, die es nicht ins finale Buch geschafft hat.
+        Vielleicht erzähle ich sie eines Tages trotzdem..."
+      </p>
+    </div>
+
+    <div class="secret-card" style="animation:slideUp .5s .9s both ease">
+      <div style="font-size:11px;letter-spacing:3px;color:var(--brass);opacity:0.3;text-transform:uppercase;margin-bottom:10px">Geheimnis #3</div>
+      <div class="serif" style="font-size:18px;color:var(--brass-light);margin-bottom:8px">Fun Facts</div>
+      <p style="font-size:13px;color:var(--brass);opacity:0.5;line-height:1.7">
+        🔹 Wie viele Entwürfe gab es?<br>
+        🔹 Welcher Charakter wurde zuerst erfunden?<br>
+        🔹 Gab es reale Inspirationen?<br>
+        🔹 Was war die schwierigste Szene zu schreiben?
+      </p>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;animation:fadeIn 1s 1.5s both ease">
+      <a href="index.html" class="btn btn-ghost" style="text-decoration:none;padding:10px 24px">
+        ← Zurück zur Oberfläche
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

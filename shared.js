@@ -1,25 +1,32 @@
-/* shared.js — particles, glow & navigation */
+/* shared.js — particles, glow, navigation & easter egg */
 
 function initSharedUI(activePage) {
   const pages = [
-    { href: "index.html",      key: "karten",     icon: "📚", label: "Karteikarten" },
-    { href: "buch.html",       key: "buch",        icon: "📖", label: "Mein Buch" },
-    { href: "spiel.html",      key: "spiel",       icon: "🃏", label: "Memory" },
-    { href: "wortspiel.html",  key: "wortspiel",   icon: "✏️", label: "Wörterraten" },
-    { href: "fokus.html",      key: "fokus",        icon: "🕯️", label: "Fokus" },
+    { href: "index.html",        key: "karten",      icon: "📚", label: "Karteikarten" },
+    { href: "werke.html",        key: "werke",        icon: "📖", label: "Meine Werke" },
+    { href: "timeline.html",     key: "timeline",     icon: "🗺️", label: "Zeitleiste" },
+    { href: "beziehungen.html",  key: "beziehungen",  icon: "👥", label: "Beziehungen" },
+    { href: "spiele.html",       key: "spiele",       icon: "🎮", label: "Spiele" },
+    { href: "fokus.html",        key: "fokus",        icon: "🕯️", label: "Fokus" },
   ];
+
+  // Mark "Spiele" as active for any game sub-page
+  const gamePages = ["spiel","wortspiel","tictactoe","hangman","wordle","typing"];
+  const effectiveActive = gamePages.includes(activePage) ? "spiele" : activePage;
 
   const nav = document.createElement("nav");
   nav.className = "site-nav";
   nav.innerHTML = pages.map(p =>
-    `<a href="${p.href}" class="nav-link ${p.key === activePage ? 'active' : ''}">${p.icon} ${p.label}</a>`
+    `<a href="${p.href}" class="nav-link ${p.key === effectiveActive ? 'active' : ''}">${p.icon}<span class="nav-label"> ${p.label}</span></a>`
   ).join('');
   document.body.prepend(nav);
 
+  // Background
   const g1 = document.createElement("div"); g1.className = "bg-glow-1";
   const g2 = document.createElement("div"); g2.className = "bg-glow-2";
   document.body.append(g1, g2);
 
+  // Particles
   const pc = document.createElement("div");
   pc.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;";
   for (let i = 0; i < 16; i++) {
@@ -30,4 +37,14 @@ function initSharedUI(activePage) {
     pc.appendChild(p);
   }
   document.body.append(pc);
+
+  // ── Konami Code Easter Egg ──
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let konamiIdx = 0;
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === konami[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === konami.length) { konamiIdx = 0; window.location.href = 'easter.html'; }
+    } else { konamiIdx = 0; }
+  });
 }

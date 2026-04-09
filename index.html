@@ -115,6 +115,14 @@ function App() {
   const [cardIdx, setCardIdx] = useState(0);
   const [lightbox, setLightbox] = useState(null);
   const [viewMode, setViewMode] = useState("grid");
+  const clickRef = React.useRef(0);
+  const clickTimer = React.useRef(null);
+  const handleTitleClick = () => {
+    clickRef.current++;
+    clearTimeout(clickTimer.current);
+    if (clickRef.current >= 5) { clickRef.current = 0; window.location.href = "easter.html"; }
+    clickTimer.current = setTimeout(() => { clickRef.current = 0; }, 800);
+  };
 
   useEffect(() => {
     fetch("cards.json")
@@ -158,7 +166,9 @@ function App() {
 
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
-      <div className="page-wrap" style={{
+      <div style={{
+        maxWidth: 1020, margin: "0 auto", padding: "32px 24px 44px",
+        position: "relative", zIndex: 1,
         opacity: trans ? 0 : 1, transform: trans ? "translateY(12px)" : "translateY(0)",
         transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
       }}>
@@ -171,7 +181,7 @@ function App() {
           <div style={{ fontSize: 11, letterSpacing: 6, textTransform: "uppercase", color: "var(--brass)", opacity: 0.5, marginBottom: 12, animation: "titleReveal 0.8s ease both" }}>
             {activeCat ? catData.icon + "  " + activeCat : "📚  Bibliothek"}
           </div>
-          <h1 className="serif" style={{
+          <h1 className="serif" onClick={!activeCat ? handleTitleClick : undefined} style={{
             fontSize: activeCat ? 38 : 52, fontWeight: 800, lineHeight: 1.1,
             animation: "slideUp 0.6s ease both",
             background: activeCat ? "var(--brass-light)" : "linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 40%, var(--cream) 60%, var(--brass-light) 100%)",

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="shared.css" rel="stylesheet"/>
+<style>
+  .ttt-board {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 12px; max-width: 340px; margin: 0 auto;
+  }
+
+  .ttt-cell {
+    aspect-ratio: 1; border-radius: 16px;
+    background: linear-gradient(150deg, var(--jungle), var(--jet));
+    border: 1px solid rgba(207,157,123,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; cursor: pointer;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    user-select: none; position: relative; overflow: hidden;
+  }
+  .ttt-cell::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at center, rgba(207,157,123,0.08), transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .ttt-cell:hover::before { opacity: 1; }
+  .ttt-cell:hover {
+    border-color: rgba(207,157,123,0.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(207,157,123,0.05);
+    transform: scale(1.03);
+  }
+  .ttt-cell.disabled { pointer-events: none; }
+  .ttt-cell.win-cell {
+    border-color: rgba(207,157,123,0.5);
+    box-shadow: 0 0 30px rgba(207,157,123,0.15);
+    animation: celebrate 0.6s ease;
+  }
+
+  .ttt-x {
+    color: var(--brass-light);
+    text-shadow: 0 0 20px rgba(207,157,123,0.3);
+    animation: popIn 0.3s ease;
+  }
+  .ttt-o {
+    color: #6ee7b7;
+    text-shadow: 0 0 20px rgba(110,231,183,0.3);
+    animation: popIn 0.3s ease;
+  }
+
+  .score-bar {
+    display: flex; justify-content: center; gap: 40px; margin-bottom: 32px;
+    animation: slideUp 0.5s 0.2s both ease;
+  }
+  .score-item { text-align: center; }
+  .score-value {
+    font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+  }
+  .score-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    opacity: 0.35; margin-top: 4px;
+  }
+  .score-you .score-value { color: var(--brass-light); }
+  .score-draw .score-value { color: var(--brass); opacity: 0.5; }
+  .score-ai .score-value { color: #6ee7b7; }
+
+  .turn-indicator {
+    text-align: center; margin-bottom: 24px;
+    font-size: 14px; color: var(--brass); opacity: 0.5;
+    min-height: 24px;
+  }
+  .turn-indicator .current-mark { font-size: 20px; vertical-align: middle; }
+
+  .diff-row {
+    display: flex; justify-content: center; gap: 8px; margin-bottom: 28px;
+    animation: slideUp 0.5s 0.1s both ease;
+  }
+  .diff-btn {
+    background: rgba(207,157,123,0.06); color: var(--brass);
+    border: 1px solid rgba(207,157,123,0.12); border-radius: 10px;
+    padding: 8px 18px; font-size: 13px; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: all 0.3s;
+  }
+  .diff-btn:hover { background: rgba(207,157,123,0.1); }
+  .diff-btn.active { background: rgba(207,157,123,0.14); border-color: rgba(207,157,123,0.3); color: var(--brass-light); }
+
+  .result-banner {
+    text-align: center; margin-top: 24px; padding: 20px;
+    border-radius: 16px; animation: fadeScale 0.4s ease;
+  }
+  .result-banner.win { background: rgba(207,157,123,0.1); border: 1px solid rgba(207,157,123,0.2); }
+  .result-banner.lose { background: rgba(110,231,183,0.06); border: 1px solid rgba(110,231,183,0.15); }
+  .result-banner.draw { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>initSharedUI('tictactoe');</script>
+<div class="page-wrap" id="app"></div>
+
+<script>
+const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+let board, turn, gameOver, winLine, difficulty;
+let scores = { you: 0, ai: 0, draw: 0 };
+
+function init(diff) {
+  difficulty = diff || difficulty || 'mittel';
+  board = Array(9).fill(null);
+  turn = 'X'; gameOver = false; winLine = null;
+  render();
+}
+
+function checkWin(b) {
+  for (const [a,c,d] of LINES) {
+    if (b[a] && b[a] === b[c] && b[a] === b[d]) return { winner: b[a], line: [a,c,d] };
+  }
+  return b.includes(null) ? null : { winner: 'draw', line: null };
+}
+
+// ── AI ──
+function minimax(b, isMax, depth, alpha, beta) {
+  const res = checkWin(b);
+  if (res) { return res.winner === 'O' ? 10 - depth : res.winner === 'X' ? depth - 10 : 0; }
+
+  if (isMax) {
+    let best = -Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (!b[i]) {
+        b[i] = 'O';
+        best = Math.max(best, minimax(b, false, depth + 1, alpha, beta));
+        b[i] = null;
+        alpha = Math.max(alpha, best);
+        if (beta <= alpha) break;
+      }
+    }
+    return best;
+  } else {
+    let best = Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (!b[i]) {
+        b[i] = 'X';
+        best = Math.min(best, minimax(b, true, depth + 1, alpha, beta));
+        b[i] = null;
+        beta = Math.min(beta, best);
+        if (beta <= alpha) break;
+      }
+    }
+    return best;
+  }
+}
+
+function aiMove() {
+  const empty = board.map((v,i) => v === null ? i : -1).filter(i => i >= 0);
+  if (!empty.length) return;
+
+  // Random chance for mistakes based on difficulty
+  const mistakeChance = difficulty === 'leicht' ? 0.6 : difficulty === 'mittel' ? 0.25 : 0;
+
+  if (Math.random() < mistakeChance) {
+    return empty[Math.floor(Math.random() * empty.length)];
+  }
+
+  let bestScore = -Infinity, bestMove = empty[0];
+  for (const i of empty) {
+    board[i] = 'O';
+    const score = minimax(board, false, 0, -Infinity, Infinity);
+    board[i] = null;
+    if (score > bestScore) { bestScore = score; bestMove = i; }
+  }
+  return bestMove;
+}
+
+function play(i) {
+  if (board[i] || gameOver || turn !== 'X') return;
+  board[i] = 'X';
+
+  const res = checkWin(board);
+  if (res) { endGame(res); return; }
+
+  turn = 'O';
+  render();
+
+  setTimeout(() => {
+    const move = aiMove();
+    if (move !== undefined) {
+      board[move] = 'O';
+      const res2 = checkWin(board);
+      if (res2) { endGame(res2); return; }
+    }
+    turn = 'X';
+    render();
+  }, 400 + Math.random() * 300);
+}
+
+function endGame(res) {
+  gameOver = true;
+  winLine = res.line;
+  if (res.winner === 'X') scores.you++;
+  else if (res.winner === 'O') scores.ai++;
+  else scores.draw++;
+  render();
+}
+
+function render() {
+  const app = document.getElementById('app');
+
+  let turnText = '';
+  if (gameOver) {
+    const res = checkWin(board);
+    if (res.winner === 'X') turnText = '🎉 Du hast gewonnen!';
+    else if (res.winner === 'O') turnText = '🤖 KI gewinnt!';
+    else turnText = '🤝 Unentschieden!';
+  } else {
+    turnText = turn === 'X'
+      ? 'Du bist dran — <span class="current-mark ttt-x">✕</span>'
+      : 'KI denkt nach...';
+  }
+
+  const resultClass = gameOver
+    ? (checkWin(board).winner === 'X' ? 'win' : checkWin(board).winner === 'O' ? 'lose' : 'draw')
+    : '';
+
+  app.innerHTML = `
+    <header style="text-align:center;margin-bottom:36px">
+      <div style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--brass);opacity:0.5;margin-bottom:12px;animation:titleReveal .8s ease both">⭕  Minispiel</div>
+      <h1 class="serif" style="font-size:44px;font-weight:800;color:var(--brass-light);line-height:1.1;animation:slideUp .6s ease both">Tic Tac Toe</h1>
+      <div class="divider" style="margin:18px auto 0"></div>
+      <p style="color:var(--brass);opacity:0.35;margin-top:12px;font-size:13px;font-style:italic">Du ✕ gegen die KI ○</p>
+    </header>
+
+    <div class="diff-row">
+      ${['leicht','mittel','schwer'].map(d =>
+        `<button class="diff-btn ${d===difficulty?'active':''}" onclick="init('${d}')">${d.charAt(0).toUpperCase()+d.slice(1)}</button>`
+      ).join('')}
+    </div>
+
+    <div class="score-bar">
+      <div class="score-item score-you"><div class="score-value">${scores.you}</div><div class="score-label" style="color:var(--brass-light)">Du ✕</div></div>
+      <div class="score-item score-draw"><div class="score-value">${scores.draw}</div><div class="score-label">Remis</div></div>
+      <div class="score-item score-ai"><div class="score-value">${scores.ai}</div><div class="score-label" style="color:#6ee7b7">KI ○</div></div>
+    </div>
+
+    <div class="turn-indicator">${turnText}</div>
+
+    <div class="ttt-board">
+      ${board.map((cell, i) => {
+        const isWin = winLine && winLine.includes(i);
+        const cls = [
+          'ttt-cell',
+          (gameOver || turn !== 'X') ? 'disabled' : '',
+          isWin ? 'win-cell' : '',
+        ].join(' ');
+        let content = '';
+        if (cell === 'X') content = `<span class="ttt-x">✕</span>`;
+        else if (cell === 'O') content = `<span class="ttt-o">○</span>`;
+        return `<div class="${cls}" onclick="play(${i})" style="animation:popIn .3s ${i*0.04}s both ease">${content}</div>`;
+      }).join('')}
+    </div>
+
+    ${gameOver ? `
+      <div class="result-banner ${resultClass}">
+        <span style="font-size:18px;font-weight:600;color:var(--brass-light)">${turnText}</span>
+        <div style="margin-top:14px">
+          <button class="btn btn-primary" onclick="init()" style="padding:10px 28px;font-size:14px">Neue Runde</button>
+        </div>
+      </div>
+    ` : ''}
+  `;
+}
+
+init('mittel');
+</script>
+</body>
+</html>

@@ -83,10 +83,11 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
 
 /* ── Navigation ── */
 .site-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 50;
   display: flex; justify-content: center; gap: 5px;
-  padding: 14px 16px; flex-wrap: wrap;
-  background: linear-gradient(180deg, var(--black) 60%, transparent);
+  padding: 12px 16px; flex-wrap: wrap;
+  background: var(--black);
+  border-bottom: 1px solid rgba(207,157,123,0.06);
 }
 .nav-link {
   text-decoration: none; color: var(--brass); font-size: 12px;
@@ -98,6 +99,8 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
 }
 .nav-link:hover { background: rgba(207,157,123,0.1); border-color: rgba(207,157,123,0.2); transform: translateY(-1px); }
 .nav-link.active { background: rgba(207,157,123,0.14); border-color: rgba(207,157,123,0.3); color: var(--brass-light); }
+.nav-label { }
+@media (max-width: 580px) { .nav-label { display: none; } }
 
 /* ── Buttons ── */
 .btn { border: none; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s cubic-bezier(.4,0,.2,1); }
@@ -118,7 +121,7 @@ h1, h2, h3, .serif { font-family: 'Playfair Display', Georgia, serif; }
 
 /* ── Shared ── */
 .divider { width: 50px; height: 2px; border-radius: 1px; background: linear-gradient(90deg, var(--coffee), var(--brass)); }
-.page-wrap { max-width: 1020px; margin: 0 auto; padding: 80px 24px 44px; position: relative; z-index: 1; }
+.page-wrap { max-width: 1020px; margin: 0 auto; padding: 32px 24px 44px; position: relative; z-index: 1; }
 .text-content { white-space: pre-wrap; }
 
 /* ── Scrollbar ── */

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Meine Werke</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="shared.css" rel="stylesheet"/>
+<style>
+  .werke-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 28px; max-width: 900px; margin: 0 auto;
+  }
+
+  .werk-card {
+    border-radius: 18px; overflow: hidden;
+    background: linear-gradient(150deg, var(--jungle), var(--jet));
+    border: 1px solid rgba(207,157,123,0.08);
+    transition: all 0.5s cubic-bezier(.4,0,.2,1);
+    cursor: pointer; position: relative;
+    text-decoration: none; color: inherit; display: block;
+  }
+  .werk-card::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(135deg, rgba(207,157,123,0.1), transparent 60%);
+    opacity: 0; transition: opacity 0.5s; pointer-events: none;
+  }
+  .werk-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    opacity: 0; transition: opacity 0.5s; z-index: 1;
+  }
+  .werk-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(207,157,123,0.06); }
+  .werk-card:hover::before { opacity: 1; }
+  .werk-card:hover::after { opacity: 0.5; }
+  .werk-card:hover .cover-img { transform: scale(1.04); }
+  .werk-card:hover .read-badge { opacity: 1; transform: translateY(0); }
+
+  .cover-wrap {
+    width: 100%; aspect-ratio: 2/3; overflow: hidden;
+    position: relative; background: rgba(207,157,123,0.04);
+  }
+  .cover-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .cover-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    font-size: 64px; opacity: 0.2;
+    background: linear-gradient(150deg, rgba(207,157,123,0.05), rgba(207,157,123,0.02));
+  }
+  .cover-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(12,21,25,0.7) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .read-badge {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%) translateY(8px);
+    background: linear-gradient(135deg, var(--coffee), var(--brass));
+    color: var(--black); font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    padding: 6px 16px; border-radius: 20px;
+    opacity: 0; transition: all 0.4s; z-index: 2;
+    text-transform: uppercase; white-space: nowrap;
+  }
+
+  .werk-info { padding: 18px 20px 22px; position: relative; z-index: 1; }
+  .werk-title {
+    font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+    color: var(--brass-light); margin-bottom: 6px; line-height: 1.3;
+  }
+  .werk-desc {
+    font-size: 12px; color: var(--brass); opacity: 0.4;
+    line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .werk-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .werk-tag {
+    font-size: 10px; padding: 3px 10px; border-radius: 20px;
+    background: rgba(207,157,123,0.06); border: 1px solid rgba(207,157,123,0.1);
+    color: var(--brass); opacity: 0.5; letter-spacing: 0.5px;
+  }
+  .werk-status {
+    display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-top: 10px;
+  }
+  .status-ongoing { background: rgba(67,233,123,0.08); border: 1px solid rgba(67,233,123,0.15); color: #6ee7b7; }
+  .status-complete { background: rgba(147,197,253,0.08); border: 1px solid rgba(147,197,253,0.15); color: #93c5fd; }
+  .status-planned { background: rgba(207,157,123,0.08); border: 1px solid rgba(207,157,123,0.15); color: var(--brass); }
+
+  .empty-state { text-align: center; padding: 80px 30px; animation: fadeIn 0.8s ease; }
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>initSharedUI('werke');</script>
+<div class="page-wrap" id="app">
+  <header style="text-align:center;margin-bottom:48px">
+    <div style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--brass);opacity:0.5;margin-bottom:12px;animation:titleReveal .8s ease both">📖  Bibliothek</div>
+    <h1 class="serif" style="font-size:48px;font-weight:800;color:var(--brass-light);line-height:1.1;animation:slideUp .6s ease both">Meine Werke</h1>
+    <div class="divider" style="margin:18px auto 0"></div>
+    <p style="color:var(--brass);opacity:0.35;margin-top:14px;font-size:14px;font-weight:300;animation:fadeIn 1s .3s both">Geschichten, die darauf warten gelesen zu werden</p>
+  </header>
+  <div id="werke-container"></div>
+</div>
+
+<script>
+/*
+  werke.json format:
+  [
+    {
+      "titel": "Mein Roman",
+      "beschreibung": "Eine Geschichte über...",
+      "cover": "werke/mein-roman/cover.jpg",
+      "link": "https://www.wattpad.com/story/...",
+      "tags": ["Fantasy", "Drama"],
+      "status": "ongoing"   // "ongoing", "complete", or "planned"
+    }
+  ]
+*/
+
+const STATUS_MAP = {
+  ongoing:  { label: "In Arbeit", cls: "status-ongoing" },
+  complete: { label: "Abgeschlossen", cls: "status-complete" },
+  planned:  { label: "Geplant", cls: "status-planned" },
+};
+
+fetch('werke.json')
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(werke => {
+    const container = document.getElementById('werke-container');
+    if (!werke.length) {
+      container.innerHTML = `<div class="empty-state"><div style="font-size:64px;margin-bottom:20px;opacity:0.4;animation:float 3s infinite ease-in-out">📖</div><p class="serif" style="font-size:22px;color:var(--brass-light);opacity:0.5">Noch keine Werke</p></div>`;
+      return;
+    }
+    container.innerHTML = `<div class="werke-grid">${werke.map((w, i) => {
+      const st = STATUS_MAP[w.status] || STATUS_MAP.planned;
+      return `
+        <a href="${w.link || '#'}" target="_blank" rel="noopener" class="werk-card" style="animation:slideUp .6s ${i*0.1}s both cubic-bezier(.4,0,.2,1)">
+          <div class="cover-wrap">
+            ${w.cover
+              ? `<img class="cover-img" src="${w.cover}" alt="${w.titel}" loading="lazy"/>`
+              : `<div class="cover-placeholder">📖</div>`
+            }
+            <div class="cover-overlay"></div>
+            <div class="read-badge">Auf Wattpad lesen →</div>
+          </div>
+          <div class="werk-info">
+            <div class="werk-title">${w.titel}</div>
+            ${w.beschreibung ? `<div class="werk-desc">${w.beschreibung}</div>` : ''}
+            ${w.tags?.length ? `<div class="werk-tags">${w.tags.map(t=>`<span class="werk-tag">${t}</span>`).join('')}</div>` : ''}
+            <div class="werk-status ${st.cls}">${st.label}</div>
+          </div>
+        </a>`;
+    }).join('')}</div>`;
+  })
+  .catch(() => {
+    document.getElementById('werke-container').innerHTML = `
+      <div class="empty-state">
+        <div style="font-size:64px;margin-bottom:20px;opacity:0.4;animation:float 3s infinite ease-in-out">📖</div>
+        <p class="serif" style="font-size:22px;color:var(--brass-light);opacity:0.5;margin-bottom:10px">Keine werke.json gefunden</p>
+        <p style="font-size:13px;color:var(--brass);opacity:0.3;max-width:420px;margin:0 auto;line-height:1.7">
+          Erstelle eine <code style="background:rgba(207,157,123,0.1);padding:2px 8px;border-radius:6px">werke.json</code> im selben Ordner.
+        </p>
+      </div>`;
+  });
+</script>
+</body>
+</html>

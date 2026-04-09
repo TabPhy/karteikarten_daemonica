@@ -1,0 +1,37 @@
+[
+  {
+    "datum": "Kapitel 1",
+    "titel": "Der Anfang",
+    "text": "Die Geschichte beginnt an einem regnerischen Morgen. Der Protagonist erwacht in einer fremden Stadt.",
+    "bild": "",
+    "tags": ["Haupthandlung", "Protagonist"]
+  },
+  {
+    "datum": "Kapitel 3",
+    "titel": "Die Begegnung",
+    "text": "Zum ersten Mal treffen Protagonist und Antagonist aufeinander. Die Spannung ist sofort spürbar.",
+    "bild": "",
+    "tags": ["Haupthandlung", "Antagonist"]
+  },
+  {
+    "datum": "Kapitel 5",
+    "titel": "Der Wendepunkt",
+    "text": "Alles ändert sich. Was zuvor sicher schien, steht plötzlich auf dem Kopf.",
+    "bild": "",
+    "tags": ["Haupthandlung", "Wendepunkt"]
+  },
+  {
+    "datum": "Kapitel 7",
+    "titel": "Die Enthüllung",
+    "text": "Ein lange gehütetes Geheimnis kommt ans Licht und stellt alles in Frage.",
+    "bild": "",
+    "tags": ["Haupthandlung", "Wendepunkt"]
+  },
+  {
+    "datum": "Kapitel 10",
+    "titel": "Das Finale",
+    "text": "Der letzte Konflikt wird ausgetragen. Nichts wird mehr so sein wie vorher.",
+    "bild": "",
+    "tags": ["Haupthandlung", "Protagonist", "Antagonist"]
+  }
+]

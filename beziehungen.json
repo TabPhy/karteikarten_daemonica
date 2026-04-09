@@ -1,0 +1,66 @@
+{
+  "_hinweis": "Wenn ein Name hier mit einem Karten-Titel in cards.json übereinstimmt, wird automatisch das erste Bild dieser Karte als Avatar genutzt.",
+
+  "charaktere": [
+    {
+      "name": "Cassie",
+      "icon": "👩",
+      "rolle": "Protagonistin",
+      "beschreibung": "Mutig und entschlossen. Sie sucht nach der Wahrheit über ihre Vergangenheit."
+    },
+    {
+      "name": "Susie",
+      "icon": "👧",
+      "rolle": "Beste Freundin",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Lucien",
+      "icon": "😈",
+      "rolle": "Antagonist",
+      "beschreibung": "Charmant aber gefährlich. Verfolgt seine eigenen Ziele."
+    },
+    {
+      "name": "Elena",
+      "icon": "👧",
+      "rolle": "Mutter",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Malakar",
+      "icon": "🤴",
+      "rolle": "Vater",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Mason",
+      "icon": "🤴",
+      "rolle": "Halbbruder",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Ethan",
+      "icon": "🤴",
+      "rolle": "Adoptivbruder",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Lily",
+      "icon": "👧",
+      "rolle": "Halbschwester",
+      "beschreibung": "-"
+    },
+    {
+      "name": "Ava",
+      "icon": "👧",
+      "rolle": "Halbschwester",
+      "beschreibung": "-"
+    }
+  ],
+  "beziehungen": [
+    { "von": "Cassie", "zu": "Susie",    "typ": "freund",  "label": "Beste Freundinnen" },
+    { "von": "Cassie", "zu": "Lucien", "typ": "feind",   "label": "Rivalen" },
+    { "von": "Elena", "zu": "Malakar",   "typ": "familie", "label": "Ex Verheiratet" },
+    { "von": "Mason",   "zu": "Ava", "typ": "familie", "label": "Zwillinge" },
+  ]
+}
