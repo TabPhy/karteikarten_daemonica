@@ -12,13 +12,17 @@
     border: 1px solid rgba(207,157,123,0.08);
     border-radius: 20px; padding: 32px; max-width: 700px; margin: 0 auto;
     font-size: 20px; line-height: 1.8; font-family: 'Playfair Display', serif;
-    position: relative; min-height: 120px;
+    position: relative; min-height: 120px; cursor: text;
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    outline: none; user-select: none;
+    overflow: hidden;
   }
-  .char { transition: color 0.1s; }
+  .text-display:focus { border-color: rgba(207,157,123,0.2); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 2px rgba(207,157,123,0.1); }
+
+  .char { transition: color 0.05s; }
   .char.correct { color: #6ee7b7; }
-  .char.wrong { color: #e08080; background: rgba(200,60,60,0.1); border-radius: 3px; }
-  .char.current { border-bottom: 2px solid var(--brass); animation: blink 1s infinite; }
+  .char.wrong { color: #e08080; background: rgba(200,60,60,0.12); border-radius: 3px; }
+  .char.current { border-left: 2px solid var(--brass); margin-left: -1px; animation: blink 1s step-end infinite; }
   .char.pending { color: rgba(207,157,123,0.3); }
 
   .stats-row {
@@ -54,9 +58,13 @@
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
   }
 
-  .hidden-input {
-    position: absolute; opacity: 0; pointer-events: none;
+  .click-hint {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(12,21,25,0.6); border-radius: 20px;
+    font-size: 14px; color: var(--brass); opacity: 0.6;
+    transition: opacity 0.3s; pointer-events: none;
   }
+  .click-hint.hidden { opacity: 0; }
 </style>
 </head>
 <body>
@@ -76,55 +84,71 @@ const PASSAGES = [
   "Worte sind wie Samen, die man in die Erde der Gedanken pflanzt. Manche blühen sofort, andere brauchen Jahre um zu wachsen.",
 ];
 
-let text, chars, pos, started, startTime, elapsed, duration, timerInterval, done, errors;
+let text, typed, pos, started, startTime, elapsed, duration, timerInterval, done, errors, focused;
 
 function init(dur) {
   duration = dur || duration || 30;
   text = PASSAGES[Math.floor(Math.random() * PASSAGES.length)];
-  chars = text.split('');
-  pos = 0; started = false; startTime = 0; elapsed = 0; done = false; errors = 0;
+  typed = [];
+  pos = 0; started = false; startTime = 0; elapsed = 0; done = false; errors = 0; focused = false;
   clearInterval(timerInterval);
-  render();
-  setTimeout(() => {
-    const inp = document.getElementById('hidden-input');
-    if (inp) inp.focus();
-  }, 100);
+  renderFull();
+}
+
+function startTimer() {
+  if (started) return;
+  started = true;
+  startTime = Date.now();
+  timerInterval = setInterval(() => {
+    elapsed = (Date.now() - startTime) / 1000;
+    if (elapsed >= duration) { finish(); return; }
+    updateStats();
+  }, 200);
 }
 
 function handleKey(e) {
   if (done) return;
-  if (e.key.length > 1 && e.key !== 'Backspace') return;
+  e.preventDefault();
 
-  if (!started) {
-    started = true; startTime = Date.now();
-    timerInterval = setInterval(() => {
-      elapsed = (Date.now() - startTime) / 1000;
-      if (elapsed >= duration) { finish(); return; }
-      updateStats();
-    }, 200);
+  const key = e.key;
+
+  if (key === 'Backspace') {
+    if (pos > 0) {
+      pos--;
+      if (typed[pos] !== text[pos]) errors = Math.max(0, errors - 1);
+      typed.pop();
+    }
+    updateDisplay();
+    return;
   }
 
-  if (e.key === 'Backspace') {
-    if (pos > 0) pos--;
-  } else if (pos < chars.length) {
-    if (e.key !== chars[pos]) errors++;
+  // Ignore non-character keys
+  if (key.length > 1) return;
+
+  // Start timer on first real keystroke
+  startTimer();
+
+  if (pos < text.length) {
+    typed.push(key);
+    if (key !== text[pos]) errors++;
     pos++;
-    if (pos >= chars.length) finish();
+    updateDisplay();
+
+    if (pos >= text.length) finish();
   }
-  render();
 }
 
 function finish() {
   clearInterval(timerInterval);
   done = true;
   elapsed = Math.min(elapsed || (Date.now() - startTime) / 1000, duration);
-  render();
+  renderFull();
 }
 
 function getWPM() {
   if (!elapsed) return 0;
-  const words = pos / 5;
-  return Math.round(words / (elapsed / 60));
+  const correctChars = typed.filter((ch, i) => ch === text[i]).length;
+  return Math.round((correctChars / 5) / (elapsed / 60));
 }
 
 function getAccuracy() {
@@ -135,15 +159,71 @@ function getAccuracy() {
 function updateStats() {
   const wpmEl = document.getElementById('wpm');
   const timeEl = document.getElementById('time-left');
+  const accEl = document.getElementById('acc');
   if (wpmEl) wpmEl.textContent = getWPM();
   if (timeEl) timeEl.textContent = Math.max(0, Math.ceil(duration - elapsed));
+  if (accEl) accEl.textContent = getAccuracy() + '%';
   const bar = document.getElementById('progress-fill');
   if (bar) bar.style.width = `${Math.min(100, (elapsed / duration) * 100)}%`;
 }
 
-function render() {
+function buildCharsHTML() {
+  let html = '';
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i] === ' ' ? '&nbsp;' : text[i].replace(/</g, '&lt;');
+    if (i < pos) {
+      const isCorrect = typed[i] === text[i];
+      html += `<span class="char ${isCorrect ? 'correct' : 'wrong'}">${ch}</span>`;
+    } else if (i === pos) {
+      html += `<span class="char current pending">${ch}</span>`;
+    } else {
+      html += `<span class="char pending">${ch}</span>`;
+    }
+  }
+  return html;
+}
+
+function updateDisplay() {
+  const display = document.getElementById('text-chars');
+  if (display) display.innerHTML = buildCharsHTML();
+  updateStats();
+  // Hide the click hint after first keystroke
+  const hint = document.getElementById('click-hint');
+  if (hint && started) hint.classList.add('hidden');
+}
+
+function focusDisplay() {
+  const el = document.getElementById('text-display');
+  if (el) { el.focus(); focused = true; }
+  const hint = document.getElementById('click-hint');
+  if (hint && !started) hint.textContent = 'Fang an zu tippen...';
+}
+
+function renderFull() {
   const app = document.getElementById('app');
   const wpm = getWPM(), acc = getAccuracy();
+
+  if (done) {
+    app.innerHTML = `
+      <header style="text-align:center;margin-bottom:28px">
+        <div style="font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--brass);opacity:0.5;margin-bottom:12px">⌨️  Minispiel</div>
+        <h1 class="serif" style="font-size:44px;font-weight:800;color:var(--brass-light)">Typing Test</h1>
+        <div class="divider" style="margin:18px auto 0"></div>
+        <div style="margin-top:10px"><a href="spiele.html" class="btn btn-ghost" style="font-size:12px;padding:6px 14px;text-decoration:none">← Alle Spiele</a></div>
+      </header>
+      <div class="result-card">
+        <div style="font-size:52px;margin-bottom:12px">${wpm>=60?'🔥':wpm>=40?'⚡':wpm>=20?'✨':'🐌'}</div>
+        <div class="stat-val" style="font-size:56px">${wpm}</div>
+        <div style="font-size:13px;color:var(--brass);opacity:0.5;letter-spacing:3px;text-transform:uppercase;margin:4px 0 20px">Wörter pro Minute</div>
+        <div style="display:flex;justify-content:center;gap:32px">
+          <div class="stat"><div style="font-size:24px;color:var(--brass-light);font-family:'Playfair Display',serif;font-weight:700">${acc}%</div><div class="stat-lbl">Genauigkeit</div></div>
+          <div class="stat"><div style="font-size:24px;color:var(--brass-light);font-family:'Playfair Display',serif;font-weight:700">${pos}</div><div class="stat-lbl">Zeichen</div></div>
+          <div class="stat"><div style="font-size:24px;color:var(--brass-light);font-family:'Playfair Display',serif;font-weight:700">${Math.round(elapsed)}s</div><div class="stat-lbl">Zeit</div></div>
+        </div>
+        <button class="btn btn-primary" onclick="init()" style="margin-top:24px;padding:12px 32px;font-size:15px">Nochmal</button>
+      </div>`;
+    return;
+  }
 
   app.innerHTML = `
     <header style="text-align:center;margin-bottom:28px">
@@ -153,50 +233,30 @@ function render() {
       <div style="margin-top:10px"><a href="spiele.html" class="btn btn-ghost" style="font-size:12px;padding:6px 14px;text-decoration:none">← Alle Spiele</a></div>
     </header>
 
-    ${done ? `
-      <div class="result-card">
-        <div style="font-size:52px;margin-bottom:12px">${wpm>=60?'🔥':wpm>=40?'⚡':wpm>=20?'✨':'🐌'}</div>
-        <div class="stat-val" style="font-size:56px">${wpm}</div>
-        <div style="font-size:13px;color:var(--brass);opacity:0.5;letter-spacing:3px;text-transform:uppercase;margin:4px 0 20px">Wörter pro Minute</div>
-        <div style="display:flex;justify-content:center;gap:32px">
-          <div class="stat"><div style="font-size:24px;color:var(--brass-light);font-family:'Playfair Display',serif;font-weight:700">${acc}%</div><div class="stat-lbl">Genauigkeit</div></div>
-          <div class="stat"><div style="font-size:24px;color:var(--brass-light);font-family:'Playfair Display',serif;font-weight:700">${pos}</div><div class="stat-lbl">Zeichen</div></div>
-        </div>
-        <button class="btn btn-primary" onclick="init()" style="margin-top:24px;padding:12px 32px;font-size:15px">Nochmal</button>
-      </div>
-    ` : `
-      <div class="time-btns">
-        ${[15,30,60].map(t => `<button class="time-btn ${t===duration?'active':''}" onclick="init(${t})">${t}s</button>`).join('')}
-      </div>
+    <div class="time-btns">
+      ${[15,30,60].map(t => `<button class="time-btn ${t===duration?'active':''}" onclick="init(${t})">${t}s</button>`).join('')}
+    </div>
 
-      <div class="stats-row">
-        <div class="stat"><div class="stat-val" id="wpm">${wpm}</div><div class="stat-lbl">WPM</div></div>
-        <div class="stat"><div class="stat-val" id="time-left">${Math.ceil(duration - elapsed)}</div><div class="stat-lbl">Sekunden</div></div>
-        <div class="stat"><div class="stat-val">${acc}%</div><div class="stat-lbl">Genauigkeit</div></div>
-      </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-val" id="wpm">0</div><div class="stat-lbl">WPM</div></div>
+      <div class="stat"><div class="stat-val" id="time-left">${duration}</div><div class="stat-lbl">Sekunden</div></div>
+      <div class="stat"><div class="stat-val" id="acc">100%</div><div class="stat-lbl">Genauigkeit</div></div>
+    </div>
 
-      <div class="text-display" onclick="document.getElementById('hidden-input').focus()">
-        <input id="hidden-input" class="hidden-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"/>
-        ${chars.map((c, i) => {
-          let cls = 'char ';
-          if (i < pos) cls += c === chars[i] ? 'correct' : 'wrong'; // simplified
-          else if (i === pos) cls += 'current pending';
-          else cls += 'pending';
-          return `<span class="${cls}">${c === ' ' ? '&nbsp;' : c}</span>`;
-        }).join('')}
-        ${!started ? '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(12,21,25,0.6);border-radius:20px;font-size:14px;color:var(--brass);opacity:0.6;cursor:text">Klicke hier und fang an zu tippen...</div>' : ''}
-      </div>
+    <div class="text-display" id="text-display" tabindex="0" onclick="focusDisplay()">
+      <div id="text-chars">${buildCharsHTML()}</div>
+      <div class="click-hint" id="click-hint">Klicke hier und fang an zu tippen...</div>
+    </div>
 
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:${(elapsed/duration)*100}%"></div></div>
-    `}
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   `;
 
-  const inp = document.getElementById('hidden-input');
-  if (inp) {
-    inp.onkeydown = handleKey;
-    inp.oninput = e => { e.target.value = ''; };
-  }
+  // Attach keyboard listener to the display div
+  const display = document.getElementById('text-display');
+  display.addEventListener('keydown', handleKey);
+  display.focus();
 }
+
 init(30);
 </script>
 </body>
