@@ -128,7 +128,27 @@ function App() {
     fetch("cards.json")
       .then(r => { if (!r.ok) throw new Error("cards.json nicht gefunden"); return r.json(); })
       .then(raw => resolveAllCards(raw))
-      .then(setData)
+      .then(resolved => {
+        setData(resolved);
+
+        // Check URL params for deep-link: ?kategorie=X&karte=Y
+        const params = new URLSearchParams(window.location.search);
+        const katParam = params.get("kategorie");
+        const karteParam = params.get("karte");
+        if (katParam && resolved[katParam]) {
+          setActiveCat(katParam);
+          if (karteParam !== null) {
+            const idx = parseInt(karteParam, 10);
+            const karten = resolved[katParam].karten;
+            if (!isNaN(idx) && idx >= 0 && idx < karten.length) {
+              setActiveCard(karten[idx]);
+              setCardIdx(idx);
+            }
+          }
+          // Clean URL without reloading
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+      })
       .catch(e => setError(e.message));
   }, []);
 
@@ -184,14 +204,18 @@ function App() {
           <h1 className="serif" onClick={!activeCat ? handleTitleClick : undefined} style={{
             fontSize: activeCat ? 38 : 52, fontWeight: 800, lineHeight: 1.1,
             animation: "slideUp 0.6s ease both",
-            background: activeCat ? "var(--brass-light)" : "linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 40%, var(--cream) 60%, var(--brass-light) 100%)",
-            backgroundSize: activeCat ? "auto" : "200% auto",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            animationName: activeCat ? "slideUp" : "slideUp, shimmer",
-            animationDuration: activeCat ? "0.6s" : "0.6s, 5s",
-            animationIterationCount: activeCat ? "1" : "1, infinite",
-            animationTimingFunction: "ease, linear",
-            animationFillMode: "both",
+            ...(activeCat ? {
+              color: "var(--brass-light)",
+            } : {
+              background: "linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 40%, var(--cream) 60%, var(--brass-light) 100%)",
+              backgroundSize: "200% auto",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              animationName: "slideUp, shimmer",
+              animationDuration: "0.6s, 5s",
+              animationIterationCount: "1, infinite",
+              animationTimingFunction: "ease, linear",
+              animationFillMode: "both",
+            }),
           }}>
             {activeCat || "Karteikarten"}
           </h1>
