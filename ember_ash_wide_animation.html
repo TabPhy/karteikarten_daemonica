@@ -1,0 +1,186 @@
+
+<h2 class="sr-only">Animierte Aschereste und Glutfunken über die gesamte Breite verteilt, vor dunkelrotem Hintergrund</h2>
+<div id="fire-container" style="position:relative;width:100%;height:550px;overflow:hidden;border-radius:var(--border-radius-lg)">
+<canvas id="fire" style="width:100%;height:100%;display:block"></canvas>
+</div>
+<script>
+const canvas = document.getElementById('fire');
+const ctx = canvas.getContext('2d');
+const container = document.getElementById('fire-container');
+
+function resize() {
+  canvas.width = container.clientWidth * 2;
+  canvas.height = container.clientHeight * 2;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const particles = [];
+const COUNT = 160;
+
+function rand(a, b) { return a + Math.random() * (b - a); }
+
+function createParticle(init) {
+  const type = Math.random();
+  const xBase = rand(0, canvas.width);
+  let p;
+  if (type < 0.35) {
+    p = {
+      kind: 'ember',
+      x: xBase,
+      y: canvas.height + rand(0, 40),
+      r: rand(1.5, 4),
+      speed: rand(0.6, 1.8),
+      drift: rand(-0.4, 0.4),
+      opacity: rand(0.7, 1),
+      fade: rand(0.001, 0.003),
+      glow: rand(0.5, 1),
+      color: Math.random() > 0.5 ? 0 : 1,
+      wobbleAmp: rand(0.3, 1.2),
+      wobbleSpeed: rand(0.002, 0.005),
+      phase: rand(0, Math.PI * 2)
+    };
+  } else if (type < 0.7) {
+    p = {
+      kind: 'ash',
+      x: xBase,
+      y: canvas.height + rand(0, 50),
+      w: rand(3, 10),
+      h: rand(2, 5),
+      speed: rand(0.3, 1.0),
+      drift: rand(-0.5, 0.5),
+      opacity: rand(0.3, 0.7),
+      fade: rand(0.0005, 0.002),
+      rotation: rand(0, Math.PI * 2),
+      rotSpeed: rand(-0.03, 0.03),
+      wobbleAmp: rand(0.5, 1.5),
+      wobbleSpeed: rand(0.001, 0.004),
+      phase: rand(0, Math.PI * 2),
+      shade: rand(30, 80)
+    };
+  } else {
+    p = {
+      kind: 'spark',
+      x: xBase,
+      y: canvas.height + rand(0, 20),
+      r: rand(0.8, 2),
+      speed: rand(1.5, 3.5),
+      drift: rand(-1, 1),
+      opacity: rand(0.8, 1),
+      fade: rand(0.005, 0.012),
+      life: 1,
+      phase: rand(0, Math.PI * 2)
+    };
+  }
+  if (init) {
+    p.y = rand(canvas.height * 0.1, canvas.height);
+    p.opacity *= rand(0.3, 0.8);
+  }
+  return p;
+}
+
+for (let i = 0; i < COUNT; i++) {
+  particles.push(createParticle(true));
+}
+
+function drawBg() {
+  const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  g.addColorStop(0, '#1a0505');
+  g.addColorStop(0.4, '#2d0a0a');
+  g.addColorStop(0.7, '#4a1010');
+  g.addColorStop(1, '#6b1a1a');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const glowW = canvas.width * 0.7;
+  const glow = ctx.createRadialGradient(
+    canvas.width * 0.5, canvas.height * 1.05, 0,
+    canvas.width * 0.5, canvas.height * 1.05, canvas.height * 0.7
+  );
+  glow.addColorStop(0, 'rgba(255, 80, 20, 0.12)');
+  glow.addColorStop(0.5, 'rgba(200, 40, 10, 0.05)');
+  glow.addColorStop(1, 'rgba(100, 10, 5, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawEmber(p, t) {
+  ctx.save();
+  ctx.globalAlpha = p.opacity * p.glow;
+  const colors = ['#ff6a2a', '#ffaa44'];
+  ctx.shadowColor = colors[p.color];
+  ctx.shadowBlur = p.r * 4;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+  ctx.fillStyle = colors[p.color];
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.r * 0.5, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffe8a0';
+  ctx.globalAlpha = p.opacity * 0.6;
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawAsh(p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.rotation);
+  ctx.globalAlpha = p.opacity;
+  const c = Math.floor(p.shade);
+  ctx.fillStyle = `rgb(${c}, ${Math.floor(c*0.7)}, ${Math.floor(c*0.6)})`;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawSpark(p) {
+  ctx.save();
+  ctx.globalAlpha = p.opacity * p.life;
+  ctx.shadowColor = '#ffcc44';
+  ctx.shadowBlur = 6;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffee88';
+  ctx.fill();
+  ctx.restore();
+}
+
+let lastTime = 0;
+
+function animate(time) {
+  const dt = lastTime ? Math.min((time - lastTime) / 16.67, 3) : 1;
+  lastTime = time;
+
+  drawBg();
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    const t = time || 0;
+    const wobble = Math.sin(t * (p.wobbleSpeed || 0.003) + p.phase) * (p.wobbleAmp || 0.5);
+
+    p.y -= p.speed * dt;
+    p.x += (p.drift + wobble) * dt;
+    p.opacity -= p.fade * dt;
+
+    if (p.kind === 'ash') p.rotation += p.rotSpeed * dt;
+    if (p.kind === 'spark') p.life -= p.fade * dt;
+    if (p.kind === 'ember') p.glow = 0.6 + Math.sin(t * 0.008 + p.phase) * 0.4;
+
+    if (p.opacity <= 0 || p.y < -40 || (p.kind === 'spark' && p.life <= 0)) {
+      particles[i] = createParticle(false);
+      continue;
+    }
+
+    if (p.kind === 'ember') drawEmber(p, t);
+    else if (p.kind === 'ash') drawAsh(p);
+    else drawSpark(p);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>

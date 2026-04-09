@@ -83,19 +83,8 @@
 <body>
 <script src="shared.js"></script>
 <script>
-// Don't use initSharedUI — no nav on this page! Just particles and glow.
-const g1 = document.createElement("div"); g1.className = "bg-glow-1";
-const g2 = document.createElement("div"); g2.className = "bg-glow-2";
-document.body.append(g1, g2);
-const pc = document.createElement("div");
-pc.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:0;";
-for (let i = 0; i < 16; i++) {
-  const p = document.createElement("div"); p.className = "particle";
-  const s = 2 + Math.random() * 5;
-  p.style.cssText = `left:${3+Math.random()*94}%;bottom:-20px;width:${s}px;height:${s}px;animation:floatUp ${12+Math.random()*10}s ${i*0.9}s infinite ease-in-out;`;
-  pc.appendChild(p);
-}
-document.body.append(pc);
+// No nav on easter egg page — just fire background
+initFireBackground();
 </script>
 
 <!-- Matrix rain background -->
