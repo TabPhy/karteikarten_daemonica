@@ -2,128 +2,135 @@
   {
     "datum": "700 v. Chr.",
     "titel": "Die Spaltung der Seele",
-    "text": "Um dem unerträglichen Leid seines Daseins zu entkommen, spaltet Luzifer die Todsünden Hochmut, Zorn und Habgier von seiner Seele ab. Geschwächt, aber endlich fähig, Freude zu empfinden, flieht er aus der Hölle in die Oberwelt.",
+    "text": "Um dem unerträglichen Leid seines Daseins zu entkommen, trennt Luzifer Hochmut, Zorn und Habgier von seiner Seele. Geschwächt und unvollständig verlässt er die Hölle und flieht in die Oberwelt.",
     "bild": "",
     "tags": ["Vorgeschichte", "Luzifer"]
   },
   {
     "datum": "700 v. Chr.",
-    "titel": "Luzifers Leben an der Oberfläche",
-    "text": "In der Oberwelt gibt sich Luzifer fortan seinen übrigen Lastern hin. Er verschwindet in einem Reich aus Rausch, Dekadenz und Ausschweifung und baut sich dort ein verborgenes Machtzentrum auf. Jeder weiß, wo er ist — doch niemand kann ihn zu einer Rückkehr bewegen. Und wer es versucht, kehrt nicht heil zurück.",
-    "bild": "",
+    "titel": "Luzifers Rückzug",
+    "text": "Fern der Hölle verliert sich Luzifer in Rausch, Ausschweifung und den übrigen Lastern seiner Natur. Jeder kennt seinen Zufluchtsort — doch niemand vermag ihn zur Rückkehr zu bewegen. Wer es versucht, kehrt selten heil zurück.",
+    "bild": "timeline_pictures/Luzifer_0.png",
     "tags": ["Vorgeschichte", "Luzifer"]
   },
   {
     "datum": "700 v. Chr.",
-    "titel": "Der neue Herrscher der Hölle",
-    "text": "Das entstandene Machtvakuum nutzt ein Dämonenlord, um sich selbst zum neuen Herrscher der Hölle zu krönen. Unter seiner Herrschaft wird die einst wilde Hölle zu einem bürokratischen Albtraum. Luzifers verbliebene Anhänger werden verfolgt, vertrieben oder vernichtet.",
+    "titel": "Der neue Thron",
+    "text": "Ein Dämonenlord nutzt das Machtvakuum und krönt sich selbst zum Herrscher der Hölle. Unter seiner Regentschaft wird aus dem alten Infernum ein Reich aus Kontrolle, Verfolgung und bürokratischem Terror.",
     "bild": "",
     "tags": ["Vorgeschichte", "Hölle"]
   },
   {
+    "datum": "Unbekannt",
+    "titel": "Die verborgenen Splitter",
+    "text": "Die abgespaltenen Sünden Luzifers verbleiben nicht in der Hölle. Über die Oberwelt verstreut, überdauern sie als Seelensplitter und verderben über Jahrhunderte hinweg alles, was mit ihnen in Berührung kommt.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Luzifer", "Seelensplitter"]
+  },
+  {
     "datum": "ca. 2000 n. Chr.",
-    "titel": "Luciens Hass auf die neue Ordnung",
-    "text": "Lucien, Sohn des neuen Höllenherrschers, verabscheut die kalte und kontrollierte Ordnung seines Vaters. Er will die Hölle in ihren alten, grausamen und freien Zustand zurückführen und beginnt, im Verborgenen Verbündete um sich zu scharen.",
+    "titel": "Luciens Aufbegehren",
+    "text": "Lucien, Sohn des neuen Höllenherrschers, verabscheut die Ordnung seines Vaters. Im Verborgenen beginnt er, Gleichgesinnte um sich zu scharen, um die Hölle in ihren alten, grausamen Zustand zurückzuführen.",
     "bild": "",
     "tags": ["Vorgeschichte", "Lucien"]
   },
   {
     "datum": "ca. 2000 n. Chr.",
     "titel": "Die Untergrundrevolution",
-    "text": "Lucien gründet eine Untergrundbewegung aus Höllenlords und alten Anhängern Luzifers. Seinen Mitstreitern erzählt er, er wolle Luzifer mithilfe der Seelensplitter zurückholen, damit dieser wieder rechtmäßig über die Hölle herrscht.",
+    "text": "Mit alten Anhängern Luzifers und rebellischen Höllenlords gründet Lucien eine geheime Bewegung. Seinen Gefolgsleuten verspricht er die Rückkehr Luzifers und die Wiederherstellung der alten Herrschaft.",
     "bild": "",
     "tags": ["Vorgeschichte", "Lucien", "Revolution"]
   },
   {
     "datum": "ca. 2000 n. Chr.",
-    "titel": "Luciens wahrer Plan",
-    "text": "In Wahrheit verfolgt Lucien ein anderes Ziel: Er will Luzifer die Seelensplitter zurückgeben, ihn dadurch wieder vollständig machen und ihn anschließend mit einem uralten Artefakt kontrollieren. Luzifer soll den aktuellen Höllenherrscher stürzen — damit Lucien selbst nach der Macht greifen kann.",
+    "titel": "Der wahre Plan",
+    "text": "In Wahrheit will Lucien Luzifer nicht befreien, sondern ihn durch ein uraltes Artefakt kontrollieren. Sobald Luzifer mithilfe der Seelensplitter wieder vollständig ist, soll er Luciens Vater stürzen — damit Lucien selbst nach dem Thron greifen kann.",
     "bild": "",
     "tags": ["Vorgeschichte", "Lucien", "Luzifer", "Artefakt"]
   },
   {
     "datum": "ca. 2000 n. Chr.",
-    "titel": "Malakars Entdeckung",
-    "text": "Malakar, einer von Luciens engsten Mitstreitern, wird damit beauftragt, das Artefakt aufzuspüren. Bei seiner Suche erkennt er Luciens wahren Plan und begreift, dass Luzifer nicht befreit, sondern missbraucht werden soll.",
+    "titel": "Malakars Verrat",
+    "text": "Der Dämon Malakar wird damit beauftragt, das Artefakt zu finden. Als er Luciens wahren Plan erkennt, wendet er sich gegen die Revolution und flieht in die Oberwelt, um das Artefakt vor Lucien zu verbergen.",
     "bild": "",
     "tags": ["Vorgeschichte", "Malakar", "Lucien", "Artefakt"]
   },
   {
     "datum": "ca. 2000 n. Chr.",
-    "titel": "Das Ende der Revolution",
-    "text": "Um Luciens Vorhaben zu vereiteln, flieht Malakar mit dem Wissen um das Artefakt in die Oberwelt. Die Revolution bricht zusammen. Ihre Mitstreiter werden wegen Hochverrats hingerichtet, Lucien selbst zu lebenslanger Haft in der Hölle verurteilt.",
+    "titel": "Der Fall der Revolution",
+    "text": "Ohne Malakar zerbricht Luciens Bewegung. Ihre Anhänger werden wegen Hochverrats hingerichtet, Lucien selbst zu lebenslanger Haft in der Hölle verurteilt.",
     "bild": "",
-    "tags": ["Vorgeschichte", "Lucien", "Malakar", "Revolution"]
+    "tags": ["Vorgeschichte", "Lucien", "Revolution", "Hölle"]
   },
   {
     "datum": "ca. 2000 n. Chr.",
-    "titel": "Ein neues Leben unter Menschen",
-    "text": "In der Oberwelt versteckt sich Malakar unter den Menschen. Dort lernt er Elena kennen, gründet mit ihr eine Familie und verbirgt seine wahre Herkunft. Gleichzeitig sorgt er dafür, dass das Artefakt und die Seelensplitter vor Lucien geschützt bleiben.",
+    "titel": "Ein Leben unter Menschen",
+    "text": "In der Oberwelt nimmt Malakar eine neue Identität an. Er begegnet Elena, gründet mit ihr eine Familie und schützt im Verborgenen sowohl das Artefakt als auch die Seelensplitter vor Luciens Zugriff.",
     "bild": "",
     "tags": ["Vorgeschichte", "Malakar", "Elena", "Cassie"]
   },
   {
     "datum": "2020 n. Chr.",
     "titel": "Luciens Flucht",
-    "text": "Lucien gelingt die Flucht aus der Hölle. Er kehrt in die Oberwelt zurück, um sich an Malakar zu rächen und seinen alten Plan endlich zu vollenden.",
+    "text": "Nach langer Gefangenschaft gelingt Lucien die Flucht aus der Hölle. Er kehrt in die Oberwelt zurück, getrieben von Rache an Malakar und dem Wunsch, seinen alten Plan zu vollenden.",
     "bild": "",
     "tags": ["Vorgeschichte", "Lucien"]
   },
   {
     "datum": "2020 n. Chr.",
-    "titel": "Die Entfesselung des Dämonenvirus",
-    "text": "Um Malakar aus seinem Versteck zu locken, setzt Lucien ein dämonisches Virus frei, das Menschen in monströse Kreaturen verwandelt. Die Pandemie breitet sich aus und verändert die Welt unwiderruflich.",
+    "titel": "Die Entfesselung des Virus",
+    "text": "Um Malakar aus seinem Versteck zu locken, setzt Lucien ein dämonisches Virus frei. Die Seuche verwandelt Menschen in monströse Kreaturen und stürzt die Welt ins Chaos.",
     "bild": "",
     "tags": ["Vorgeschichte", "Lucien", "Pandemie", "Daemonica"]
   },
   {
     "datum": "2020 n. Chr.",
-    "titel": "Malakar wird entdeckt",
-    "text": "Tatsächlich gelingt es Lucien, Malakar aus seinem Versteck zu locken. Doch Lucien wird bei jedem offenen Einsatz seiner Kräfte von der Hölle geortet. So werden beide schließlich entdeckt.",
+    "titel": "Die Rückkehr der Hölle",
+    "text": "Malakar tritt aus dem Schatten, um Lucien zu stellen. Doch da Lucien bei offenem Einsatz seiner Kräfte geortet werden kann, werden beide von Mächten aus der Hölle aufgespürt.",
     "bild": "",
-    "tags": ["Vorgeschichte", "Lucien", "Malakar"]
+    "tags": ["Vorgeschichte", "Lucien", "Malakar", "Hölle"]
   },
   {
     "datum": "2020 n. Chr.",
-    "titel": "Rückkehr in die Hölle",
-    "text": "Malakar wird gefangen genommen und in die Hölle zurückgebracht. Dort erwartet ihn jahrhundertelange Folter — als Strafe sowohl für seine Beteiligung an der Revolution als auch für seinen späteren Verrat.",
+    "titel": "Malakars Gefangenschaft",
+    "text": "Malakar wird in die Hölle zurückgebracht und dort für seine Beteiligung an der Revolution und seinen späteren Verrat zu jahrhundertelanger Folter verurteilt.",
     "bild": "",
     "tags": ["Vorgeschichte", "Malakar", "Hölle"]
   },
   {
     "datum": "2020 n. Chr.",
-    "titel": "Lucien taucht unter",
-    "text": "Lucien gelingt es erneut, in der Oberwelt zu verschwinden. Solange er seine Kräfte nicht offen einsetzt, bleibt er für die Hölle nahezu unsichtbar. Im Verborgenen arbeitet er weiter daran, Luzifer mithilfe der Seelensplitter wieder vollständig zu machen und das Artefakt aufzuspüren.",
+    "titel": "Ein Unsichtbarer in der Oberwelt",
+    "text": "Lucien entzieht sich erneut dem Zugriff der Hölle und taucht in der Oberwelt unter. Solange er seine Kräfte nicht offen einsetzt, bleibt er nahezu unsichtbar — und arbeitet im Verborgenen weiter an Luzifers Wiederherstellung.",
     "bild": "",
-    "tags": ["Vorgeschichte", "Lucien", "Luzifer", "Artefakt"]
+    "tags": ["Vorgeschichte", "Lucien", "Luzifer"]
   },
   {
     "datum": "2040 n. Chr.",
-    "titel": "Cassie wird zum Schlüssel",
-    "text": "Jahre später rückt Cassie ins Zentrum von Luciens Plan. Malakar hat die Seelensplitter mit seiner Magie geschützt, sodass nur seine Tochter sie gefahrlos berühren und bergen kann.",
+    "titel": "Cassie als Schlüssel",
+    "text": "Jahre später rückt Cassie ins Zentrum von Luciens Plan. Malakar hat die Seelensplitter mit seiner Magie so geschützt, dass nur seine Tochter sie gefahrlos berühren und bergen kann.",
     "bild": "",
-    "tags": ["Cassie", "Lucien", "Malakar", "Seelensplitter"]
+    "tags": ["Vorgeschichte", "Cassie", "Lucien", "Malakar", "Seelensplitter"]
   },
   {
     "datum": "2040 n. Chr.",
-    "titel": "Die Jagd nach den Seelensplittern",
-    "text": "Lucien sucht Cassie nicht nur, weil er die Seelensplitter selbst nicht bergen kann. Er will sie zugleich als Druckmittel gegen Malakar benutzen, um endlich den Aufenthaltsort des Artefakts zu erfahren.",
+    "titel": "Die Jagd beginnt",
+    "text": "Lucien sucht Cassie nicht nur wegen der Seelensplitter. Er will sie auch als Druckmittel gegen Malakar benutzen, um endlich den Aufenthaltsort des verborgenen Artefakts zu erfahren.",
     "bild": "",
-    "tags": ["Vorgeschichte", "Cassie", "Lucien", "Malakar", "Artefakt"]
+    "tags": ["Cassie", "Lucien", "Malakar", "Artefakt"]
   },
   {
     "datum": "2040 n. Chr.",
     "titel": "Die Lüge von der Rettung",
-    "text": "Lucien spiegelt Cassie vor, ihr helfen zu wollen, Malakar zu retten. Dass er sie in Wahrheit nur für seine eigenen Ziele benutzt, verschweigt er ihr ebenso wie das volle Ausmaß seiner Kräfte.",
+    "text": "Gegenüber Cassie gibt Lucien vor, ihr helfen zu wollen, Malakar zu retten. Dass er sie in Wahrheit nur für seine eigenen Ziele benutzt, verschweigt er ebenso wie das volle Ausmaß seiner Macht.",
     "bild": "",
-    "tags": ["Vorgeschichte","Cassie", "Lucien", "Malakar"]
+    "tags": ["Cassie", "Lucien", "Malakar"]
   },
   {
     "datum": "2040 n. Chr.",
-    "titel": "Luciens wahre Fähigkeiten",
-    "text": "Zu diesem Zeitpunkt kann Lucien niedere Dämonen kontrollieren und Erinnerungen manipulieren, ohne sofort entdeckt zu werden. Cassie erzählt er davon nichts — nicht nur, um seine Tarnung zu wahren, sondern auch, um ihre Angst vor ihm lebendig zu halten.",
+    "titel": "Macht im Verborgenen",
+    "text": "Zu diesem Zeitpunkt kann Lucien niedere Dämonen kontrollieren und Erinnerungen manipulieren, ohne sofort entdeckt zu werden. Cassie erzählt er davon nichts — nicht aus Gnade, sondern damit ihre Angst vor ihm bestehen bleibt.",
     "bild": "",
-    "tags": ["Vorgeschichte","Cassie", "Lucien", "Dämonen"]
+    "tags": ["Cassie", "Lucien", "Dämonen"]
   },
   {
     "datum": "Kapitel 1",
