@@ -1,5 +1,131 @@
 [
   {
+    "datum": "700 v. Chr.",
+    "titel": "Die Spaltung der Seele",
+    "text": "Um dem unerträglichen Leid seines Daseins zu entkommen, spaltet Luzifer die Todsünden Hochmut, Zorn und Habgier von seiner Seele ab. Geschwächt, aber endlich fähig, Freude zu empfinden, flieht er aus der Hölle in die Oberwelt.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Luzifer"]
+  },
+  {
+    "datum": "700 v. Chr.",
+    "titel": "Luzifers Leben an der Oberfläche",
+    "text": "In der Oberwelt gibt sich Luzifer fortan seinen übrigen Lastern hin. Er verschwindet in einem Reich aus Rausch, Dekadenz und Ausschweifung und baut sich dort ein verborgenes Machtzentrum auf. Jeder weiß, wo er ist — doch niemand kann ihn zu einer Rückkehr bewegen. Und wer es versucht, kehrt nicht heil zurück.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Luzifer"]
+  },
+  {
+    "datum": "700 v. Chr.",
+    "titel": "Der neue Herrscher der Hölle",
+    "text": "Das entstandene Machtvakuum nutzt ein Dämonenlord, um sich selbst zum neuen Herrscher der Hölle zu krönen. Unter seiner Herrschaft wird die einst wilde Hölle zu einem bürokratischen Albtraum. Luzifers verbliebene Anhänger werden verfolgt, vertrieben oder vernichtet.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Hölle"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Luciens Hass auf die neue Ordnung",
+    "text": "Lucien, Sohn des neuen Höllenherrschers, verabscheut die kalte und kontrollierte Ordnung seines Vaters. Er will die Hölle in ihren alten, grausamen und freien Zustand zurückführen und beginnt, im Verborgenen Verbündete um sich zu scharen.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Die Untergrundrevolution",
+    "text": "Lucien gründet eine Untergrundbewegung aus Höllenlords und alten Anhängern Luzifers. Seinen Mitstreitern erzählt er, er wolle Luzifer mithilfe der Seelensplitter zurückholen, damit dieser wieder rechtmäßig über die Hölle herrscht.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Revolution"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Luciens wahrer Plan",
+    "text": "In Wahrheit verfolgt Lucien ein anderes Ziel: Er will Luzifer die Seelensplitter zurückgeben, ihn dadurch wieder vollständig machen und ihn anschließend mit einem uralten Artefakt kontrollieren. Luzifer soll den aktuellen Höllenherrscher stürzen — damit Lucien selbst nach der Macht greifen kann.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Luzifer", "Artefakt"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Malakars Entdeckung",
+    "text": "Malakar, einer von Luciens engsten Mitstreitern, wird damit beauftragt, das Artefakt aufzuspüren. Bei seiner Suche erkennt er Luciens wahren Plan und begreift, dass Luzifer nicht befreit, sondern missbraucht werden soll.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Malakar", "Lucien", "Artefakt"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Das Ende der Revolution",
+    "text": "Um Luciens Vorhaben zu vereiteln, flieht Malakar mit dem Wissen um das Artefakt in die Oberwelt. Die Revolution bricht zusammen. Ihre Mitstreiter werden wegen Hochverrats hingerichtet, Lucien selbst zu lebenslanger Haft in der Hölle verurteilt.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Malakar", "Revolution"]
+  },
+  {
+    "datum": "ca. 2000 n. Chr.",
+    "titel": "Ein neues Leben unter Menschen",
+    "text": "In der Oberwelt versteckt sich Malakar unter den Menschen. Dort lernt er Elena kennen, gründet mit ihr eine Familie und verbirgt seine wahre Herkunft. Gleichzeitig sorgt er dafür, dass das Artefakt und die Seelensplitter vor Lucien geschützt bleiben.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Malakar", "Elena", "Cassie"]
+  },
+  {
+    "datum": "2020 n. Chr.",
+    "titel": "Luciens Flucht",
+    "text": "Lucien gelingt die Flucht aus der Hölle. Er kehrt in die Oberwelt zurück, um sich an Malakar zu rächen und seinen alten Plan endlich zu vollenden.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien"]
+  },
+  {
+    "datum": "2020 n. Chr.",
+    "titel": "Die Entfesselung des Dämonenvirus",
+    "text": "Um Malakar aus seinem Versteck zu locken, setzt Lucien ein dämonisches Virus frei, das Menschen in monströse Kreaturen verwandelt. Die Pandemie breitet sich aus und verändert die Welt unwiderruflich.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Pandemie", "Daemonica"]
+  },
+  {
+    "datum": "2020 n. Chr.",
+    "titel": "Malakar wird entdeckt",
+    "text": "Tatsächlich gelingt es Lucien, Malakar aus seinem Versteck zu locken. Doch Lucien wird bei jedem offenen Einsatz seiner Kräfte von der Hölle geortet. So werden beide schließlich entdeckt.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Malakar"]
+  },
+  {
+    "datum": "2020 n. Chr.",
+    "titel": "Rückkehr in die Hölle",
+    "text": "Malakar wird gefangen genommen und in die Hölle zurückgebracht. Dort erwartet ihn jahrhundertelange Folter — als Strafe sowohl für seine Beteiligung an der Revolution als auch für seinen späteren Verrat.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Malakar", "Hölle"]
+  },
+  {
+    "datum": "2020 n. Chr.",
+    "titel": "Lucien taucht unter",
+    "text": "Lucien gelingt es erneut, in der Oberwelt zu verschwinden. Solange er seine Kräfte nicht offen einsetzt, bleibt er für die Hölle nahezu unsichtbar. Im Verborgenen arbeitet er weiter daran, Luzifer mithilfe der Seelensplitter wieder vollständig zu machen und das Artefakt aufzuspüren.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Lucien", "Luzifer", "Artefakt"]
+  },
+  {
+    "datum": "2040 n. Chr.",
+    "titel": "Cassie wird zum Schlüssel",
+    "text": "Jahre später rückt Cassie ins Zentrum von Luciens Plan. Malakar hat die Seelensplitter mit seiner Magie geschützt, sodass nur seine Tochter sie gefahrlos berühren und bergen kann.",
+    "bild": "",
+    "tags": ["Cassie", "Lucien", "Malakar", "Seelensplitter"]
+  },
+  {
+    "datum": "2040 n. Chr.",
+    "titel": "Die Jagd nach den Seelensplittern",
+    "text": "Lucien sucht Cassie nicht nur, weil er die Seelensplitter selbst nicht bergen kann. Er will sie zugleich als Druckmittel gegen Malakar benutzen, um endlich den Aufenthaltsort des Artefakts zu erfahren.",
+    "bild": "",
+    "tags": ["Vorgeschichte", "Cassie", "Lucien", "Malakar", "Artefakt"]
+  },
+  {
+    "datum": "2040 n. Chr.",
+    "titel": "Die Lüge von der Rettung",
+    "text": "Lucien spiegelt Cassie vor, ihr helfen zu wollen, Malakar zu retten. Dass er sie in Wahrheit nur für seine eigenen Ziele benutzt, verschweigt er ihr ebenso wie das volle Ausmaß seiner Kräfte.",
+    "bild": "",
+    "tags": ["Vorgeschichte","Cassie", "Lucien", "Malakar"]
+  },
+  {
+    "datum": "2040 n. Chr.",
+    "titel": "Luciens wahre Fähigkeiten",
+    "text": "Zu diesem Zeitpunkt kann Lucien niedere Dämonen kontrollieren und Erinnerungen manipulieren, ohne sofort entdeckt zu werden. Cassie erzählt er davon nichts — nicht nur, um seine Tarnung zu wahren, sondern auch, um ihre Angst vor ihm lebendig zu halten.",
+    "bild": "",
+    "tags": ["Vorgeschichte","Cassie", "Lucien", "Dämonen"]
+  },
+  {
     "datum": "Kapitel 1",
     "titel": "Der Anfang",
     "text": "Die Geschichte beginnt an einem regnerischen Morgen. Der Protagonist erwacht in einer fremden Stadt.",
