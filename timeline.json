@@ -213,39 +213,104 @@
       "Dämonen"
     ]
   },
+{
+    "datum": "Kapitel 1",
+    "titel": "Ein Morgen im kalten Haus",
+    "text": "Cassie schlichtet den Streit ihrer Geschwister und holt sie zum Aufbruch. Ihre Mutter, die seit dem Weggang des Vaters kalt geworden ist, versorgt alle außer Cassie und fährt die Kinder zur Schule.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Familie"
+    ]
+  },
   {
     "datum": "Kapitel 1",
-    "titel": "Der Anfang",
-    "text": "Die Geschichte beginnt an einem regnerischen Morgen. Der Protagonist erwacht in einer fremden Stadt.",
+    "titel": "Der Schultag mit Susie",
+    "text": "Cassie passiert die Sicherheitsschleuse der Schule und trifft ihre Freundin Susie. Im Unterricht wird Susie wegen ihres Handys zum Direktor geschickt. Cassie holt es für sie vom Lehrerpult zurück.",
     "bild": "",
-    "tags": ["Haupthandlung", "Protagonist"]
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Susie"
+    ]
+  },
+  {
+    "datum": "Kapitel 1",
+    "titel": "Die Einladung hinter den Wall",
+    "text": "Susie lädt Cassie zu einer Feier in einem verlassenen Anwesen hinter dem Schutzwall ein. Cassie hält die Idee für Wahnsinn, sagt aber nicht endgültig Nein und will es sich überlegen.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Susie"
+    ]
+  },
+  {
+    "datum": "Kapitel 2",
+    "titel": "Emma wird abgeführt",
+    "text": "Auf dem Weg zur Sporthalle beobachtet Cassie, wie Sicherheitsbeamte ihre Mitschülerin Emma mit einer Atemmaske festhalten und gewaltsam vom Gelände tragen. Susie schwänzt den Unterricht. In der Umkleide kursieren Gerüchte, Emma habe Fieber und sei in Quarantäne. Cassie nimmt Susie in Schutz.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Susie",
+      "Pandemie"
+    ]
+  },
+  {
+    "datum": "Kapitel 2",
+    "titel": "Jake spricht Cassie an",
+    "text": "Nach dem Unterricht fängt Jake Parker, der Quarterback der Schule, Cassie im Regen ab und überrascht sie mit ihrem vollen Namen. Er umwirbt sie und lädt sie zu Karl Mercers Geburtstagsfeier ein. Cassie sagt zu, obwohl sie weiß, dass die Feier außerhalb der Mauern stattfindet. Den Regenschirm lässt er ihr da.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Jake"
+    ]
+  },
+  {
+    "datum": "Kapitel 2",
+    "titel": "Die Heimfahrt mit Ethan",
+    "text": "Cassie verlässt das Schulgelände und wird von ihrem Adoptivbruder Ethan im alten Dodge Charger ihres Vaters abgeholt. Als er den Schirm bemerkt, weicht sie aus. Sie weiß selbst, dass es dumm ist, auf die Feier zu gehen, und tut es trotzdem.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Familie"
+    ]
   },
   {
     "datum": "Kapitel 3",
-    "titel": "Die Begegnung",
-    "text": "Zum ersten Mal treffen Protagonist und Antagonist aufeinander. Die Spannung ist sofort spürbar.",
+    "titel": "Das Geständnis",
+    "text": "Bei einem Kaffee mit Ethan fängt Cassie im Radio eine Meldung über die Abriegelung von Distrikt 5 auf. Sie gesteht ihm, dass die Feier außerhalb der Boston-Zone stattfindet. Ethan warnt sie eindringlich, verspricht aber, sie nicht zu verraten, und bietet an, sie im Notfall überall abzuholen. Als der betrunkene Greg hereinplatzt, verlässt Ethan das Haus.",
     "bild": "",
-    "tags": ["Haupthandlung", "Antagonist"]
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Familie",
+      "Pandemie"
+    ]
   },
   {
-    "datum": "Kapitel 5",
-    "titel": "Der Wendepunkt",
-    "text": "Alles ändert sich. Was zuvor sicher schien, steht plötzlich auf dem Kopf.",
+    "datum": "Kapitel 3",
+    "titel": "Das Kleid ihres Vaters",
+    "text": "Cassie sagt Susie zu. Per Videochat sucht Susie ihr ein Outfit aus, und Cassie zieht ein Blumenkleid an, das ihr Vater ihr vor Jahren geschenkt hat. Susie schickt ihr den Standort der Feier und verrät, dass man am alten Busbahnhof über die Mauer kommt, weil dort wegen Distrikt 5 weniger Wachen stehen.",
     "bild": "",
-    "tags": ["Haupthandlung", "Wendepunkt"]
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Susie"
+    ]
   },
   {
-    "datum": "Kapitel 7",
-    "titel": "Die Enthüllung",
-    "text": "Ein lange gehütetes Geheimnis kommt ans Licht und stellt alles in Frage.",
+    "datum": "Kapitel 3",
+    "titel": "Der Aufbruch",
+    "text": "Cassie klettert durchs Fenster auf das Garagendach und verlässt das Haus unbemerkt. Im Regen macht sie sich auf den Weg zur Feier.",
     "bild": "",
-    "tags": ["Haupthandlung", "Wendepunkt"]
-  },
-  {
-    "datum": "Kapitel 10",
-    "titel": "Das Finale",
-    "text": "Der letzte Konflikt wird ausgetragen. Nichts wird mehr so sein wie vorher.",
-    "bild": "",
-    "tags": ["Haupthandlung", "Protagonist", "Antagonist"]
+    "tags": [
+      "Haupthandlung",
+      "Cassie"
+    ]
   }
 ]
