@@ -295,7 +295,7 @@
   {
     "datum": "Kapitel 3",
     "titel": "Das Kleid ihres Vaters",
-    "text": "Cassie sagt Susie zu. Per Videochat sucht Susie ihr ein Outfit aus, und Cassie zieht ein Blumenkleid an, das ihr Vater ihr vor Jahren geschenkt hat. Susie schickt ihr den Standort der Feier und verrät, dass man am alten Busbahnhof über die Mauer kommt, weil dort wegen Distrikt 5 weniger Wachen stehen.",
+    "text": "Cassie sagt Susie zu. Per Videochat sucht Susie ihr ein Outfit aus, und Cassie zieht ein Blumenkleid an, das ihr Vater ihr vor Jahren geschenkt hat. Susie schickt ihr den Standort der Feier und verrät, dass man am alten Busbahnhof durch das Tunnelsystem unter der Mauer hindurchkommt, weil dort wegen Distrikt 5 weniger Wachen stehen.",
     "bild": "",
     "tags": [
       "Haupthandlung",
@@ -311,6 +311,39 @@
     "tags": [
       "Haupthandlung",
       "Cassie"
+    ]
+  },
+  {
+    "datum": "Kapitel 4",
+    "titel": "Der Weg durch die leere Stadt",
+    "text": "Cassie schleicht durch den Franklin Park und das Wohnviertel. Kein Tier ist zu hören, und neben einer Pfütze liegt ein toter Fuchs, dessen Kopf sich zu bewegen scheint. Sie erreicht die Barrikaden vor der Forest Hills Station, an denen Blutspuren, Schuhe und ein zerfetzter Kinderwagen hängen, während eine kaputte Durchsage in Endlosschleife läuft.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Pandemie"
+    ]
+  },
+  {
+    "datum": "Kapitel 4",
+    "titel": "Das Wesen im Tunnel",
+    "text": "Der Bahnhof ist unbewacht. Cassie nimmt Susies Weg durch den Tunnel unter den Gleisen, findet eine frische Blutlache und hört einen Schrei, der weder menschlich noch tierisch klingt. Etwas verfolgt sie. Sie stürzt auf der Treppe, rettet ihr Handy und zwängt sich durch einen Drahtzaun. Dabei reißt das Kleid ihres Vaters. Das Wesen folgt ihr nicht durch den Zaun. Es war auf der Seite, die als sicher galt.",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Daemonica"
+    ]
+  },
+  {
+    "datum": "Kapitel 4",
+    "titel": "Ankunft auf der Party",
+    "text": "Jenseits der Zone ist es still und friedlicher als erwartet. Cassie leiht sich ein Fahrrad und fährt zum Partyhaus. Aus einem Erkerfenster starren sie gelbe Augen an, dann wird ihr schwindelig. Als sie wieder hinsieht, ist das Fenster leer. Kurz vor der Tür legt Jake die Hand auf ihre Schulter: »Ich wusste, du würdest kommen.«",
+    "bild": "",
+    "tags": [
+      "Haupthandlung",
+      "Cassie",
+      "Jake"
     ]
   }
 ]

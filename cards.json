@@ -67,7 +67,7 @@
           "karten/charaktere/schwester_2/rueckseite.txt"
         ],
         "bilder": [
-          "karten/charaktere/schwester_2/Ava_1.png"
+          "karten/charaktere/schwester_2/Lily_1.png"
         ]
       },
       {
@@ -88,9 +88,7 @@
         "rueckseite": [
           "karten/charaktere/vater/rueckseite.txt"
         ],
-        "bilder": [
-          "karten/charaktere/vater/Malakar_1.png"
-        ]
+        "bilder": []
       },
       {
         "id": 9,
