@@ -7,7 +7,9 @@
         "id": 1,
         "titel": "Cassie Hawthorne",
         "vorderseite": "Protagonist",
-        "rueckseite": ["karten/charaktere/protagonist/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/protagonist/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/protagonist/Cassie_1.png",
           "karten/charaktere/protagonist/Cassie_2.png"
@@ -17,7 +19,9 @@
         "id": 2,
         "titel": "Lucien",
         "vorderseite": "Antagonist | Höllenprinz",
-        "rueckseite": ["karten/charaktere/antagonist/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/antagonist/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/antagonist/Lucien_1.png"
         ]
@@ -26,7 +30,9 @@
         "id": 3,
         "titel": "Ethan Hawthorne",
         "vorderseite": "Cassies Adoptivbruder | Malakars Untergebener",
-        "rueckseite": ["karten/charaktere/bruder_1/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/bruder_1/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/bruder_1/Ethan_1.png"
         ]
@@ -35,7 +41,9 @@
         "id": 4,
         "titel": "Ava Hawthorne",
         "vorderseite": "Cassies Halbschwester | jüngerer Zwilling",
-        "rueckseite": ["karten/charaktere/schwester_1/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/schwester_1/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/schwester_1/Ava_1.png"
         ]
@@ -44,7 +52,9 @@
         "id": 5,
         "titel": "Mason Hawthorne",
         "vorderseite": "Cassies Halbbruder | älterer Zwilling",
-        "rueckseite": ["karten/charaktere/bruder_2/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/bruder_2/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/bruder_2/Mason_1.png"
         ]
@@ -53,16 +63,20 @@
         "id": 6,
         "titel": "Lily Hawthorne",
         "vorderseite": "Cassies Halbschwester | jüngste Schwester",
-        "rueckseite": ["karten/charaktere/schwester_2/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/schwester_2/rueckseite.txt"
+        ],
         "bilder": [
-          "karten/charaktere/schwester_2/Ava_1.png"
+          "karten/charaktere/schwester_2/Lily_1.png"
         ]
       },
       {
         "id": 7,
         "titel": "Elena Hawthorne",
         "vorderseite": "Cassies Mutter",
-        "rueckseite": ["karten/charaktere/mutter/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/mutter/rueckseite.txt"
+        ],
         "bilder": [
           "karten/charaktere/mutter/Elena_1.png"
         ]
@@ -71,16 +85,67 @@
         "id": 8,
         "titel": "Malakar",
         "vorderseite": "Cassies Vater | Höllenlord",
-        "rueckseite": ["karten/charaktere/vater/rueckseite.txt"],
-        "bilder": [
-          "karten/charaktere/vater/Malakar_1.png"
-        ]
+        "rueckseite": [
+          "karten/charaktere/vater/rueckseite.txt"
+        ],
+        "bilder": []
       },
       {
         "id": 9,
         "titel": "Susie",
         "vorderseite": "Beste Freundin",
-        "rueckseite": ["karten/charaktere/susie/rueckseite.txt"],
+        "rueckseite": [
+          "karten/charaktere/susie/rueckseite.txt"
+        ],
+        "bilder": []
+      },
+      {
+        "id": 10,
+        "titel": "Jake Parker",
+        "vorderseite": "Quarterback | Luciens Werkzeug",
+        "rueckseite": "Umwirbt Cassie in Kapitel 2 und kennt ihren vollen Namen. Das stammt von Lucien, der ihn beeinflusst hat.\nKapitel 5: Er schenkt ihr nach und führt sie unter dem Vorwand der Fürsorge von der Party weg. Das ist ein Übergriffsversuch, der über Enge, Alkohol und überhörte Einwände bedrohlich wird (nicht ausgeschrieben).\nKapitel 6: Stirbt im Blutbad. Cassie sieht es. Als Mitwisser ist er für Lucien beseitigt.",
+        "bilder": []
+      },
+      {
+        "id": 11,
+        "titel": "Laura Carter",
+        "vorderseite": "Dämonenjägerin | die Frau aus dem Prolog",
+        "rueckseite": "Überlebte im Prolog die Verwandlung ihres Mannes Eddie und lebt seitdem in einer Symbiose mit ihm.\nSie hält ihn wie einen Begleiter und jagt mit ihm Dämonen. Hart, kompetent, trocken.\nTritt kurz vor dem zweiten Splitter auf. Wird zu Cassies Gegenpol zu Lucien: Er benutzt Dämonen als Werkzeug, sie hat einen als Partner behalten.\nSie kennt Wege, die Lucien nicht kontrolliert (Schmugglerrouten, Frachtflüge).\nTod: Lucien richtet sie hin, nachdem Cassie ihren Standort verraten hat (Kapitel 19).",
+        "bilder": []
+      },
+      {
+        "id": 12,
+        "titel": "Eddie Carter",
+        "vorderseite": "Dämon | Lauras Begleiter",
+        "rueckseite": "Lauras Mann, im Prolog verwandelt: über zwei Meter, wächserne Haut, nadelartige Finger, gelbliche Augen.\nEr reagiert auf die Splitter und auf Lucien und ist damit Lauras Warnsystem. Seine Nase kann Splitter aufspüren (Vorschlag).\nEr hat noch Fetzen von Sprache und Erinnerung, aber keine Worte mehr für alles.\nNach Lauras Tod läuft er weg.",
+        "bilder": []
+      },
+      {
+        "id": 13,
+        "titel": "Greg",
+        "vorderseite": "Cassies Stiefvater | ziemliches Arschloch",
+        "rueckseite": "Elenas zweiter Mann. Trinkt, pöbelt (»Verpisst euch«) und behandelt Cassie und Ethan wie Gäste, die man aus dem Haus werfen könnte.\nEthan hat ihm früher einmal eine verpasst.\nRolle in der Handlung noch offen. Wenn er eine braucht: der Grund, warum Cassie ihr Zuhause nicht mehr als sicher empfindet.",
+        "bilder": []
+      },
+      {
+        "id": 14,
+        "titel": "Emma",
+        "vorderseite": "Mitschülerin | erste sichtbare Infizierte",
+        "rueckseite": "Kapitel 2: Fiebrig und blass, wird mit Atemmaske vom Schulgelände gezerrt. Offiziell: Quarantäne.\nSie ist der erste Beweis, dass die Pandemie nicht vorbei ist, und der Auftakt zum Ausbruch in Distrikt 5 (Vorschlag).",
+        "bilder": []
+      },
+      {
+        "id": 15,
+        "titel": "Karl Mercer",
+        "vorderseite": "Geburtstagskind | erstes Opfer",
+        "rueckseite": "Wird auf seiner Feier 18 (Kapitel 5/6). Der Hunddämon drängt ihn in die Ecke und beißt ihn.\nEr infiziert sich, blutet aus den Augen, die Augen fallen aus den Höhlen, er verwandelt sich. Das ist der Moment, in dem die Party zum Blutbad wird.",
+        "bilder": []
+      },
+      {
+        "id": 16,
+        "titel": "Luzifer",
+        "vorderseite": "Der Gefallene | Ziel für Band 2",
+        "rueckseite": "Hat sich vor 700 v. Chr. von Hochmut, Zorn und Habgier getrennt und ist unvollständig in die Oberwelt geflohen. Dort verliert er sich in Rausch und Lastern.\nJeder kennt seinen Zufluchtsort, doch niemand bringt ihn zurück.\nWer die drei Splitter besitzt, hält ihn in der Hand.\nBand 2: Cassie muss ihn höchstpersönlich finden.",
         "bilder": []
       }
     ]
@@ -90,9 +155,33 @@
     "beschreibung": "Kernideen & Motive",
     "karten": [
       {
-        "titel": "Kernthema",
-        "vorderseite": "Zentrales Thema",
-        "rueckseite": "Direkter Text geht auch – kein .txt nötig!",
+        "titel": "Kernthema: Zugehörigkeit",
+        "vorderseite": "Einsamkeit vs. Anschluss",
+        "rueckseite": "Cassie will nicht mehr »die Komische« sein, und genau das macht sie verführbar: für Jakes Aufmerksamkeit, für Luciens Verständnis, für die Party.\nDie Frage: Wer gehört wirklich zu dir, und wer benutzt deine Sehnsucht?",
+        "bilder": []
+      },
+      {
+        "titel": "Kontrolle vs. Freiheit",
+        "vorderseite": "Die Zone als Käfig",
+        "rueckseite": "Zäune, Augenscans, Drehkreuze, die nur nach draußen gehen. Die Sicherheit ist real, aber sie hat einen Preis.\nBeim Verlassen der Zone entdeckt Cassie, dass draußen anfangs friedlicher ist, und dass das Gefährliche längst drinnen sitzt (das Wesen im Tunnel).",
+        "bilder": []
+      },
+      {
+        "titel": "Vertrauen & Manipulation",
+        "vorderseite": "Luciens Lügen",
+        "rueckseite": "Was Lucien behauptet: Er ist Malakars Freund, Malakar kann die Pandemie beenden, nur Cassie kann die Splitter tragen, er kann es nicht selbst.\nWas stimmt: Er hat den Ausbruch in Distrikt 5 und das Blutbad ausgelöst, das Virus hängt an seinem Willen, und er will Cassie als Druckmittel gegen Malakar.\nWahrheit und Lüge liegen eng beieinander, deshalb wirkt er glaubwürdig.",
+        "bilder": []
+      },
+      {
+        "titel": "Erinnerung als Waffe",
+        "vorderseite": "Gemeinsame Erinnerungen, die nie stattfanden",
+        "rueckseite": "Lucien manipuliert Erinnerungen: Die Klasse (und Susie) kennt ihn plötzlich, 20 Schüler sind nie dagewesen. Nur Cassie und Ethan erinnern sich.\nDas ist der Auslöser für Cassies Zweifel an sich selbst und für den Beweis, dass sie anders ist.",
+        "bilder": []
+      },
+      {
+        "titel": "Das Erbe des Vaters",
+        "vorderseite": "Verlust und Schutz",
+        "rueckseite": "Das Kleid, der Dodge Charger, das Lied im Regen: Malakar ist in kleinen Dingen anwesend.\nSeine Entscheidung, Cassie als Versteck zu benutzen, ist Liebe und Last zugleich.",
         "bilder": []
       }
     ]
@@ -100,21 +189,265 @@
   "Orte": {
     "icon": "🌍",
     "beschreibung": "Schauplätze & Welten",
-    "karten": []
+    "karten": [
+      {
+        "titel": "Boston-Zone",
+        "vorderseite": "Die Sicherheitszone",
+        "rueckseite": "Streng kontrollierte Schutzzone um den Stadtkern. Zäune, Kameras, Desinfektionsschleusen und Augenscans an den Schulen.\nGemüse wächst unter künstlichen Bedingungen und schmeckt nach nichts.\nDie Zone gilt als sicher, aber der Ausbruch in Distrikt 5 und das Wesen im Tunnel zeigen, dass sie es nicht ist.",
+        "bilder": []
+      },
+      {
+        "titel": "Cassies Haus",
+        "vorderseite": "Glade Avenue 21",
+        "rueckseite": "Verfallendes Haus: verdorrter Garten, durchgesessenes Sofa, Karton als Tisch. Die Umrisse eines Flügels zeichnen sich noch auf dem Parkett ab.\nMalakars Bann liegt darauf und wird mit den Jahren schwächer.\nDer Kirschbaum im Garten ist verschwunden.",
+        "bilder": []
+      },
+      {
+        "titel": "Franklin Park",
+        "vorderseite": "Cassies Schleichweg",
+        "rueckseite": "Tagsüber eine kleine Oase. Wackelpferd und kaputte Wippe erinnern an früher.\nIn Kapitel 4 fehlen die Tiere: kein Rascheln, kein Vogel. Das ist ein Vorbote.",
+        "bilder": []
+      },
+      {
+        "titel": "Forest Hills Station",
+        "vorderseite": "Der Übergang",
+        "rueckseite": "Bahn- und Busstation im Stil eines Kunstpalastes mit Glaspyramiden, jetzt von Moos überwuchert.\nOffizieller Durchgang für Expeditionstrupps. Ein unbeaufsichtigtes Hallentor, zwei Zäune mit versetzten Türen.\nSusies Weg: durch den Tunnel unter den Gleisen, mit einem Drahtzaun, der sich verbiegen lässt.\nHier trifft Cassie auf das Wesen, das auf der Innenseite zurückbleibt.",
+        "bilder": []
+      },
+      {
+        "titel": "Walter Street 66",
+        "vorderseite": "Das Partyhaus",
+        "rueckseite": "Dreistöckiges Holzhaus mit Erker (Centre-South).\nIm Erkerfenster erscheinen gelbe Augen. Cassie sieht sie nur kurz.\nHier findet die Feier für Karl Mercer statt, hier beginnt das Blutbad.",
+        "bilder": []
+      },
+      {
+        "titel": "Distrikt 5",
+        "vorderseite": "Der verschwiegene Ausbruch",
+        "rueckseite": "Offiziell Quarantäne und »vorbeugende Maßnahmen«, in Wahrheit ein Daemonica-Ausbruch, den Lucien ausgelöst hat.\nDie Sicherheitskräfte wurden abgezogen, deshalb war die Station leer.\nCassie erfährt es erst später.",
+        "bilder": []
+      },
+      {
+        "titel": "Höllenpforten",
+        "vorderseite": "Reisen zwischen den Orten (Vorschlag)",
+        "rueckseite": "Risse dort, wo besonders viel Leid war. Lucien öffnet sie mit einem Splitter oder seinem Blut.\nJeder Durchgang macht die Hölle auf ihn aufmerksam, denn sein Vater spürt ihn über den Schwur.\nFür Cassie fühlt sich die Reise körperlich schlimm an: Hitze, Übelkeit, gedehnte Zeit.\nMögliche Pforte in Boston: Forest Hills Cemetery.",
+        "bilder": []
+      },
+      {
+        "titel": "Zorn: Paris",
+        "vorderseite": "Katakomben unter der Place de la Concorde (Vorschlag)",
+        "rueckseite": "Der einzige Fundort, den Lucien aus Malakars Erzählungen kennt (nur grob: »Frankreich, wo der Zorn der Menschen ein Reich stürzte«).\nFinden: Der Kristall wandert durch die Knochenwände, wann immer dort Gewalt geschieht.\nHinkommen: Paris ist eine abgeriegelte Militärzone, deshalb per Höllenpforte.\nMitnehmen: Wut greift um sich, Knochen klappern, Besucher gehen aufeinander los. Lucien verliert fast die Kontrolle. Cassie bleibt ruhig.",
+        "bilder": []
+      },
+      {
+        "titel": "Hochmut: Bernsteinzimmer",
+        "vorderseite": "Stollen im Erzgebirge (Vorschlag)",
+        "rueckseite": "Das seit 1945 verschollene Bernsteinzimmer. Der Kristall sitzt darin.\nFinden: Der erste Splitter vibriert in Richtung des zweiten.\nHinkommen: Flug über den Atlantik mit Schwingen und Zwischenlandung.\nMitnehmen: Der Raum zeigt, wen man sehen will. Wer sich dort groß sieht, bleibt und erstarrt in Harz. Der Spiegel zeigt Cassie Luciens wahre Gestalt.",
+        "bilder": []
+      },
+      {
+        "titel": "Habgier: Arnold Arboretum",
+        "vorderseite": "Gewächshaus in Boston (Vorschlag)",
+        "rueckseite": "Der Kristall steckt in einer Tulpenknolle, ungewöhnlich groß und leuchtend. Malakar hat ihn bewusst in der Nähe seiner Familie versteckt.\nDas Gebiet ist wegen Quarantäne gesperrt, alles wächst üppig und dicht.\nRiesige Wurzeln alarmieren die Dämonen. Diese horten Äste und Knochen, aus manchen wachsen Pflanzen, andere wurden von der Tulpe konsumiert.\nPreis: Die Wurzeln fordern etwas, das Cassie besitzt (vielleicht das Kleid ihres Vaters).",
+        "bilder": []
+      }
+    ]
   },
   "Zitate": {
     "icon": "✍️",
     "beschreibung": "Schlüsselzitate & Passagen",
-    "karten": []
+    "karten": [
+      {
+        "titel": "»Du hast keine Ahnung, was da draußen ist.«",
+        "vorderseite": "Ethan, Kapitel 3",
+        "rueckseite": "Ethans Warnung klingt wie von jemandem, der es weiß. Das ist der erste Hinweis, dass er mehr ist, als er zeigt.",
+        "bilder": []
+      },
+      {
+        "titel": "»Ich wusste, du würdest kommen.«",
+        "vorderseite": "Jake, Kapitel 4",
+        "rueckseite": "Letzter Satz von Kapitel 4. Er klingt charmant und gleichzeitig wie ein Plan.",
+        "bilder": []
+      },
+      {
+        "titel": "»Hörst du das auch?«",
+        "vorderseite": "Lucien, Kapitel 5 (geplant)",
+        "rueckseite": "Der Moment, in dem das Gelächter unten in echte Angst kippt. Ruhig, intensiv, zu ruhig.",
+        "bilder": []
+      },
+      {
+        "titel": "»Du bist nicht verrückt. Ich war auch da.«",
+        "vorderseite": "Lucien, Kapitel 7 (Vorschlag)",
+        "rueckseite": "Er bestätigt als Einziger, was sie gesehen hat. Genau das macht ihn gefährlich.",
+        "bilder": []
+      }
+    ]
   },
   "Symbole": {
     "icon": "🔮",
     "beschreibung": "Symbolik & Metaphern",
-    "karten": []
+    "karten": [
+      {
+        "titel": "Die Splitter",
+        "vorderseite": "Physische Kristalle",
+        "rueckseite": "Jeder Splitter ist ein echter Kristall mit auffälligem Auftreten, der seine Umgebung verändert:\nZorn: dunkelrot, Hitze, Gewitter, Gewalt.\nHochmut: goldweiß, Spiegelflächen, Größenwahn.\nHabgier: grün-golden, wuchernde Pflanzen, Hortverhalten.\nIn Cassies Hand werden sie warm, bei Lucien bleiben sie kalt. Das ist ihr erster Hinweis, dass er etwas verbirgt.\nSie vibrieren, wenn sie einander nahe sind (Vorschlag: ein natürlicher Kompass).",
+        "bilder": []
+      },
+      {
+        "titel": "Warmer Regen",
+        "vorderseite": "Etwas stimmt nicht",
+        "rueckseite": "Kapitel 2: Die Regentropfen sind seltsam warm. Kapitel 4: Die Ranke im Bahnhof ist warm, und der Regen fühlt sich später nicht mehr warm an.\nWärme ist das Zeichen für die Nähe des Dämonischen und Cassies Verbindung dazu.",
+        "bilder": []
+      },
+      {
+        "titel": "Gelbe Augen",
+        "vorderseite": "Das Dämonische schaut zurück",
+        "rueckseite": "Eddie im Prolog, die Augen im Erkerfenster in Kapitel 4.\nSie sind Marker für Wesen aus der Hölle und kündigen Gefahr an.",
+        "bilder": []
+      },
+      {
+        "titel": "Das Kleid",
+        "vorderseite": "Malakars Geschenk",
+        "rueckseite": "Blumenkleid vom Vater, in Kapitel 3 angezogen und in Kapitel 4 am Zaun zerrissen.\nSymbol für Cassies Verbindung zu ihm und für das, was sie in der Welt zurücklassen muss.",
+        "bilder": []
+      },
+      {
+        "titel": "Zäune & Drehkreuze",
+        "vorderseite": "Zugang und Ausschluss",
+        "rueckseite": "Die Schleuse in der Schule, die Zäune im Bahnhof, das Drehkreuz, das nur nach draußen geht.\nGrenzen zwischen drinnen und draußen, Sicherheit und Freiheit.",
+        "bilder": []
+      },
+      {
+        "titel": "Stille der Tiere",
+        "vorderseite": "Vorbote",
+        "rueckseite": "In Kapitel 4 fehlt jedes Tier. Der Fuchs ist tot, aber bewegt sich.\nDie Stille kündigt an, dass die Natur etwas spürt, bevor die Menschen es tun.",
+        "bilder": []
+      },
+      {
+        "titel": "Schwingen",
+        "vorderseite": "Fliegende Dämonen (Vorschlag)",
+        "rueckseite": "Geflügelte Dämonen, die Lucien kontrolliert und die Reisende tragen. Sie fliegen nur nachts und werden in der Nähe der Splitter unruhig.\nSie zeigen Luciens Macht über niedere Dämonen und binden ihn an Orte, weil er in der Nähe bleiben muss.",
+        "bilder": []
+      }
+    ]
   },
   "Handlung": {
     "icon": "📖",
     "beschreibung": "Plot & Wendepunkte",
-    "karten": []
+    "karten": [
+      {
+        "titel": "Prolog",
+        "vorderseite": "Laura & Eddie",
+        "rueckseite": "Nachrichtenstudio: Dr. Robert Carlson spricht über den neuen Erreger. Candace bricht live zusammen und verwandelt sich.\nEddie, Lauras Mann, kommt krank heim und verwandelt sich in der Küche. Laura legt ihm die Hand an die Wange, das Wesen schreit, Gas quillt aus ihm, sie wird bewusstlos.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 1",
+        "vorderseite": "Ein Morgen und die Einladung",
+        "rueckseite": "Haus: Streit der Geschwister, Cassies Mutter ist kalt. Schule: Sicherheitsschleuse, Susie, Herr Braun. In der Kantine lädt Susie sie zur Party hinter dem Wall ein.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 2",
+        "vorderseite": "Emma, Jake, Heimfahrt",
+        "rueckseite": "Emma wird abgeführt, Susie schwänzt. Jake spricht Cassie im Regen an und lädt sie zu Karls Geburtstag ein. Ethan holt sie ab.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 3",
+        "vorderseite": "Kaffee mit Ethan",
+        "rueckseite": "Radio: Distrikt 5 abgeriegelt. Cassie gesteht Ethan die Party, er deckt sie. Greg stört. Kleid vom Vater, Fenster, Dach, Aufbruch.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 4",
+        "vorderseite": "Der Weg zur Party",
+        "rueckseite": "Fuchs, Barrikaden, Durchsagen, Bahnhof. Im Tunnel verfolgt sie ein Wesen. Sie reißt das Kleid am Zaun, flieht, fährt mit dem Rad zur Party. Gelbe Augen im Erker, Jake legt die Hand auf ihre Schulter.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 5 (Gerüst)",
+        "vorderseite": "Die Party",
+        "rueckseite": "Lucien ist plötzlich da. Alle kennen ihn, nur Cassie nicht. Er wirkt gerissen, charismatisch und frech. Sie vertraut ihm nicht, aber jeder mag ihn zu sehr.\nJake schenkt nach, Trinkspiele, Cassie hat Spaß und verliert zugleich die Kontrolle.\nJake führt die Betrunkene weg (nicht ausgeschrieben, nur Bedrohung). Lucien hält sie kurz fest (»Du solltest nicht so viel trinken«), sie reißt sich los.\nSchreie von unten, erst gespielt, dann echt. Schluss: »Hörst du das auch?«\nParallel: Ein hundeähnlicher Dämon dringt ein (Luciens Plan, Cassie emotional zu isolieren).",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 6 (Gerüst)",
+        "vorderseite": "Das Blutbad",
+        "rueckseite": "Im Wohnzimmer drängt ein scheinbar tollwütiger Hund Karl in die Ecke und beißt ihn. Er infiziert sich, blutet aus den Augen, verwandelt sich.\nChaos, Schreie, Cassie erstarrt. Einige sterben, andere werden verwandelt.\nSusies Schrei reißt sie aus dem Schock. Cassie wirft sich dazwischen, wird gekratzt. Etwas in ihr erwacht, sie rettet Susie und sich.\nSie sieht Jake sterben. Beide fliehen, Cassie ruft Ethan, der sie abholt. Kaum jemand entkommt.",
+        "bilder": []
+      },
+      {
+        "titel": "Kapitel 7 (Gerüst)",
+        "vorderseite": "Der leere Platz",
+        "rueckseite": "Schule: Alle tun, als wären immer etwa 20 Schüler weniger gewesen. Susie erinnert sich an nichts. Cassie zweifelt an sich, aber Ethan erwähnt noch ein Gespräch, also war es kein Traum.\nLucien sitzt dort, wo die Fehlenden saßen, und baut sich in das Duo Susie/Cassie ein. Susie glaubt, sie seien schon immer zu dritt gewesen.\nSchluss (Vorschlag): Lucien zu Cassie allein: »Du bist nicht verrückt. Ich war auch da.«",
+        "bilder": []
+      },
+      {
+        "titel": "Zwischenkapitel: Laura",
+        "vorderseite": "Die Jägerin (Vorschlag)",
+        "rueckseite": "Kurzer Auftritt aus Lauras Perspektive: Sie jagt die Reste des Hunddämons, Eddie an der Leine.\nEin Ausblick auf das, was Cassie später braucht.",
+        "bilder": []
+      },
+      {
+        "titel": "Der Handel",
+        "vorderseite": "Kapitel 8–9 (Vorschlag)",
+        "rueckseite": "Lucien gewinnt Cassies Vertrauen. Er gibt vor, Freund von Malakar zu sein, der noch lebt und die Pandemie beenden kann, wenn Cassie die Splitter findet. Warum er sie nicht selbst tragen kann, lässt er offen (die Splitter wirken auf ihn anders).\nSusie ist sein Druckmittel. Ethan wird ferngehalten oder kontrolliert.",
+        "bilder": []
+      },
+      {
+        "titel": "Splitter 1: Zorn",
+        "vorderseite": "Paris (Vorschlag)",
+        "rueckseite": "Lucien kennt nur diesen Fundort. Reise per Höllenpforte. Der Kristall verstärkt Wut. Lucien verliert fast die Kontrolle, Cassie bleibt ruhig und trägt ihn. Der Kristall wird warm in ihrer Hand, bei Lucien bleibt er kalt.",
+        "bilder": []
+      },
+      {
+        "titel": "Begegnung mit Laura",
+        "vorderseite": "Vor dem zweiten Splitter",
+        "rueckseite": "Cassie und Lucien treffen auf Laura und Eddie. Eddie reagiert auf Lucien und die Splitter.",
+        "bilder": []
+      },
+      {
+        "titel": "Splitter 2: Hochmut",
+        "vorderseite": "Bernsteinzimmer (Vorschlag)",
+        "rueckseite": "Reise mit Schwingen, Gefahr durch Zeitverlust. Das Bernsteinzimmer zeigt jedem, was er sein will. Cassie sieht Luciens wahre Gestalt.\nKurz nach dem Splitter erfährt sie von Laura, wer Lucien ist und dass er das Blutbad veranstaltet hat, um sie zu isolieren.",
+        "bilder": []
+      },
+      {
+        "titel": "Der Bruch",
+        "vorderseite": "Cassie flieht mit Laura",
+        "rueckseite": "Misstrauisch sucht Cassie den letzten Splitter allein mit Laura. Der Streit trennt sie von Lucien.\nSie spielt vielleicht mit (und sucht seine Schwäche), aber sie gehört ihm nicht mehr.",
+        "bilder": []
+      },
+      {
+        "titel": "Susie als Geisel",
+        "vorderseite": "Luciens Druck",
+        "rueckseite": "Lucien weiß nicht, wo der letzte Splitter liegt. Er hält Susie hypnotisiert in seiner Gewalt und droht, sie zu töten.\nCassie teilt ihm ihren Standort mit. Er richtet Laura hin, Eddie läuft weg. So macht er Cassie gefügig.",
+        "bilder": []
+      },
+      {
+        "titel": "Splitter 3: Habgier",
+        "vorderseite": "Arnold Arboretum (Vorschlag)",
+        "rueckseite": "Quarantäne, Gewächshaus, Wurzeln, Hortdämonen. Cassie muss den Splitter für Lucien holen und etwas Eigenes opfern.",
+        "bilder": []
+      },
+      {
+        "titel": "Finale & Band 2",
+        "vorderseite": "Malakar und Luzifer",
+        "rueckseite": "Mit den drei Splittern sucht Lucien den Weg zu Malakar. Er will ihn mit Cassie unter Druck setzen, damit er den Aufbewahrungsort des Artefakts verrät. Malakar hilft Cassie zur Flucht.\nBand 2: Cassie muss Luzifer finden.",
+        "bilder": []
+      },
+      {
+        "titel": "Ethans Rolle (Vorschlag)",
+        "vorderseite": "Wie er mit Lucien umgeht",
+        "rueckseite": "Ethan ist ein niederer Dämon, den Lucien kontrollieren kann. Deshalb hält er sich fern, warnt Cassie nur vage und darf ihr das Artefakt nicht verraten (Malakars Auftrag).\nWenn Cassie aufbricht, will er folgen, aber Lucien zwingt ihn zum Stehenbleiben und lässt ihn am Leben, als Hebel.\nSpäter wird er Verbündeter im Finale. Seine Schuld gegenüber Malakar kommt ans Licht.",
+        "bilder": []
+      },
+      {
+        "titel": "Offene Fragen",
+        "vorderseite": "Noch nicht entschieden",
+        "rueckseite": "Zeitlinie: Cassie ist 17, die Gefangennahme liegt aber 20 Jahre zurück. Vorschlag: Versteck und Virus um 2025, Gegenwart um 2042.\nKennt Lucien Ethan? Wenn ja, lässt er ihn bewusst leben?\nWie wird das Blutbad vertuscht (Behörden, Eltern)?\nWo sitzen die Splitter nach dem Finden? In Cassie oder bei ihr?\nWer in der Hölle streut Luciens Gerücht über Cassie?",
+        "bilder": []
+      }
+    ]
   }
 }
